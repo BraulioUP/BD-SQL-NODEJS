@@ -1,5 +1,5 @@
 const express = require("express");
-const { Connection, Request, TYPES } = require("tedious");
+const { Connection, Request } = require("tedious");
 
 var config = {
   server: "BRAULIO\\SQLEXPRESS",
@@ -7,70 +7,70 @@ var config = {
     type: "default",
     options: {
       userName: "ejemplo",
-      password: "braulioYrodrigo",
+      password: "braulioYrodrigo"
     },
   },
   options: {
     port: 1433,
     database: "ECOMMERCE",
     trustServerCertificate: true,
+    encrypt: false,
   },
 };
 
-// Crear una nueva aplicación express
 const app = express();
-const port = 3000; // Puerto en el que se ejecutará el servidor
+const port = 3000; 
 
-const connection = new Connection(config);
-
-connection.on("connect", function (err) {
-  if (err) {
-    console.error("Error al conectar a la base de datos:", err);
-  } else {
-    console.log("Conectado a la base de datos");
-  }
-});
-
-connection.on("error", function (err) {
-  console.error("Error de conexión:", err);
-});
-
-// Definir una ruta para la página web principal
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html"); // Asegúrate de tener un archivo index.html en tu directorio
+  res.sendFile(__dirname + "/index.html");
 });
 
-// Definir una ruta para la API que proporcionará los datos de los usuarios
 app.get("/api/usuarios", (req, res) => {
-  const sql = "SELECT * FROM Usuarios";
-  const request = new Request(sql, (err, rowCount, rows) => {
+  const connection = new Connection(config);
+  
+  connection.on("connect", function (err) {
     if (err) {
-      console.error("Error al ejecutar la consulta:", err);
-      res.status(500).send("Error al ejecutar la consulta en la base de datos");
-      return;
-    }
-    const result = rows.map((row) => {
-      let item = {};
-      row.forEach((column) => {
-        item[column.metadata.colName] = column.value;
+      console.error("Error al conectar a la base de datos:", err);
+      res.status(500).json({ error: "Error al conectar a la base de datos" });
+    } else {
+      const sql = "SELECT * FROM Usuarios";
+      const request = new Request(sql, (err, rowCount) => {
+        if (err) {
+          console.error("Error al ejecutar la consulta:", err);
+          res.status(500).json({ error: "Error al ejecutar la consulta en la base de datos" });
+        } else if (rowCount === 0) {
+          res.json({ error: "No se encontraron usuarios" });
+        }
+        // No need to close the connection here, it will be closed after the request is done
       });
-      return item;
-    });
-    res.json(result); // Enviar los datos como JSON
-    // No cierres la conexión aquí
+      
+      const result = [];
+      request.on('row', columns => {
+        let item = {};
+        columns.forEach(column => {
+          item[column.metadata.colName] = column.value;
+        });
+        result.push(item);
+      });
+
+      request.on('requestCompleted', function () {
+        // Send the result once the request is completed
+        res.json(result);
+        connection.close();
+      });
+      
+      connection.execSql(request);
+    }
   });
 
-  connection.execSql(request);
+  connection.on("error", function (err) {
+    console.error("Error de conexión:", err);
+    res.status(500).json({ error: "Error de conexión" });
+  });
+
+  connection.connect();
 });
 
-// Iniciar el servidor
 app.listen(port, () => {
   console.log(`Servidor escuchando en http://localhost:${port}`);
-});
-
-connection.connect();
-
-// Puedes cerrar la conexión cuando el servidor se detenga
-process.on("exit", () => {
-  connection.close();
 });
