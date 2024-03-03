@@ -1,15 +1,6 @@
 const { Sequelize } = require("sequelize");
 
-const sequelize = new Sequelize("ECOMMERCE", "sa", "braulioYrodrigo", {
-  host: "BRAULIO\\SQLEXPRESS",
-  dialect: "mssql",
-  dialectOptions: {
-    options: {
-      encrypt: true,
-      trustServerCertificate: true,
-    },
-  },
-});
+const sequelize = require("./database");
 
 const User = require("./Users")(sequelize, Sequelize);
 
@@ -18,12 +9,12 @@ const insertUser = () => {
 
   User.create({
     // Tus datos aquí
-    RegionID: 2,
-    IdiomaID: 2,
-    Nombre: "Braulio",
+    RegionID: 3,
+    IdiomaID: 1,
+    Nombre: "Rodrigo",
     Apellido: "Uc",
-    Correo: "Braulioalexosn@gmail.com",
-    ContrasenaHash: Buffer.from("02000D3A", "hex"), // Suponiendo que el hash es hexadecimal y quieres guardarlo como binario
+    Correo: "rodrigo@gmail.com",
+    ContrasenaHash: "amam"
   })
     .then((user) => {
       console.log("Nuevo usuario insertado:", user.toJSON());

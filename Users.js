@@ -1,29 +1,33 @@
-const { Sequelize, DataTypes } = require("sequelize");
+const { Sequelize, Model } = require("sequelize");
+const bcrypt = require("bcryptjs"); // Asumiendo que estás utilizando bcryptjs para el hashing
+const Regiones = require("./Regiones");
+const Idiomas = require("./Idiomas");
 
 module.exports = (sequelize) => {
-  return sequelize.define(
-    "User",
+  class User extends Model {}
+
+  User.init(
     {
-      // Estos son los atributos del modelo. Asegúrate de que coincidan con los nombres de las columnas de la base de datos.
-      UsuarioID: {
+      // Atributos del modelo
+      UsuarioId: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      RegionID: {
+      RegionId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
-          model: "Regiones", // Nombre del modelo de la tabla Regiones
-          key: "RegionID",
+          model: "Regiones", // Nombre de la tabla
+          key: "RegionId",
         },
       },
-      IdiomaID: {
+      IdiomaId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
-          model: "Idiomas", // Nombre del modelo de la tabla Idiomas
-          key: "IdiomaID",
+          model: "Idiomas", // Nombre de la tabla
+          key: "IdiomaId",
         },
       },
       Nombre: {
@@ -38,17 +42,31 @@ module.exports = (sequelize) => {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
+        validate: {
+          isEmail: true, // Validación para asegurar que el campo es un correo electrónico
+        },
       },
       ContrasenaHash: {
-        type: Sequelize.BLOB,
+        type: Sequelize.STRING,
         allowNull: false,
       },
     },
     {
-      // Estas son las opciones del modelo
-      tableName: "Usuarios", // Nombre de la tabla. Asegúrate de que coincida exactamente.
-      timestamps: false, // Si la tabla no tiene las columnas createdAt y updatedAt
-      sequelize, // Pasamos la instancia de conexión
+      // Opciones del modelo
+      sequelize,
+      modelName: "User", // Asegúrate de que el modelName esté en singular y capitalizado si sigue tu convención
+      tableName: "Usuarios",
+      timestamps: false, // Habilita los campos createdAt y updatedAt
+     
+      
+      paranoid: true, // Habilita el borrado suave
     }
   );
+
+  User.associate = (models) => {
+    User.belongsTo(models.Region, { foreignKey: "RegionId" });
+    User.belongsTo(models.Idioma, { foreignKey: "IdiomaId" });
+  };
+
+  return User;
 };

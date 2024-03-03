@@ -1,34 +1,88 @@
-<!-- archivo: usuarios.html -->
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Lista de Usuarios</title>
-</head>
-<body>
-  <h1>Usuarios</h1>
-  <ul id="lista-usuarios">
-    <!-- Los usuarios se cargarán aquí -->
-  </ul>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lista de Usuarios</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              clifford: "#da373d",
+              "custom-blue": "#007bff",
+              "custom-gray": "#f8f9fa",
+            },
+            fontFamily: {
+              sans: ["UI Sans", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-custom-gray text-gray-800">
+    <div class="container mx-auto px-4 py-8">
+      <h1 class="text-4xl font-bold text-center text-clifford mb-8">
+        Usuarios
+      </h1>
+      <ul id="lista-usuarios" class="space-y-4">
+        <!-- Los usuarios se cargarán aquí -->
+      </ul>
+    </div>
 
-  <script>
-    // Función para cargar y mostrar los usuarios
-    function cargarUsuarios() {
-      fetch('/api/usuarios')
-        .then(response => response.json())
-        .then(usuarios => {
-          const lista = document.getElementById('lista-usuarios');
-          usuarios.forEach(usuario => {
-            const li = document.createElement('li');
-            li.textContent = `${usuario.Nombre} ${usuario.Apellido} - ${usuario.Correo}`;
-            lista.appendChild(li);
-          });
-        })
-        .catch(error => console.error('Error al cargar usuarios:', error));
-    }
+    <script>
+      // Función para cargar y mostrar los usuarios
+      // Función para cargar y mostrar los usuarios
+      function cargarUsuarios() {
+        fetch("/api/users")
+          .then((response) => response.json())
+          .then((usuarios) => {
+            const lista = document.getElementById("lista-usuarios");
+            usuarios.forEach((usuario) => {
+              const li = document.createElement("li");
+              li.className =
+                "bg-white shadow-md rounded-lg p-4 flex flex-col gap-2";
 
-    // Llamar a cargarUsuarios al cargar la página
-    window.addEventListener('DOMContentLoaded', cargarUsuarios);
-  </script>
-</body>
+              // Crear elementos para cada detalle del usuario
+              const nombre = document.createElement("div");
+              nombre.textContent = `Nombre: ${usuario.Nombre} ${usuario.Apellido}`;
+
+              const correo = document.createElement("div");
+              correo.textContent = `Correo: ${usuario.Correo}`;
+
+              const region = document.createElement("div");
+              region.textContent = `Región: ${
+                usuario.Region?.Nombre || "No especificado"
+              }`; // Asegúrate de ajustar la clave 'nombre' según tu modelo de Regiones
+
+              const idioma = document.createElement("div");
+              idioma.textContent = `Idioma: ${
+                usuario.Idioma?.Nombre || "No especificado"
+              } - Código: ${usuario.Idioma?.Codigo || "No especificado"}`; // Ajusta 'Nombre' y 'Codigo' según tu modelo de Idiomas
+
+              const contrasenaHash = document.createElement("div");
+              contrasenaHash.textContent = `Contraseña Hash: ${
+                usuario.ContrasenaHash || "No especificado"
+              }`; // Ajusta 'hash' según tu modelo de Usuarios
+
+              // Añadir todos los elementos al li
+              li.appendChild(nombre);
+              li.appendChild(correo);
+              li.appendChild(region);
+              li.appendChild(idioma);
+              li.appendChild(contrasenaHash);
+
+              // Añadir el li a la lista
+              lista.appendChild(li);
+            });
+          })
+          .catch((error) => console.error("Error al cargar usuarios:", error));
+      }
+
+      // Llamar a cargarUsuarios al cargar la página
+      window.addEventListener("DOMContentLoaded", cargarUsuarios);
+    </script>
+  </body>
 </html>

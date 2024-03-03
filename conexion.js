@@ -1,76 +1,62 @@
 const express = require("express");
-const { Connection, Request } = require("tedious");
+const path = require("path");
 
-var config = {
-  server: "BRAULIO\\SQLEXPRESS",
-  authentication: {
-    type: "default",
-    options: {
-      userName: "ejemplo",
-      password: "braulioYrodrigo"
-    },
-  },
-  options: {
-    port: 1433,
-    database: "ECOMMERCE",
-    trustServerCertificate: true,
-    encrypt: false,
-  },
-};
+const { Sequelize } = require("sequelize");
+//const insertUser = require("./migration");
 
+// Inicializar la app Express
 const app = express();
-const port = 3000; 
+const PORT = 3000;
 
+// Luego de establecer la conexión con la base de datos
+const sequelize = require("./database");
+
+// Importa el modelos de la base de datos
+//const User = require("./Users")(sequelize, Sequelize);
+
+// Sincronizar los modelos con la base de datos
+sequelize
+  .sync()
+  .then(() => {
+    console.log("Modelos sincronizados con la base de datos.");
+
+    // Iniciar el servidor después de sincronizar los modelos
+    app.listen(PORT, () => {
+      console.log(`Servidor corriendo en http://localhost:${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error("Error al sincronizar modelos:", err);
+  });
+
+// Inserta datos en la base de datos
+//insertUser();
+
+// Ruta para obtener datos de usuarios en formato JSON
+const routes = require("./routes");
+app.use(routes);
+
+// Ruta para servir la página HTML de usuarios
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
-app.get("/api/usuarios", (req, res) => {
-  const connection = new Connection(config);
-  
-  connection.on("connect", function (err) {
-    if (err) {
-      console.error("Error al conectar a la base de datos:", err);
-      res.status(500).json({ error: "Error al conectar a la base de datos" });
-    } else {
-      const sql = "SELECT * FROM Usuarios";
-      const request = new Request(sql, (err, rowCount) => {
-        if (err) {
-          console.error("Error al ejecutar la consulta:", err);
-          res.status(500).json({ error: "Error al ejecutar la consulta en la base de datos" });
-        } else if (rowCount === 0) {
-          res.json({ error: "No se encontraron usuarios" });
-        }
-        // No need to close the connection here, it will be closed after the request is done
-      });
-      
-      const result = [];
-      request.on('row', columns => {
-        let item = {};
-        columns.forEach(column => {
-          item[column.metadata.colName] = column.value;
-        });
-        result.push(item);
-      });
-
-      request.on('requestCompleted', function () {
-        // Send the result once the request is completed
-        res.json(result);
-        connection.close();
-      });
-      
-      connection.execSql(request);
-    }
+// Prueba la conexión a la base de datos
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log("Conexión establecida con éxito.");
+  })
+  .catch((err) => {
+    console.error("No se pudo conectar a la base de datos:", err);
   });
 
-  connection.on("error", function (err) {
-    console.error("Error de conexión:", err);
-    res.status(500).json({ error: "Error de conexión" });
+// Sincroniza el modelo con la base de datos
+/*User.findAll()
+  .then((users) => {
+    console.log("Todos los usuarios:", JSON.stringify(users, null, 2));
+  })
+  .catch((err) => {
+    console.error("Error al recuperar usuarios:", err);
   });
-
-  connection.connect();
-});
-
-app.listen(port, () => {
-  console.log(`Servidor escuchando en http://localhost:${port}`);
-});
+*/
