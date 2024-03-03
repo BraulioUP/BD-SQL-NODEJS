@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lista de Usuarios</title>
+    <script>
+      function fetchUsers() {
+        fetch("/api/usuarios")
+          .then((response) => response.json())
+          .then((data) => {
+            const usersList = document.getElementById("usersList");
+            usersList.innerHTML = ""; // Limpiar la lista actual
+            data.forEach((user) => {
+              usersList.innerHTML += `<li>${user.Nombre} ${user.Apellido}</li>`;
+            });
+          })
+          .catch((error) => console.error("Error:", error));
+      }
+
+      // Cargar usuarios cuando la página esté lista
+      document.addEventListener("DOMContentLoaded", fetchUsers);
+    </script>
+  </head>
+  <body>
+    <h1>Usuarios</h1>
+    <ul id="usersList">
+      <!-- Los usuarios se cargarán aquí -->
+    </ul>
+  </body>
+</html>
