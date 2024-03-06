@@ -7,6 +7,8 @@ const { Sequelize } = require("sequelize");
 // Inicializar la app Express
 const app = express();
 const PORT = 3000;
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Luego de establecer la conexión con la base de datos
 const sequelize = require("./database");
@@ -51,6 +53,7 @@ sequelize
     console.error("No se pudo conectar a la base de datos:", err);
   });
 
+;
 // Sincroniza el modelo con la base de datos
 /*User.findAll()
   .then((users) => {
