@@ -6,6 +6,7 @@ const { Sequelize } = require("sequelize");
 
 // Inicializar la app Express
 const app = express();
+
 const PORT = 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -41,6 +42,12 @@ app.use(routes);
 // Ruta para servir la página HTML de usuarios
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
+});
+app.get("/users", (req, res) => {
+  res.sendFile(path.join(__dirname, "./src/pages/user.html"));
+});
+app.get("/apis", (req, res) => {
+  res.sendFile(path.join(__dirname, "./src/pages/apis.html"));
 });
 
 // Prueba la conexión a la base de datos
