@@ -1,5 +1,7 @@
 const { Sequelize } = require("sequelize");
 const sequelize = require("../controllers/database");
+const multer = require("multer");
+const upload = multer();
 
 const express = require("express");
 const router = express.Router();
@@ -12,6 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 const User = require("../models/Users")(sequelize, Sequelize);
 const Regiones = require("../models/Regiones")(sequelize, Sequelize);
 const Idiomas = require("../models/Idiomas")(sequelize, Sequelize);
+const Vehiculo = require("../models/Vehiculo")(sequelize, Sequelize);
 
 // Establece las asociaciones
 User.associate(sequelize.models);
@@ -130,6 +133,131 @@ router.get("/api/regiones", async (req, res) => {
   } catch (error) {
     console.error("Error al obtener regiones:", error);
     res.status(500).send("Ocurrió un error al obtener las regiones");
+  }
+});
+
+router.get("/api/vehiculos", async (req, res) => {
+  try {
+    const vehiculos = await Vehiculo.findAll();
+    res.json(vehiculos);
+  } catch (error) {
+    console.error("Error al obtener vehículos:", error);
+    res.status(500).send("Ocurrió un error al obtener los vehículos");
+  }
+});
+
+router.post("/carspost", upload.none(), async (req, res) => {
+  try {
+    const vehiculoData = req.body;
+
+    // Convierte 'on' a true y la ausencia de valor a false
+    vehiculoData.TechoSolar = vehiculoData.TechoSolar === "on";
+    vehiculoData.ConexionInternet = vehiculoData.ConexionInternet === "on";
+    vehiculoData.SistemaDeSonidoPremium =
+      vehiculoData.SistemaDeSonidoPremium === "on";
+
+    const {
+      Marca,
+      Modelo,
+      Ano,
+      Tipo,
+      Autonomia,
+      TiempoDeCarga,
+      Potencia,
+      Traccion,
+      CapacidadDeBateria,
+      NumeroDeAsientos,
+      Precio,
+      ColorExterior,
+      ColorInterior,
+      OpcionesDeRuedas,
+      PaqueteDeAutopiloto,
+      TechoSolar,
+      ConexionInternet,
+      SistemaDeSonidoPremium,
+      ModoDeConduccion,
+    } = req.body;
+
+    const vehiculo = await Vehiculo.create({
+      Marca,
+      Modelo,
+      Ano,
+      Tipo,
+      Autonomia,
+      TiempoDeCarga,
+      Potencia,
+      Traccion,
+      CapacidadDeBateria,
+      NumeroDeAsientos,
+      Precio,
+      ColorExterior,
+      ColorInterior,
+      OpcionesDeRuedas,
+      PaqueteDeAutopiloto,
+      TechoSolar,
+      ConexionInternet,
+      SistemaDeSonidoPremium,
+      ModoDeConduccion,
+    });
+    return res.status(201).json(vehiculo);
+  } catch (error) {
+    console.error("Error al crear vehículo:", error.message);
+    console.error(error.stack);
+    res.status(500).send("Ocurrió un error al crear el vehículo");
+  }
+  res.json({ success: true, message: "Registro completado con éxito." });
+});
+
+router.post("/api/vehiculos", async (req, res) => {
+  try {
+    const {
+      Marca,
+      Modelo,
+      Ano,
+      Tipo,
+      Autonomia,
+      TiempoDeCarga,
+      Potencia,
+      Traccion,
+      CapacidadDeBateria,
+      NumeroDeAsientos,
+      Precio,
+      ColorExterior,
+      ColorInterior,
+      OpcionesDeRuedas,
+      PaqueteDeAutopiloto,
+      TechoSolar,
+      ConexionInternet,
+      SistemaDeSonidoPremium,
+      ModoDeConduccion,
+    } = req.body;
+
+    const vehiculo = await Vehiculo.create({
+      Marca,
+      Modelo,
+      Ano,
+      Tipo,
+      Autonomia,
+      TiempoDeCarga,
+      Potencia,
+      Traccion,
+      CapacidadDeBateria,
+      NumeroDeAsientos,
+      Precio,
+      ColorExterior,
+      ColorInterior,
+      OpcionesDeRuedas,
+      PaqueteDeAutopiloto,
+      TechoSolar,
+      ConexionInternet,
+      SistemaDeSonidoPremium,
+      ModoDeConduccion,
+    });
+    return res.status(201).json(vehiculo);
+  } catch (error) {
+    console.error("Error al crear vehículo:", error.message);
+    console.error(error.stack);
+    res.status(500).send("Ocurrió un error al crear el vehículo");
   }
 });
 
