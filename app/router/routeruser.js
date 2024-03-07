@@ -114,23 +114,7 @@ router.post("/api/login", async (req, res) => {
   }
 });
 
-router.get("/api/regiones", async (req, res) => {
-  try {
-    const regiones = await Regiones.findAll();
-    res.json(regiones);
-  } catch (error) {
-    console.error("Error al obtener regiones:", error);
-    res.status(500).send("Ocurrió un error al obtener las regiones");
-  }
-});
-router.get("/api/idiomas", async (req, res) => {
-  try {
-    const idiomas = await Idiomas.findAll();
-    res.json(idiomas);
-  } catch (error) {
-    console.error("Error al obtener idiomas:", error);
-    res.status(500).send("Ocurrió un error al obtener los idiomas");
-  }
-});
+
+
 
 module.exports = router;
