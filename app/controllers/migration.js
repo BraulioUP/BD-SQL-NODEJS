@@ -2,7 +2,7 @@ const { Sequelize } = require("sequelize");
 
 const sequelize = require("./database");
 
-const User = require("./Users")(sequelize, Sequelize);
+const User = require("../models/Users")(sequelize, Sequelize);
 
 const insertUser = () => {
   // Inserta un nuevo usuario
@@ -14,7 +14,7 @@ const insertUser = () => {
     Nombre: "Rodrigo",
     Apellido: "Uc",
     Correo: "rodrigo@gmail.com",
-    ContrasenaHash: "amam"
+    ContrasenaHash: "amam",
   })
     .then((user) => {
       console.log("Nuevo usuario insertado:", user.toJSON());

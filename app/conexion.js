@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Luego de establecer la conexión con la base de datos
-const sequelize = require("./database");
+const sequelize = require("./controllers/database");
 
 // Importa el modelos de la base de datos
 //const User = require("./Users")(sequelize, Sequelize);
@@ -35,7 +35,7 @@ sequelize
 //insertUser();
 
 // Ruta para obtener datos de usuarios en formato JSON
-const routes = require("./routes");
+const routes = require("./routers/routes");
 app.use(routes);
 
 // Ruta para servir la página HTML de usuarios
@@ -52,8 +52,6 @@ sequelize
   .catch((err) => {
     console.error("No se pudo conectar a la base de datos:", err);
   });
-
-;
 // Sincroniza el modelo con la base de datos
 /*User.findAll()
   .then((users) => {

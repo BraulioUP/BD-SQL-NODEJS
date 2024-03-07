@@ -1,5 +1,5 @@
 const { Sequelize } = require("sequelize");
-const sequelize = require("./database");
+const sequelize = require("../controllers/database");
 
 const express = require("express");
 const router = express.Router();
@@ -9,9 +9,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Importa el modelo de la base de datos
-const User = require("./Users")(sequelize, Sequelize);
-const Regiones = require("./Regiones")(sequelize, Sequelize);
-const Idiomas = require("./Idiomas")(sequelize, Sequelize);
+const User = require("../models/Users")(sequelize, Sequelize);
+const Regiones = require("../models/Regiones")(sequelize, Sequelize);
+const Idiomas = require("../models/Idiomas")(sequelize, Sequelize);
 
 // Establece las asociaciones
 User.associate(sequelize.models);
@@ -28,7 +28,7 @@ router.get("/api/users", async (req, res) => {
           attributes: ["RegionId", "Nombre"],
         },
         {
-          model: Idiomas, 
+          model: Idiomas,
           as: "Idioma",
           attributes: ["IdiomaId", "Nombre", "Codigo"],
         },
@@ -42,8 +42,16 @@ router.get("/api/users", async (req, res) => {
 });
 router.post("/api/users", async (req, res) => {
   try {
-    const { IdiomaId, RegionId, Nombre, Apellido, Correo, ContrasenaHash } =
-      req.body;
+    const {
+      IdiomaId,
+      RegionId,
+      Nombre,
+      Apellido,
+      Correo,
+      ContrasenaHash,
+      Telefono,
+      Direccion,
+    } = req.body;
     console.log(
       "Datos del registro:",
       IdiomaId,
@@ -51,7 +59,9 @@ router.post("/api/users", async (req, res) => {
       Nombre,
       Apellido,
       Correo,
-      ContrasenaHash
+      ContrasenaHash,
+      Telefono,
+      Direccion
     );
 
     const user = await User.create({
@@ -61,6 +71,8 @@ router.post("/api/users", async (req, res) => {
       Apellido,
       Correo,
       ContrasenaHash,
+      Telefono,
+      Direccion,
     });
     return res.status(201).json(user);
   } catch (error) {
@@ -69,6 +81,37 @@ router.post("/api/users", async (req, res) => {
     res.status(500).send("Ocurrió un error al crear el usuario");
   }
   res.json({ success: true, message: "Registro completado con éxito." });
+});
+
+router.post("/api/login", async (req, res) => {
+  try {
+    const { Correo, ContrasenaHash } = req.body;
+
+    // Buscar al usuario con el correo proporcionado
+    const usuario = await User.findOne({ where: { Correo } });
+
+    if (!usuario) {
+      return res
+        .status(401)
+        .json({ message: "Correo o contraseña incorrectos" });
+    }
+
+    // Verificar la contraseña
+    // Aquí asumimos que estás almacenando las contraseñas como hashes
+    // y que ContrasenaHash es el hash de la contraseña proporcionada por el usuario
+    if (usuario.ContrasenaHash !== ContrasenaHash) {
+      return res
+        .status(401)
+        .json({ message: "Correo o contraseña incorrectos" });
+    }
+
+    // Si las credenciales son correctas, iniciar la sesión y responder con los datos del usuario
+    // Aquí deberías generar un token de sesión o algo similar
+    res.json(usuario);
+  } catch (error) {
+    console.error("Error al iniciar sesión:", error);
+    res.status(500).send("Ocurrió un error al iniciar sesión");
+  }
 });
 
 router.get("/api/regiones", async (req, res) => {

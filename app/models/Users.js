@@ -48,6 +48,14 @@ module.exports = (sequelize) => {
       },
       ContrasenaHash: {
         type: Sequelize.STRING,
+        allowNull: true,
+      },
+      Telefono: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      Direccion: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
     },
@@ -57,8 +65,7 @@ module.exports = (sequelize) => {
       modelName: "User", // Asegúrate de que el modelName esté en singular y capitalizado si sigue tu convención
       tableName: "Usuarios",
       timestamps: false, // Habilita los campos createdAt y updatedAt
-     
-      
+
       paranoid: true, // Habilita el borrado suave
     }
   );

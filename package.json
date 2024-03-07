@@ -1,13 +1,14 @@
 {
   "name": "bd-sql-nodejs",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Conexion a base de datos SQL Server con Node.js",
+  "main": "app/conexion.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app/conexion.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "BraulioUP",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
