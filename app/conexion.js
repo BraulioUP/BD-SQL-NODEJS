@@ -55,6 +55,12 @@ app.get("/vehiculos", (req, res) => {
 app.get("/carspost", (req, res) => {
   res.sendFile(path.join(__dirname, "./src/pages/carspost.html"));
 });
+app.get("/cars", (req, res) => {
+  res.sendFile(path.join(__dirname, "./src/pages/cars.html"));
+});
+app.get("/404", (req, res) => {
+  res.sendFile(path.join(__dirname, "./src/pages/404.html"));
+});
 
 // Prueba la conexión a la base de datos
 sequelize

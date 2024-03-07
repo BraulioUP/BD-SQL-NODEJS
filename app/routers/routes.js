@@ -203,7 +203,15 @@ router.post("/carspost", upload.none(), async (req, res) => {
   } catch (error) {
     console.error("Error al crear vehículo:", error.message);
     console.error(error.stack);
-    res.status(500).send("Ocurrió un error al crear el vehículo");
+    const errorPage = fs.readFileSync(
+      path.join(__dirname, "../src/pages/404.html"),
+      "utf8"
+    );
+    const errorPageWithMessage = errorPage.replace(
+      "<!-- ERROR_MESSAGE -->",
+      `Ocurrió un error al crear el vehículo: ${error.message}`
+    );
+    res.status(500).send(errorPageWithMessage);
   }
   res.json({ success: true, message: "Registro completado con éxito." });
 });
