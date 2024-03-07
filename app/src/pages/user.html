@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lista de Usuarios</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+    <link href="/tailwind.config.js" rel="stylesheet" />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              clifford: "#da373d",
+              "custom-blue": "#007bff",
+              "custom-gray": "#f8f9fa",
+            },
+            fontFamily: {
+              sans: ["UI Sans", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-gray-200 text-gray-800">
+    <div class="container mx-auto px-4 py-8">
+      <h1 class="text-4xl font-bold text-center mb-8 text-blue-800">
+        Usuarios
+      </h1>
+      <div class="my-8 text-center space-y-4">
+        <div class="mt-8 text-center">
+          <a
+            href="/"
+            class="flex-row justify-center text-white cursor-pointer hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2 hover:shadow-lg transition-all duration-200 ease-in-out scale-90 hover:scale-110 gap-x-2 opacity-70 hover:opacity-100 backdrop-blur-md bg-blue-500 transform hover:-translate-y-1"
+          >
+            Volver al Inicio
+          </a>
+        </div>
+        <div class="mt-4 text-center">
+          <button
+            class="text-black font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
+          >
+            <a
+              href="/api/users"
+              class="flex-row justify-center text-white cursor-pointer hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2 hover:shadow-lg transition-all duration-200 ease-in-out scale-90 hover:scale-110 gap-x-2 opacity-70 hover:opacity-100 backdrop-blur-md bg-blue-500 transform hover:-translate-y-1"
+              >API DE USUARIOS</a
+            >
+          </button>
+        </div>
+      </div>
+      <ul id="lista-usuarios" class="space-y-4">
+        <!-- Los usuarios se cargarán aquí -->
+      </ul>
+    </div>
+
+    <script>
+      // Función para cargar y mostrar los usuarios
+      function cargarUsuarios() {
+        fetch("/api/users")
+          .then((response) => response.json())
+          .then((usuarios) => {
+            const lista = document.getElementById("lista-usuarios");
+            usuarios.forEach((usuario) => {
+              const li = document.createElement("li");
+              li.className =
+                "bg-white shadow-md rounded-lg p-4 flex flex-col gap-2";
+
+              // Crear elementos para cada detalle del usuario
+              const nombre = document.createElement("div");
+              nombre.textContent = `Nombre: ${usuario.Nombre} ${usuario.Apellido}`;
+
+              const correo = document.createElement("div");
+              correo.textContent = `Correo: ${usuario.Correo}`;
+
+              const telefono = document.createElement("div");
+              telefono.textContent = `Teléfono: ${
+                usuario.Telefono || "No especificado"
+              }`;
+
+              const direccion = document.createElement("div");
+              direccion.textContent = `Dirección: ${
+                usuario.Direccion || "No especificado"
+              }`;
+
+              const region = document.createElement("div");
+              region.textContent = `Región: ${
+                usuario.Region?.Nombre || "No especificado"
+              }`; // Asegúrate de ajustar la clave 'nombre' según tu modelo de Regiones
+
+              const idioma = document.createElement("div");
+              idioma.textContent = `Idioma: ${
+                usuario.Idioma?.Nombre || "No espe cificado"
+              } - Código: ${usuario.Idioma?.Codigo || "No especificado"}`; // Ajusta 'Nombre' y 'Codigo' según tu modelo de Idiomas
+
+              const contrasenaHash = document.createElement("div");
+              contrasenaHash.textContent = `Contraseña Hash: ${
+                usuario.ContrasenaHash || "No especificado"
+              }`; // Ajusta 'hash' según tu modelo de Usuarios
+
+              // Añadir todos los elementos al li
+              li.appendChild(nombre);
+              li.appendChild(correo);
+              li.appendChild(region);
+              li.appendChild(idioma);
+              li.appendChild(contrasenaHash);
+
+              // Añadir el li a la lista
+              lista.appendChild(li);
+            });
+          })
+          .catch((error) => console.error("Error al cargar usuarios:", error));
+      }
+
+      // Llamar a cargarUsuarios al cargar la página
+      window.addEventListener("DOMContentLoaded", cargarUsuarios);
+    </script>
+  </body>
+</html>
