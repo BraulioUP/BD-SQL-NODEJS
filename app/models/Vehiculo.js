@@ -64,6 +64,10 @@ module.exports = (sequelize) => {
       ModoDeConduccion: {
         type: DataTypes.STRING,
       },
+      Imagen: {
+        type: DataTypes.BLOB("long"),
+      },
+
       // RutaDeImagen: DataTypes.STRING, // Descomentar si decides almacenar rutas de imagen
     },
     {

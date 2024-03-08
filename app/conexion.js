@@ -48,9 +48,7 @@ app.get("/users", (req, res) => {
 app.get("/apis", (req, res) => {
   res.sendFile(path.join(__dirname, "./src/pages/apis.html"));
 });
-app.get("/vehiculos", (req, res) => {
-  res.sendFile(path.join(__dirname, "./src/pages/vehiculos.html"));
-});
+
 app.get("/carspost", (req, res) => {
   res.sendFile(path.join(__dirname, "./src/pages/carspost.html"));
 });

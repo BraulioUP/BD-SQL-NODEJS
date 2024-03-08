@@ -1,12 +1,13 @@
 const { Sequelize } = require("sequelize");
 const sequelize = require("../controllers/database");
-const multer = require("multer");
-const upload = multer();
 const path = require("path");
-
 const express = require("express");
 const router = express.Router();
 const app = express();
+
+const sharp = require("sharp");
+const multer = require("multer");
+const fs = require("fs");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -139,7 +140,9 @@ router.get("/api/regiones", async (req, res) => {
 
 router.get("/api/vehiculos", async (req, res) => {
   try {
-    const vehiculos = await Vehiculo.findAll();
+    const vehiculos = await Vehiculo.findAll({
+      order: [["CreatedAt", "DESC"]],
+    });
     res.json(vehiculos);
   } catch (error) {
     console.error("Error al obtener vehículos:", error);
@@ -230,7 +233,19 @@ router.delete("/api/vehiculo/:id", async (req, res) => {
       .json({ message: "Ocurrió un error al eliminar el vehículo" });
   }
 });
-router.post("/carspost", upload.none(), async (req, res) => {
+// Configuración de Multer para guardar las imágenes en una carpeta local
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/"); // Carpeta donde se guardarán las imágenes
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname); // Nombre original del archivo
+  },
+});
+
+const upload = multer({ storage: storage });
+
+router.post("/carspost", upload.single("Imagen"), async (req, res) => {
   try {
     const vehiculoData = req.body;
 
@@ -240,6 +255,7 @@ router.post("/carspost", upload.none(), async (req, res) => {
     vehiculoData.SistemaDeSonidoPremium =
       vehiculoData.SistemaDeSonidoPremium === "on";
 
+    // Desestructura los datos del vehículo y agrega 'Imagen' desde req.file.filename
     const {
       Marca,
       Modelo,
@@ -262,6 +278,10 @@ router.post("/carspost", upload.none(), async (req, res) => {
       ModoDeConduccion,
     } = req.body;
 
+    // Obteniendo el nombre del archivo de la imagen cargada
+    const Imagen = req.file.filename;
+
+    // Crear el vehículo en la base de datos
     const vehiculo = await Vehiculo.create({
       Marca,
       Modelo,
@@ -282,83 +302,19 @@ router.post("/carspost", upload.none(), async (req, res) => {
       ConexionInternet,
       SistemaDeSonidoPremium,
       ModoDeConduccion,
+      Imagen,
     });
+
+    // Eliminar el archivo temporal
+    fs.unlinkSync(req.file.path);
+
+    // Enviar respuesta con el vehículo creado
     return res.status(201).json(vehiculo);
   } catch (error) {
     console.error("Error al crear Vehiculo:", error.message);
     console.error(error.stack);
     res.status(500).send("Ocurrió un error al crear el Vehiculo");
   }
-  res.json({ success: true, message: "Registro completado con éxito." });
-});
-
-router.put("/api/vehiculos/:id", upload.none(), async (req, res) => {
-  try {
-    const vehiculoData = req.body;
-
-    // Convierte 'on' a true y la ausencia de valor a false
-    vehiculoData.TechoSolar = vehiculoData.TechoSolar === "on";
-    vehiculoData.ConexionInternet = vehiculoData.ConexionInternet === "on";
-    vehiculoData.SistemaDeSonidoPremium =
-      vehiculoData.SistemaDeSonidoPremium === "on";
-
-    const {
-      Marca,
-      Modelo,
-      Ano,
-      Tipo,
-      Autonomia,
-      TiempoDeCarga,
-      Potencia,
-      Traccion,
-      CapacidadDeBateria,
-      NumeroDeAsientos,
-      Precio,
-      ColorExterior,
-      ColorInterior,
-      OpcionesDeRuedas,
-      PaqueteDeAutopiloto,
-      TechoSolar,
-      ConexionInternet,
-      SistemaDeSonidoPremium,
-      ModoDeConduccion,
-    } = req.body;
-
-    const vehiculo = await Vehiculo.update(
-      {
-        Marca,
-        Modelo,
-        Ano,
-        Tipo,
-        Autonomia,
-        TiempoDeCarga,
-        Potencia,
-        Traccion,
-        CapacidadDeBateria,
-        NumeroDeAsientos,
-        Precio,
-        ColorExterior,
-        ColorInterior,
-        OpcionesDeRuedas,
-        PaqueteDeAutopiloto,
-        TechoSolar,
-        ConexionInternet,
-        SistemaDeSonidoPremium,
-        ModoDeConduccion,
-      },
-      {
-        where: {
-          VehiculoId: req.params.id,
-        },
-      }
-    );
-    return res.status(201).json(vehiculo);
-  } catch (error) {
-    console.error("Error al crear Vehiculo:", error.message);
-    console.error(error.stack);
-    res.status(500).send("Ocurrió un error al crear el Vehiculo");
-  }
-  res.json({ success: true, message: "Registro completado con éxito." });
 });
 
 module.exports = router;

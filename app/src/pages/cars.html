@@ -12,9 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
-    <link href="/tailwind.config.js" rel="stylesheet" />
   </head>
   <body>
     <!--[if lt IE 7]>
@@ -356,8 +354,54 @@
           "m-5"
         );
 
+        const div4 = document.createElement("div");
+        div3.classList.add(
+          "relative",
+          "h-[350px]",
+          "sm:h-[450px]",
+          "w-[300px]", // Ancho fijo para la imagen
+          "m-5"
+        );
+
         const img = document.createElement("img");
-        img.src = `data:image/jpeg;base64,${vehiculo.Imagen}`; // Convertir la imagen VARBINARY a una URL de imagen
+
+        // Verificar si el vehículo tiene información de imagen
+        if (vehiculo.Imagen && vehiculo.Imagen.data) {
+          const imagenData = vehiculo.Imagen.data;
+
+          // Convertir los datos de la imagen a una cadena base64
+          const imagenBase64 = arrayBufferToBase64(imagenData);
+
+          // Obtener el tipo MIME de la imagen
+          let mimeTypes = {
+            jpg: "image/jpeg",
+            jpeg: "image/jpeg",
+            png: "image/png",
+            gif: "image/gif",
+            bmp: "image/bmp",
+            webp: "image/webp",
+            // Agrega aquí más tipos de imágenes si es necesario
+          };
+
+          // Luego puedes obtener el tipo MIME de una imagen basándote en su extensión
+          let extension = "jpg"; // Reemplaza esto con la extensión real de tu imagen
+          let mimeType = mimeTypes[extension];
+
+          if (vehiculo.Imagen.type) {
+            mimeType = vehiculo.Imagen.type;
+          }
+
+          // Construir la URL de la imagen
+          const imgSrc = `data:${mimeType};base64,${imagenBase64}`;
+
+          // Establecer la URL de la imagen como la fuente de la etiqueta <img>
+          img.src = imgSrc;
+        } else {
+          // Si no hay información de imagen, establecer una imagen de marcador de posición
+          img.src = "/app/src/public/auto.jpg";
+        }
+
+        // Agregar atributos y estilos adicionales según sea necesario
         img.alt = vehiculo.Modelo;
         img.classList.add(
           "absolute",
@@ -369,59 +413,66 @@
           "group-hover:opacity-0"
         );
         div3.appendChild(img);
-
+        function arrayBufferToBase64(buffer) {
+          let binary = "";
+          let bytes = new Uint8Array(buffer);
+          let len = bytes.byteLength;
+          for (let i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+          }
+          return window.btoa(binary);
+        }
         //Botones de Actualizar y Eliminar
         section.appendChild(div3);
         const actualizarBtn = document.createElement("button");
-        actualizarBtn.textContent = "Actualizar";
+        actualizarBtn.textContent = "Editar Contenido";
         actualizarBtn.classList.add(
-          "px-4",
+          "text-black",
+          "font-bold",
           "py-2",
+          "px-4",
+          "rounded",
+          "transition",
+          "duration-300",
+          "ease-in-out",
+          "flex-row",
+          "justify-center",
+          "text-white",
+          "cursor-pointer",
+          "hover:bg-blue-700",
+          "focus:outline-none",
+          "focus:ring-4",
+          "focus:ring-blue-300",
+          "font-medium",
+          "rounded-lg",
+          "px-5",
+          "py-2.5",
+          "text-center",
+          "inline-flex",
+          "items-center",
+          "mr-2",
+          "mb-2",
+          "hover:shadow-lg",
+          "transition-all",
+          "duration-200",
+          "ease-in-out",
+          "scale-90",
+          "hover:scale-110",
+          "gap-x-2",
+          "opacity-70",
+          "hover:opacity-100",
+          "backdrop-blur-md",
           "bg-blue-500",
-          "text-white",
-          "rounded",
-          "mr-4" // Agrega margen a la derecha
-        );
-
-        const eliminarBtn = document.createElement("button");
-        eliminarBtn.textContent = "Eliminar";
-        eliminarBtn.classList.add(
-          "px-4",
-          "py-2",
-          "bg-red-700",
-          "text-white",
-          "rounded",
-          "ml-6",
-          "mr-4"
+          "transform",
+          "hover:-translate-y-1"
         );
 
         div1.appendChild(actualizarBtn);
-        div1.appendChild(eliminarBtn);
 
         actualizarBtn.addEventListener("click", function () {
           window.location.href = `/edit/${vehiculo.VehiculoID}`;
         });
 
-        eliminarBtn.addEventListener("click", function () {
-          if (confirm("¿Estás seguro de que quieres eliminar este vehículo?")) {
-            fetch(`/api/vehiculos/${vehiculo.VehiculoID}`, {
-              method: "DELETE",
-            })
-              .then((response) => {
-                if (!response.ok) {
-                  throw new Error("Error al eliminar el vehículo");
-                }
-                return response.json();
-              })
-              .then((data) => {
-                console.log(data);
-                cargarVehiculos(paginaActual);
-              })
-              .catch((error) => {
-                mostrarError(error.message);
-              });
-          }
-        });
         return section;
       }
 
