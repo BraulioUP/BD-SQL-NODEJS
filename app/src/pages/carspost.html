@@ -22,154 +22,465 @@
         <a href="#">upgrade your browser</a> to improve your experience.
       </p>
     <![endif]-->
-    <body class="bg-gray-200 text-gray-800">
-        <div class="container mx-auto px-4 py-8">
-          <h1 class="text-4xl font-bold text-center mb-8 text-blue-800">
-            Vehiculos
-          </h1>
-          <div class="my-8 text-center space-y-4">
-            <div class="mt-8 text-center">
+    <body class= text-gray-800">
+    <nav
+      class="bg-white bg-opacity-50 fixed w-full z-10 top-0 border-gray-200 dark:bg-gray-900"
+    >
+      <div
+        class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
+      >
+        <a href="/" class="flex items-center pb-4 border-b border-b-gray-800">
+          <h2
+            class="bg-[#000000] text-white px-2 rounded-md font-bold text-2xl"
+          >
+            E
+            <span class="text-white px-1 rounded-md">Corp</span>
+          </h2>
+        </a>
+        <h1 class="text-4xl font-bold text-center mb-8 text-black">
+          Vehiculos
+        </h1>
+
+        <button
+          data-collapse-toggle="navbar-default"
+          type="button"
+          class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          aria-controls="navbar-default"
+          aria-expanded="false"
+        >
+          <span class="sr-only">Open main menu</span>
+          <svg
+            class="w-5 h-5"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 17 14"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M1 1h15M1 7h15M1 13h15"
+            />
+          </svg>
+        </button>
+        <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+          <ul
+            class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
+          >
+            <li>
               <a
                 href="/"
-                class="flex-row justify-center text-white cursor-pointer hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2 hover:shadow-lg transition-all duration-200 ease-in-out scale-90 hover:scale-110 gap-x-2 opacity-70 hover:opacity-100 backdrop-blur-md bg-blue-500 transform hover:-translate-y-1"
+                class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
+                aria-current="page"
+                >Home</a
               >
-                Volver al Inicio
-              </a>
-            </div>
-            <div class="mt-4 text-center">
-              <button
-                class="text-black font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
+            </li>
+            <li>
+              <a
+                href="/api/users"
+                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                >API Users</a
               >
-                <a
-                  href="/api/vehiculos"
-                  class="flex-row justify-center text-white cursor-pointer hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2 hover:shadow-lg transition-all duration-200 ease-in-out scale-90 hover:scale-110 gap-x-2 opacity-70 hover:opacity-100 backdrop-blur-md bg-blue-500 transform hover:-translate-y-1"
-                  >API DE VEHICULOS</a
-                >
-              </button>
-            </div>
-          </div>
-          <ul id="lista-usuarios" class="space-y-4">
-            <!-- Los usuarios se cargarán aquí -->
+            </li>
+            <li>
+              <a
+                href="/cars"
+                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                >Cars</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                >Others</a
+              >
+            </li>
+            <li>
+              <a
+                href="/apis"
+                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                >APIs</a
+              >
+            </li>
           </ul>
         </div>
-        
-        <main>
-            <div class="max-w-4xl mx-auto mt-10 p-5 shadow-lg">
-                <h2 class="text-2xl font-semibold mb-5">Registro de Vehículo</h2>
-                <form class="grid grid-cols-1 md:grid-cols-2 gap-4" method="POST" action="http://localhost:3000/carspost" enctype="multipart/form-data">
-                    <div>
-                        <label for="Modelo" class="block text-sm font-medium text-gray-700">Modelo</label>
-                        <input type="text" id="Modelo" name="Modelo" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                    </div>
-        
-                    <div>
-                        <label for="Ano" class="block text-sm font-medium text-gray-700">Año</label>
-                        <input type="number" id="Ano" name="Ano" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                    </div>
-        
-                    <div>
-                        <label for="Tipo" class="block text-sm font-medium text-gray-700">Tipo</label>
-                        <input type="text" id="Tipo" name="Tipo" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                    </div>
-        
-                    <div>
-                        <label for="Autonomia" class="block text-sm font-medium text-gray-700">Autonomía (km)</label>
-                        <input type="number" id="Autonomia" name="Autonomia" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                    </div>
-        
-                    <div>
-                        <label for="TiempoDeCarga" class="block text-sm font-medium text-gray-700">Tiempo de Carga (horas)</label>
-                        <input type="text" id="TiempoDeCarga" name="TiempoDeCarga" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                    </div>
-        
-                    <div>
-                        <label for="Potencia" class="block text-sm font-medium text-gray-700">Potencia (kW)</label>
-                        <input type="text" id="Potencia" name="Potencia" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                    </div>
-        
-                    <div>
-                        <label for="Traccion" class="block text-sm font-medium text-gray-700">Tracción</label>
-                        <input type="text" id="Traccion" name="Traccion" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                    </div>
-        
-                    <div>
-                        <label for="CapacidadDeBateria" class="block text-sm font-medium text-gray-700">Capacidad de Batería (kWh)</label>
-                        <input type="text" id="CapacidadDeBateria" name="CapacidadDeBateria" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                    </div>
-        
-                    <div>
-                        <label for="NumeroDeAsientos" class="block text-sm font-medium text-gray-700">Número de Asientos</label>
-                        <input type="number" id="NumeroDeAsientos" name="NumeroDeAsientos" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                    </div>
-        
-                    <div>
-                        <label for="Precio" class="block text-sm font-medium text-gray-700">Precio ($)</label>
-                        <input type="text" id="Precio" name="Precio" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                    </div>
-        
-                    <div>
-                        <label for="ColorExterior" class="block text-sm font-medium text-gray-700">Color Exterior</label>
-                        <input type="text" id="ColorExterior" name="ColorExterior" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                    </div>
-        
-                    <div>
-                        <label for="ColorInterior" class="block text-sm font-medium text-gray-700">Color Interior</label>
-                        <input type="text" id="ColorInterior" name="ColorInterior" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                    </div>
-        
-                    <div>
-                        <label for="OpcionesDeRuedas" class="block text-sm font-medium text-gray-700">Opciones de Ruedas</label>
-                        <input type="text" id="OpcionesDeRuedas" name="OpcionesDeRuedas" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                    </div>
-        
-                    <div class="md:col-span-2">
-                        <label for="PaqueteDeAutopiloto" class="block text-sm font-medium text-gray-700">Paquete de Autopiloto</label>
-                        <select id="PaqueteDeAutopiloto" name="PaqueteDeAutopiloto" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                            <option value="1">Sí</option>
-                            <option value="0">No</option>
-                        </select>
-                    </div>
-        
-                    <div class="md:col-span-2">
-                        <div class="flex justify-between">
-                            <div class="flex items-center">
-                                <input id="TechoSolar" name="TechoSolar" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
-                                <label for="TechoSolar" class="ml-2 block text-sm text-gray-900">Techo Solar</label>
-                            </div>
-                            <div class="flex items-center">
-                                <input id="ConexionInternet" name="ConexionInternet" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
-                                <label for="ConexionInternet" class="ml-2 block text-sm text-gray-900">Conexión Internet</label>
-                            </div>
-                            <div class="flex items-center">
-                                <input id="SistemaDeSonidoPremium" name="SistemaDeSonidoPremium" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
-                                <label for="SistemaDeSonidoPremium" class="ml-2 block text-sm text-gray-900">Sistema de Sonido Premium</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <label for="Imagen" class="block text-sm font-medium text-gray-700">Imagen del Vehículo</label>
-                        <input type="file" id="Imagen" name="Imagen" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-sm text-gray-900">
-                    </div>
-                    
-                    <div class="md:col-span-2">
-                        <label for="ModoDeConduccion" class="block text-sm font-medium text-gray-700">Modo de Conducción</label>
-                        <select id="ModoDeConduccion" name="ModoDeConduccion" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                            <option value="Estándar">Estándar</option>
-                            <option value="Eco">Eco</option>
-                            <option value="Deportivo">Deportivo</option>
-                        </select>
-                    </div>
-        
-                    <div class="md:col-span-2">
-                        <button value="Enviar" type="submit" class="mt-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            Guardar
-                        </button>
-                    </div>
-                </form>
+      </div>
+    </nav>
+
+    <h1 class="text-4xl font-bold text-center mb-8 text-black"></h1>
+
+    <main class="container mx-auto px-4 py-8">
+      <div class="max-w-4xl mx-auto mt-10 p-5 shadow-2xl">
+        <h2 class="text-2xl font-semibold mb-5">Registro de Vehículo</h2>
+        <form
+          class="grid grid-cols-1 md:grid-cols-2 gap-4"
+          method="POST"
+          action="http://localhost:3000/carspost"
+          enctype="multipart/form-data"
+        >
+          <div>
+            <label for="Modelo" class="block text-sm font-medium text-gray-700"
+              >Modelo</label
+            >
+            <input
+              type="text"
+              id="Modelo"
+              name="Modelo"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          <div>
+            <label for="Ano" class="block text-sm font-medium text-gray-700"
+              >Año</label
+            >
+            <input
+              type="number"
+              id="Ano"
+              name="Ano"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          <div>
+            <label for="Tipo" class="block text-sm font-medium text-gray-700"
+              >Tipo</label
+            >
+            <input
+              type="text"
+              id="Tipo"
+              name="Tipo"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          <div>
+            <label
+              for="Autonomia"
+              class="block text-sm font-medium text-gray-700"
+              >Autonomía (km)</label
+            >
+            <input
+              type="number"
+              id="Autonomia"
+              name="Autonomia"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          <div>
+            <label
+              for="TiempoDeCarga"
+              class="block text-sm font-medium text-gray-700"
+              >Tiempo de Carga (horas)</label
+            >
+            <input
+              type="text"
+              id="TiempoDeCarga"
+              name="TiempoDeCarga"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          <div>
+            <label
+              for="Potencia"
+              class="block text-sm font-medium text-gray-700"
+              >Potencia (kW)</label
+            >
+            <input
+              type="text"
+              id="Potencia"
+              name="Potencia"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          <div>
+            <label
+              for="Traccion"
+              class="block text-sm font-medium text-gray-700"
+              >Tracción</label
+            >
+            <input
+              type="text"
+              id="Traccion"
+              name="Traccion"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          <div>
+            <label
+              for="CapacidadDeBateria"
+              class="block text-sm font-medium text-gray-700"
+              >Capacidad de Batería (kWh)</label
+            >
+            <input
+              type="text"
+              id="CapacidadDeBateria"
+              name="CapacidadDeBateria"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          <div>
+            <label
+              for="NumeroDeAsientos"
+              class="block text-sm font-medium text-gray-700"
+              >Número de Asientos</label
+            >
+            <input
+              type="number"
+              id="NumeroDeAsientos"
+              name="NumeroDeAsientos"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          <div>
+            <label for="Precio" class="block text-sm font-medium text-gray-700"
+              >Precio ($)</label
+            >
+            <input
+              type="text"
+              id="Precio"
+              name="Precio"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          <div>
+            <label
+              for="ColorExterior"
+              class="block text-sm font-medium text-gray-700"
+              >Color Exterior</label
+            >
+            <input
+              type="text"
+              id="ColorExterior"
+              name="ColorExterior"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          <div>
+            <label
+              for="ColorInterior"
+              class="block text-sm font-medium text-gray-700"
+              >Color Interior</label
+            >
+            <input
+              type="text"
+              id="ColorInterior"
+              name="ColorInterior"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          <div>
+            <label
+              for="OpcionesDeRuedas"
+              class="block text-sm font-medium text-gray-700"
+              >Opciones de Ruedas</label
+            >
+            <input
+              type="text"
+              id="OpcionesDeRuedas"
+              name="OpcionesDeRuedas"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          <div class="md:col-span-2">
+            <label
+              for="PaqueteDeAutopiloto"
+              class="block text-sm font-medium text-gray-700"
+              >Paquete de Autopiloto</label
+            >
+            <select
+              id="PaqueteDeAutopiloto"
+              name="PaqueteDeAutopiloto"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            >
+              <option value="1">Sí</option>
+              <option value="0">No</option>
+            </select>
+          </div>
+
+          <div class="md:col-span-2">
+            <div class="flex justify-between">
+              <div class="flex items-center">
+                <input
+                  id="TechoSolar"
+                  name="TechoSolar"
+                  type="checkbox"
+                  class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                />
+                <label for="TechoSolar" class="ml-2 block text-sm text-gray-900"
+                  >Techo Solar</label
+                >
+              </div>
+              <div class="flex items-center">
+                <input
+                  id="ConexionInternet"
+                  name="ConexionInternet"
+                  type="checkbox"
+                  class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                />
+                <label
+                  for="ConexionInternet"
+                  class="ml-2 block text-sm text-gray-900"
+                  >Conexión Internet</label
+                >
+              </div>
+              <div class="flex items-center">
+                <input
+                  id="SistemaDeSonidoPremium"
+                  name="SistemaDeSonidoPremium"
+                  type="checkbox"
+                  class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                />
+                <label
+                  for="SistemaDeSonidoPremium"
+                  class="ml-2 block text-sm text-gray-900"
+                  >Sistema de Sonido Premium</label
+                >
+              </div>
             </div>
-        </main>
-    
-       
+          </div>
+          <div>
+            <label for="Imagen" class="block text-sm font-medium text-gray-700"
+              >Imagen del Vehículo</label
+            >
+            <input
+              type="file"
+              id="Imagen"
+              name="Imagen"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-sm text-gray-900"
+            />
+          </div>
+
+          <div class="md:col-span-2">
+            <label
+              for="ModoDeConduccion"
+              class="block text-sm font-medium text-gray-700"
+              >Modo de Conducción</label
+            >
+            <select
+              id="ModoDeConduccion"
+              name="ModoDeConduccion"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            >
+              <option value="Estándar">Estándar</option>
+              <option value="Eco">Eco</option>
+              <option value="Deportivo">Deportivo</option>
+            </select>
+          </div>
+
+          <div class="md:col-span-2">
+            <button
+              value="Enviar"
+              type="submit"
+              class="mt-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Guardar
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
+    <h1 class="text-4xl font-bold text-center mb-8 text-black"></h1>
+
+    <footer class="bg-gray-100">
+      <div
+        class="relative mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8 lg:pt-24"
+      >
+        <div class="absolute end-4 top-4 sm:end-6 sm:top-6 lg:end-8 lg:top-8">
+          <a
+            class="inline-block rounded-full bg-teal-600 p-2 text-white shadow transition hover:bg-teal-500 sm:p-3 lg:p-4"
+            href="#MainContent"
+          >
+            <span class="sr-only">Back to top</span>
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </a>
+        </div>
+
+        <div class="lg:flex lg:items-end lg:justify-between">
+          <div>
+            <div class="flex justify-center text-teal-600 lg:justify-start">
+              E-Corp
+            </div>
+
+            <p
+              class="mx-auto mt-6 max-w-md text-center leading-relaxed text-gray-500 lg:text-left"
+            >
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt
+              consequuntur amet culpa cum itaque neque.
+            </p>
+          </div>
+
+          <ul
+            class="mt-12 flex flex-wrap justify-center gap-6 md:gap-8 lg:mt-0 lg:justify-end lg:gap-12"
+          >
+            <li>
+              <a
+                class="text-gray-700 transition hover:text-gray-700/75"
+                href="#"
+              >
+                About
+              </a>
+            </li>
+
+            <li>
+              <a
+                class="text-gray-700 transition hover:text-gray-700/75"
+                href="#"
+              >
+                Services
+              </a>
+            </li>
+
+            <li>
+              <a
+                class="text-gray-700 transition hover:text-gray-700/75"
+                href="#"
+              >
+                Projects
+              </a>
+            </li>
+
+            <li>
+              <a
+                class="text-gray-700 transition hover:text-gray-700/75"
+                href="#"
+              >
+                Blog
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <p class="mt-12 text-center text-sm text-gray-500 lg:text-right">
+          Copyright &copy; 2022. All rights reserved.
+        </p>
+      </div>
+    </footer>
     <script src="" async defer></script>
   </body>
 </html>

@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Edit and Delete</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+    <link href="/tailwind.config.js" rel="stylesheet" />
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="browsehappy">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="#">upgrade your browser</a> to improve your experience.
+      </p>
+    <![endif]-->
+    <nav
+      class="bg-white bg-opacity-50 fixed w-full z-10 top-0 border-gray-200 dark:bg-gray-900"
+    >
+      <div
+        class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
+      >
+        <a href="/" class="flex items-center pb-4 border-b border-b-gray-800">
+          <h2
+            class="bg-[#000000] text-white px-2 rounded-md font-bold text-2xl"
+          >
+            E
+            <span class="text-white px-1 rounded-md">Corp</span>
+          </h2>
+        </a>
+        <h1 class="text-4xl font-bold text-center mb-8 text-black-800">
+          Publications
+        </h1>
+
+        <button
+          data-collapse-toggle="navbar-default"
+          type="button"
+          class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          aria-controls="navbar-default"
+          aria-expanded="false"
+        >
+          <span class="sr-only">Open main menu</span>
+          <svg
+            class="w-5 h-5"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 17 14"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M1 1h15M1 7h15M1 13h15"
+            />
+          </svg>
+        </button>
+        <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+          <ul
+            class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
+          >
+            <li>
+              <a
+                href="/"
+                class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-red-700 md:p-0 dark:text-white md:dark:text-red-500"
+                aria-current="page"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                href="/carspost"
+                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                >Add
+              </a>
+            </li>
+            <li>
+              <a
+                href="/edit"
+                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                >Edit</a
+              >
+            </li>
+            <li>
+              <a
+                href="/apis"
+                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                >APIs</a
+              >
+            </li>
+            <li>
+              <a
+                href="/api/vehiculos"
+                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                >Others</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-20">
+      <main class="container mx-auto px-4 py-20">
+        <div id="vehiculos"></div>
+        <form
+          id="vehiculo-form"
+          class="grid grid-cols-1 md:grid-cols-2 gap-4"
+          enctype="multipart/form-data"
+        >
+          <div>
+            <label for="Modelo" class="block text-sm font-medium text-gray-700"
+              >Modelo</label
+            >
+            <input
+              type="text"
+              id="Modelo"
+              name="Modelo"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          <div>
+            <label for="Ano" class="block text-sm font-medium text-gray-700"
+              >Año</label
+            >
+            <input
+              type="number"
+              id="Ano"
+              name="Ano"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          <div>
+            <label for="Tipo" class="block text-sm font-medium text-gray-700"
+              >Tipo</label
+            >
+            <input
+              type="text"
+              id="Tipo"
+              name="Tipo"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          <div>
+            <label
+              for="Autonomia"
+              class="block text-sm font-medium text-gray-700"
+              >Autonomía (km)</label
+            >
+            <input
+              type="number"
+              id="Autonomia"
+              name="Autonomia"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          <div>
+            <label
+              for="TiempoDeCarga"
+              class="block text-sm font-medium text-gray-700"
+              >Tiempo de Carga (horas)</label
+            >
+            <input
+              type="text"
+              id="TiempoDeCarga"
+              name="TiempoDeCarga"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          <div>
+            <label
+              for="Potencia"
+              class="block text-sm font-medium text-gray-700"
+              >Potencia (kW)</label
+            >
+            <input
+              type="text"
+              id="Potencia"
+              name="Potencia"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          <div>
+            <label
+              for="Traccion"
+              class="block text-sm font-medium text-gray-700"
+              >Tracción</label
+            >
+            <input
+              type="text"
+              id="Traccion"
+              name="Traccion"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          <div>
+            <label
+              for="CapacidadDeBateria"
+              class="block text-sm font-medium text-gray-700"
+              >Capacidad de Batería (kWh)</label
+            >
+            <input
+              type="text"
+              id="CapacidadDeBateria"
+              name="CapacidadDeBateria"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          <div>
+            <label
+              for="NumeroDeAsientos"
+              class="block text-sm font-medium text-gray-700"
+              >Número de Asientos</label
+            >
+            <input
+              type="number"
+              id="NumeroDeAsientos"
+              name="NumeroDeAsientos"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          <div>
+            <label for="Precio" class="block text-sm font-medium text-gray-700"
+              >Precio ($)</label
+            >
+            <input
+              type="text"
+              id="Precio"
+              name="Precio"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          <div>
+            <label
+              for="ColorExterior"
+              class="block text-sm font-medium text-gray-700"
+              >Color Exterior</label
+            >
+            <input
+              type="text"
+              id="ColorExterior"
+              name="ColorExterior"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          <div>
+            <label
+              for="ColorInterior"
+              class="block text-sm font-medium text-gray-700"
+              >Color Interior</label
+            >
+            <input
+              type="text"
+              id="ColorInterior"
+              name="ColorInterior"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          <div>
+            <label
+              for="OpcionesDeRuedas"
+              class="block text-sm font-medium text-gray-700"
+              >Opciones de Ruedas</label
+            >
+            <input
+              type="text"
+              id="OpcionesDeRuedas"
+              name="OpcionesDeRuedas"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          <div class="md:col-span-2">
+            <label
+              for="PaqueteDeAutopiloto"
+              class="block text-sm font-medium text-gray-700"
+              >Paquete de Autopiloto</label
+            >
+            <select
+              id="PaqueteDeAutopiloto"
+              name="PaqueteDeAutopiloto"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            >
+              <option value="1">Sí</option>
+              <option value="0">No</option>
+            </select>
+          </div>
+
+          <div class="md:col-span-2">
+            <div class="flex justify-between">
+              <div class="flex items-center">
+                <input
+                  id="TechoSolar"
+                  name="TechoSolar"
+                  type="checkbox"
+                  class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                />
+                <label for="TechoSolar" class="ml-2 block text-sm text-gray-900"
+                  >Techo Solar</label
+                >
+              </div>
+              <div class="flex items-center">
+                <input
+                  id="ConexionInternet"
+                  name="ConexionInternet"
+                  type="checkbox"
+                  class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                />
+                <label
+                  for="ConexionInternet"
+                  class="ml-2 block text-sm text-gray-900"
+                  >Conexión Internet</label
+                >
+              </div>
+              <div class="flex items-center">
+                <input
+                  id="SistemaDeSonidoPremium"
+                  name="SistemaDeSonidoPremium"
+                  type="checkbox"
+                  class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                />
+                <label
+                  for="SistemaDeSonidoPremium"
+                  class="ml-2 block text-sm text-gray-900"
+                  >Sistema de Sonido Premium</label
+                >
+              </div>
+            </div>
+          </div>
+          <div>
+            <label for="Imagen" class="block text-sm font-medium text-gray-700"
+              >Imagen del Vehículo</label
+            >
+            <input
+              type="file"
+              id="Imagen"
+              name="Imagen"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-sm text-gray-900"
+            />
+          </div>
+
+          <div class="md:col-span-2">
+            <label
+              for="ModoDeConduccion"
+              class="block text-sm font-medium text-gray-700"
+              >Modo de Conducción</label
+            >
+            <select
+              id="ModoDeConduccion"
+              name="ModoDeConduccion"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            >
+              <option value="Estándar">Estándar</option>
+              <option value="Eco">Eco</option>
+              <option value="Deportivo">Deportivo</option>
+            </select>
+          </div>
+
+          <div class="md:col-span-2">
+            <button
+              value="Enviar"
+              type="submit"
+              class="mt-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Actualizar
+            </button>
+          </div>
+          <div class="md:col-span-2">
+            <button
+              value="Enviar"
+              type="submit"
+              id="delete-button"
+              class="mt-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Eliminar
+            </button>
+          </div>
+        </form>
+      </main>
+      <div id="paginacion"></div>
+    </div>
+
+    <h1 class="text-4xl font-bold text-center mb-8 text-black"></h1>
+
+    <footer class="bg-gray-100">
+      <div
+        class="relative mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8 lg:pt-24"
+      >
+        <div class="absolute end-4 top-4 sm:end-6 sm:top-6 lg:end-8 lg:top-8">
+          <a
+            class="inline-block rounded-full bg-gray-600 p-2 text-white shadow transition hover:bg-red-500 sm:p-3 lg:p-4"
+            href="#MainContent"
+          >
+            <span class="sr-only">Back to top</span>
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </a>
+        </div>
+
+        <div class="lg:flex lg:items-end lg:justify-between">
+          <div>
+            <div class="flex justify-center text-black lg:justify-start">
+              E-Corp
+            </div>
+
+            <p
+              class="mx-auto mt-6 max-w-md text-center leading-relaxed text-gray-500 lg:text-left"
+            >
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt
+              consequuntur amet culpa cum itaque neque.
+            </p>
+          </div>
+
+          <ul
+            class="mt-12 flex flex-wrap justify-center gap-6 md:gap-8 lg:mt-0 lg:justify-end lg:gap-12"
+          >
+            <li>
+              <a
+                class="text-gray-700 transition hover:text-gray-700/75"
+                href="#"
+              >
+                About
+              </a>
+            </li>
+
+            <li>
+              <a
+                class="text-gray-700 transition hover:text-gray-700/75"
+                href="#"
+              >
+                Services
+              </a>
+            </li>
+
+            <li>
+              <a
+                class="text-gray-700 transition hover:text-gray-700/75"
+                href="#"
+              >
+                Projects
+              </a>
+            </li>
+
+            <li>
+              <a
+                class="text-gray-700 transition hover:text-gray-700/75"
+                href="#"
+              >
+                Blog
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <p class="mt-12 text-center text-sm text-gray-500 lg:text-right">
+          Copyright &copy; 2022. All rights reserved.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // Obtén el ID del vehículo de la URL
+      const id = window.location.pathname.split("/").pop();
+
+      // Haz una solicitud a la ruta del vehículo
+      fetch(`/vehiculo/${id}`)
+        .then((response) => response.json())
+        .then((data) => {
+          // Llena el formulario con los datos del vehículo
+          document.getElementById("Modelo").value = data.vehiculo.Modelo;
+          document.getElementById("Ano").value = data.vehiculo.Ano;
+          document.getElementById("Tipo").value = data.vehiculo.Tipo;
+          document.getElementById("Autonomia").value = data.vehiculo.Autonomia;
+          document.getElementById("TiempoDeCarga").value =
+            data.vehiculo.TiempoDeCarga;
+          document.getElementById("Potencia").value = data.vehiculo.Potencia;
+          document.getElementById("Traccion").value = data.vehiculo.Traccion;
+          document.getElementById("CapacidadDeBateria").value =
+            data.vehiculo.CapacidadDeBateria;
+          document.getElementById("NumeroDeAsientos").value =
+            data.vehiculo.NumeroDeAsientos;
+          document.getElementById("Precio").value = data.vehiculo.Precio;
+          document.getElementById("ColorExterior").value =
+            data.vehiculo.ColorExterior;
+          document.getElementById("ColorInterior").value =
+            data.vehiculo.ColorInterior;
+          document.getElementById("OpcionesDeRuedas").value =
+            data.vehiculo.OpcionesDeRuedas;
+          document.getElementById("PaqueteDeAutopiloto").value =
+            data.vehiculo.PaqueteDeAutopiloto;
+          document.getElementById("TechoSolar").checked =
+            data.vehiculo.TechoSolar;
+          document.getElementById("ConexionInternet").checked =
+            data.vehiculo.ConexionInternet;
+          document.getElementById("SistemaDeSonidoPremium").checked =
+            data.vehiculo.SistemaDeSonidoPremium;
+          document.getElementById("ModoDeConduccion").value =
+            data.vehiculo.ModoDeConduccion;
+          document.getElementById("Imagen").value = data.vehiculo.Imagen;
+
+          // Haz lo mismo para los otros campos del formulario...
+        })
+        .catch((error) => console.error("Error:", error));
+      document
+        .getElementById("vehiculo-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          // Obtén los datos del formulario
+          const formData = new FormData(this);
+
+          // Haz una solicitud PUT a la ruta de actualización
+          fetch(`/api/vehiculo/${id}`, {
+            method: "PUT",
+            body: JSON.stringify(Object.fromEntries(formData)),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              // Haz algo con los datos actualizados...
+              window.location.href = "/cars";
+            })
+            .catch((error) => console.error("Error:", error));
+        });
+
+      document
+        .getElementById("delete-button")
+        .addEventListener("click", function (event) {
+          event.preventDefault();
+
+          // Haz una solicitud DELETE a la ruta de eliminación
+          fetch(`/api/vehiculo/${id}`, {
+            method: "DELETE",
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Error al eliminar el vehículo");
+              }
+              // Redirige a la página de lista de vehículos después de la eliminación
+              window.location.href = "/cars";
+            })
+            .catch((error) => console.error("Error:", error));
+        });
+    </script>
+    <script src="" async defer></script>
+  </body>
+</html>

@@ -6,7 +6,6 @@ const { Sequelize } = require("sequelize");
 
 // Inicializar la app Express
 const app = express();
-
 const PORT = 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -61,7 +60,9 @@ app.get("/cars", (req, res) => {
 app.get("/404", (req, res) => {
   res.sendFile(path.join(__dirname, "./src/pages/404.html"));
 });
-
+app.get("/edit/:id", (req, res) => {
+  res.sendFile(path.join(__dirname, "./src/pages/edit.html"));
+});
 // Prueba la conexión a la base de datos
 sequelize
   .authenticate()

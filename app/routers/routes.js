@@ -2,6 +2,7 @@ const { Sequelize } = require("sequelize");
 const sequelize = require("../controllers/database");
 const multer = require("multer");
 const upload = multer();
+const path = require("path");
 
 const express = require("express");
 const router = express.Router();
@@ -145,7 +146,81 @@ router.get("/api/vehiculos", async (req, res) => {
     res.status(500).send("Ocurrió un error al obtener los vehículos");
   }
 });
+router.get("/edit/:id", async (req, res) => {
+  try {
+    const vehiculo = await Vehiculo.findByPk(req.params.id);
+    if (!vehiculo) {
+      console.log("Vehículo no encontrado");
+      return res.status(404).json({ message: "Vehículo no encontrado" });
+    }
+    console.log("Vehículo obtenido con éxito");
+    // En lugar de renderizar una vista, envía el archivo HTML estático
+    res.sendFile(path.join(__dirname, "../src/pages/edit.html"));
+  } catch (error) {
+    console.error("Error al obtener vehículo:", error);
+    res
+      .status(500)
+      .json({ message: "Ocurrió un error al obtener el vehículo" });
+  }
+});
+router.get("/vehiculo/:id", async (req, res) => {
+  try {
+    const vehiculo = await Vehiculo.findByPk(req.params.id);
+    if (!vehiculo) {
+      return res.status(404).json({ message: "Vehículo no encontrado" });
+    }
+    res.json({ vehiculo });
+  } catch (error) {
+    console.error("Error al obtener vehículo:", error);
+    res
+      .status(500)
+      .json({ message: "Ocurrió un error al obtener el vehículo" });
+  }
+});
+router.put("/api/vehiculo/:id", async (req, res) => {
+  try {
+    const vehiculo = await Vehiculo.findByPk(req.params.id);
+    if (!vehiculo) {
+      console.log("Vehículo no encontrado");
+      return res.status(404).json({ message: "Vehículo no encontrado" });
+    }
 
+    const vehiculoData = req.body;
+
+    // Convierte 'on' a true y la ausencia de valor a false
+    vehiculoData.TechoSolar = vehiculoData.TechoSolar === "on";
+    vehiculoData.ConexionInternet = vehiculoData.ConexionInternet === "on";
+    vehiculoData.SistemaDeSonidoPremium =
+      vehiculoData.SistemaDeSonidoPremium === "on";
+
+    await vehiculo.update(req.body);
+    console.log("Vehículo actualizado con éxito");
+    res.json({ vehiculo });
+  } catch (error) {
+    console.error("Error al actualizar vehículo:", error);
+    res
+      .status(500)
+      .json({ message: "Ocurrió un error al actualizar el vehículo" });
+  }
+});
+router.delete("/api/vehiculo/:id", async (req, res) => {
+  try {
+    const vehiculo = await Vehiculo.findByPk(req.params.id);
+    if (!vehiculo) {
+      console.log("Vehículo no encontrado");
+      return res.status(404).json({ message: "Vehículo no encontrado" });
+    }
+
+    await vehiculo.destroy();
+    console.log("Vehículo eliminado con éxito");
+    res.json({ message: "Vehículo eliminado con éxito" });
+  } catch (error) {
+    console.error("Error al eliminar vehículo:", error);
+    res
+      .status(500)
+      .json({ message: "Ocurrió un error al eliminar el vehículo" });
+  }
+});
 router.post("/carspost", upload.none(), async (req, res) => {
   try {
     const vehiculoData = req.body;
@@ -201,23 +276,23 @@ router.post("/carspost", upload.none(), async (req, res) => {
     });
     return res.status(201).json(vehiculo);
   } catch (error) {
-    console.error("Error al crear vehículo:", error.message);
+    console.error("Error al crear Vehiculo:", error.message);
     console.error(error.stack);
-    const errorPage = fs.readFileSync(
-      path.join(__dirname, "../src/pages/404.html"),
-      "utf8"
-    );
-    const errorPageWithMessage = errorPage.replace(
-      "<!-- ERROR_MESSAGE -->",
-      `Ocurrió un error al crear el vehículo: ${error.message}`
-    );
-    res.status(500).send(errorPageWithMessage);
+    res.status(500).send("Ocurrió un error al crear el Vehiculo");
   }
   res.json({ success: true, message: "Registro completado con éxito." });
 });
 
-router.post("/api/vehiculos", async (req, res) => {
+router.put("/api/vehiculos/:id", upload.none(), async (req, res) => {
   try {
+    const vehiculoData = req.body;
+
+    // Convierte 'on' a true y la ausencia de valor a false
+    vehiculoData.TechoSolar = vehiculoData.TechoSolar === "on";
+    vehiculoData.ConexionInternet = vehiculoData.ConexionInternet === "on";
+    vehiculoData.SistemaDeSonidoPremium =
+      vehiculoData.SistemaDeSonidoPremium === "on";
+
     const {
       Marca,
       Modelo,
@@ -240,33 +315,41 @@ router.post("/api/vehiculos", async (req, res) => {
       ModoDeConduccion,
     } = req.body;
 
-    const vehiculo = await Vehiculo.create({
-      Marca,
-      Modelo,
-      Ano,
-      Tipo,
-      Autonomia,
-      TiempoDeCarga,
-      Potencia,
-      Traccion,
-      CapacidadDeBateria,
-      NumeroDeAsientos,
-      Precio,
-      ColorExterior,
-      ColorInterior,
-      OpcionesDeRuedas,
-      PaqueteDeAutopiloto,
-      TechoSolar,
-      ConexionInternet,
-      SistemaDeSonidoPremium,
-      ModoDeConduccion,
-    });
+    const vehiculo = await Vehiculo.update(
+      {
+        Marca,
+        Modelo,
+        Ano,
+        Tipo,
+        Autonomia,
+        TiempoDeCarga,
+        Potencia,
+        Traccion,
+        CapacidadDeBateria,
+        NumeroDeAsientos,
+        Precio,
+        ColorExterior,
+        ColorInterior,
+        OpcionesDeRuedas,
+        PaqueteDeAutopiloto,
+        TechoSolar,
+        ConexionInternet,
+        SistemaDeSonidoPremium,
+        ModoDeConduccion,
+      },
+      {
+        where: {
+          VehiculoId: req.params.id,
+        },
+      }
+    );
     return res.status(201).json(vehiculo);
   } catch (error) {
-    console.error("Error al crear vehículo:", error.message);
+    console.error("Error al crear Vehiculo:", error.message);
     console.error(error.stack);
-    res.status(500).send("Ocurrió un error al crear el vehículo");
+    res.status(500).send("Ocurrió un error al crear el Vehiculo");
   }
+  res.json({ success: true, message: "Registro completado con éxito." });
 });
 
 module.exports = router;

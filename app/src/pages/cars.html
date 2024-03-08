@@ -23,6 +23,476 @@
         <a href="#">upgrade your browser</a> to improve your experience.
       </p>
     <![endif]-->
+    <nav
+      class="bg-white bg-opacity-50 fixed w-full z-10 top-0 border-gray-200 dark:bg-gray-900"
+    >
+      <div
+        class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
+      >
+        <a href="/" class="flex items-center pb-4 border-b border-b-gray-800">
+          <h2
+            class="bg-[#000000] text-white px-2 rounded-md font-bold text-2xl"
+          >
+            E
+            <span class="text-white px-1 rounded-md">Corp</span>
+          </h2>
+        </a>
+        <h1 class="text-4xl font-bold text-center mb-8 text-black-800">
+          Publications
+        </h1>
+
+        <button
+          data-collapse-toggle="navbar-default"
+          type="button"
+          class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          aria-controls="navbar-default"
+          aria-expanded="false"
+        >
+          <span class="sr-only">Open main menu</span>
+          <svg
+            class="w-5 h-5"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 17 14"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M1 1h15M1 7h15M1 13h15"
+            />
+          </svg>
+        </button>
+        <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+          <ul
+            class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
+          >
+            <li>
+              <a
+                href="/"
+                class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-red-700 md:p-0 dark:text-white md:dark:text-red-500"
+                aria-current="page"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                href="/carspost"
+                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                >Add
+              </a>
+            </li>
+            <li>
+              <a
+                href="/edit"
+                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                >Edit</a
+              >
+            </li>
+            <li>
+              <a
+                href="/apis"
+                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                >APIs</a
+              >
+            </li>
+            <li>
+              <a
+                href="/api/vehiculos"
+                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                >Others</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container mx-auto px-4 py-20">
+      <main class="container mx-auto px-4 py-20">
+        <div id="vehiculos"></div>
+        <div id="botones"></div>
+      </main>
+      <div id="paginacion"></div>
+    </div>
+
+    <h1 class="text-4xl font-bold text-center mb-8 text-black"></h1>
+
+    <footer class="bg-gray-100">
+      <div
+        class="relative mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8 lg:pt-24"
+      >
+        <div class="absolute end-4 top-4 sm:end-6 sm:top-6 lg:end-8 lg:top-8">
+          <a
+            class="inline-block rounded-full bg-gray-600 p-2 text-white shadow transition hover:bg-red-500 sm:p-3 lg:p-4"
+            href="#MainContent"
+          >
+            <span class="sr-only">Back to top</span>
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </a>
+        </div>
+
+        <div class="lg:flex lg:items-end lg:justify-between">
+          <div>
+            <div class="flex justify-center text-black lg:justify-start">
+              E-Corp
+            </div>
+
+            <p
+              class="mx-auto mt-6 max-w-md text-center leading-relaxed text-gray-500 lg:text-left"
+            >
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt
+              consequuntur amet culpa cum itaque neque.
+            </p>
+          </div>
+
+          <ul
+            class="mt-12 flex flex-wrap justify-center gap-6 md:gap-8 lg:mt-0 lg:justify-end lg:gap-12"
+          >
+            <li>
+              <a
+                class="text-gray-700 transition hover:text-gray-700/75"
+                href="#"
+              >
+                About
+              </a>
+            </li>
+
+            <li>
+              <a
+                class="text-gray-700 transition hover:text-gray-700/75"
+                href="#"
+              >
+                Services
+              </a>
+            </li>
+
+            <li>
+              <a
+                class="text-gray-700 transition hover:text-gray-700/75"
+                href="#"
+              >
+                Projects
+              </a>
+            </li>
+
+            <li>
+              <a
+                class="text-gray-700 transition hover:text-gray-700/75"
+                href="#"
+              >
+                Blog
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <p class="mt-12 text-center text-sm text-gray-500 lg:text-right">
+          Copyright &copy; 2022. All rights reserved.
+        </p>
+      </div>
+    </footer>
+    <script></script>
+    <script>
+      let lista = [];
+      let elementosPorPagina = 6;
+      let paginaActual = 1;
+
+      function cargarVehiculos(page) {
+        fetch(`http://localhost:3000/api/vehiculos?page=${page}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Error al cargar los vehículos");
+            }
+            return response.json();
+          })
+          .then((vehiculos) => {
+            lista = vehiculos;
+            mostrarVehiculos();
+            crearBotonesPaginacion();
+          })
+          .catch((error) => {
+            mostrarError(error.message);
+          });
+      }
+
+      function mostrarVehiculos() {
+        const vehiculosDiv = document.getElementById("vehiculos");
+        vehiculosDiv.innerHTML = ""; // Limpiar el contenido anterior
+
+        let inicio = (paginaActual - 1) * elementosPorPagina;
+        let fin = inicio + elementosPorPagina;
+        let elementosPagina = lista.slice(inicio, fin);
+
+        elementosPagina.forEach((vehiculo) => {
+          const vehiculoElemento = crearElementoVehiculo(vehiculo);
+          vehiculosDiv.appendChild(vehiculoElemento);
+        });
+      }
+      function crearElementoVehiculo(vehiculo) {
+        const section = document.createElement("section");
+        section.classList.add(
+          "group",
+          "flex",
+          "justify-end", // Alineación a la derecha
+          "items-center",
+          "border-b",
+          "border-gray-200",
+          "py-4"
+        );
+
+        // Crear la estructura del elemento de vehículo
+        const div1 = document.createElement("div");
+        div1.classList.add(
+          "flex-grow", // Hace que este div ocupe el espacio restante
+          "mr-4" // Margen derecho para separación
+        );
+
+        const h3 = document.createElement("h3");
+        h3.textContent = vehiculo.Modelo;
+        h3.classList.add("text-lg", "font-semibold", "text-gray-800");
+        h3.setAttribute("contenteditable", "true"); // Hace que el elemento sea editable
+        div1.appendChild(h3);
+
+        const p = document.createElement("p");
+        p.textContent = vehiculo.Tipo;
+        p.classList.add("text-sm", "text-gray-600", "mt-1");
+        p.setAttribute("contenteditable", "true");
+        div1.appendChild(p);
+
+        const div2 = document.createElement("div");
+        div2.classList.add("mt-3");
+
+        const detalles = [
+          { nombre: "Año", valor: vehiculo.Ano },
+          { nombre: "Autonomía", valor: `${vehiculo.Autonomia} km` },
+          {
+            nombre: "Tiempo de Carga",
+            valor: `${vehiculo.TiempoDeCarga} horas`,
+          },
+          { nombre: "Potencia", valor: `${vehiculo.Potencia} kW` },
+          { nombre: "Tracción", valor: vehiculo.Traccion },
+          {
+            nombre: "Capacidad de batería",
+            valor: `${vehiculo.CapacidadDeBateria} kWh`,
+          },
+          { nombre: "Número de Asientos", valor: vehiculo.NumeroDeAsientos },
+          { nombre: "Precio", valor: vehiculo.Precio },
+          { nombre: "Color Exterior", valor: vehiculo.ColorExterior },
+          { nombre: "Color Interior", valor: vehiculo.ColorInterior },
+          { nombre: "Opciones de Ruedas", valor: vehiculo.OpcionesDeRuedas },
+          {
+            nombre: "Paquete de Autopiloto",
+            valor: vehiculo.PaqueteDeAutopiloto ? "Sí" : "No",
+          },
+          {
+            nombre: "Techo Solar",
+            valor: vehiculo.TechoSolar ? "Sí" : "No",
+          },
+          {
+            nombre: "Conexión a Internet",
+            valor: vehiculo.ConexionInternet ? "Sí" : "No",
+          },
+          {
+            nombre: "Sistema de Sonido Premium",
+            valor: vehiculo.SistemaDeSonidoPremium ? "Sí" : "No",
+          },
+          {
+            nombre: "Modo de Conducción",
+            valor: vehiculo.ModoDeConduccion,
+          },
+        ];
+
+        detalles.forEach((detalle) => {
+          const p = document.createElement("p");
+          p.textContent = `${detalle.nombre}: `;
+          p.classList.add("text-sm", "text-gray-600", "mt-1");
+
+          const span = document.createElement("span");
+          span.textContent = detalle.valor;
+          span.setAttribute("contenteditable", "true"); // Hace que el elemento span sea editable
+
+          // Inferir el tipo de datos
+          if (typeof detalle.valor === "number") {
+            if (Number.isInteger(detalle.valor)) {
+              console.log(`${detalle.nombre} podría ser INT`);
+            } else {
+              console.log(`${detalle.nombre} podría ser DECIMAL`);
+            }
+          } else if (typeof detalle.valor === "boolean") {
+            console.log(`${detalle.nombre} podría ser BIT`);
+          } else if (
+            typeof detalle.valor === "string" &&
+            detalle.valor.match(/^[0-9A-Fa-f]+$/)
+          ) {
+            console.log(`${detalle.nombre} podría ser VARBINARY`);
+          }
+
+          p.appendChild(span);
+          div2.appendChild(p);
+        });
+        div1.appendChild(div2);
+        section.appendChild(div1);
+
+        const div3 = document.createElement("div");
+        div3.classList.add(
+          "relative",
+          "h-[350px]",
+          "sm:h-[450px]",
+          "w-[300px]", // Ancho fijo para la imagen
+          "m-5"
+        );
+
+        const img = document.createElement("img");
+        img.src = `data:image/jpeg;base64,${vehiculo.Imagen}`; // Convertir la imagen VARBINARY a una URL de imagen
+        img.alt = vehiculo.Modelo;
+        img.classList.add(
+          "absolute",
+          "inset-0",
+          "h-full",
+          "w-full",
+          "object-cover",
+          "opacity-100",
+          "group-hover:opacity-0"
+        );
+        div3.appendChild(img);
+
+        //Botones de Actualizar y Eliminar
+        section.appendChild(div3);
+        const actualizarBtn = document.createElement("button");
+        actualizarBtn.textContent = "Actualizar";
+        actualizarBtn.classList.add("btn", "btn-primary");
+
+        const eliminarBtn = document.createElement("button");
+        eliminarBtn.textContent = "Eliminar";
+        eliminarBtn.classList.add("btn", "btn-danger");
+
+        div1.appendChild(actualizarBtn);
+        div1.appendChild(eliminarBtn);
+
+        actualizarBtn.addEventListener("click", function () {
+          window.location.href = `/edit/${vehiculo.VehiculoID}`;
+        });
+
+        eliminarBtn.addEventListener("click", function () {
+          if (confirm("¿Estás seguro de que quieres eliminar este vehículo?")) {
+            fetch(`/api/vehiculos/${vehiculo.VehiculoID}`, {
+              method: "DELETE",
+            })
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error("Error al eliminar el vehículo");
+                }
+                return response.json();
+              })
+              .then((data) => {
+                console.log(data);
+                cargarVehiculos(paginaActual);
+              })
+              .catch((error) => {
+                mostrarError(error.message);
+              });
+            }
+          }
+        );
+        return section;
+      }
+
+      function crearBotonesPaginacion() {
+        let numeroPaginas = Math.ceil(lista.length / elementosPorPagina);
+
+        const paginacionDiv = document.getElementById("paginacion");
+        paginacionDiv.innerHTML = ""; // Limpiar el contenido anterior
+
+        let ol = document.createElement("ol");
+        ol.className = "flex justify-center gap-1 text-xs font-medium";
+
+        let prevButton = document.createElement("li");
+        prevButton.innerHTML = `
+          <a href="" class="inline-flex size-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900 rtl:rotate-180">
+            <span class="sr-only">Prev Page</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+          </a>
+        `;
+        ol.appendChild(prevButton);
+
+        for (let i = 1; i <= numeroPaginas; i++) {
+          let li = document.createElement("li");
+          li.innerHTML = `
+            <a href=http://localhost:3000/cars?page${i} class="block size-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900">
+              ${i}
+            </a>
+          `;
+          li.addEventListener("click", () => {
+            paginaActual = i;
+            mostrarVehiculos();
+            actualizarEstiloBoton(li);
+          });
+          ol.appendChild(li);
+        }
+
+        let nextButton = document.createElement("li");
+        nextButton.innerHTML = `
+          <a href="" class="inline-flex size-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900 rtl:rotate-180">
+            <span class="sr-only">Next Page</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+          </a>
+        `;
+        ol.appendChild(nextButton);
+
+        paginacionDiv.appendChild(ol);
+      }
+
+      function actualizarEstiloBoton(botonSeleccionado) {
+        Array.from(botonSeleccionado.parentElement.children).forEach((li) => {
+          li.firstChild.classList.remove(
+            "border-blue-600",
+            "bg-blue-600",
+            "text-white"
+          );
+          li.firstChild.classList.add(
+            "border-gray-100",
+            "bg-white",
+            "text-gray-900"
+          );
+        });
+        botonSeleccionado.firstChild.classList.remove(
+          "border-gray-100",
+          "bg-white",
+          "text-gray-900"
+        );
+        botonSeleccionado.firstChild.classList.add(
+          "border-blue-600",
+          "bg-blue-600",
+          "text-white"
+        );
+      }
+
+      function mostrarError(mensaje) {
+        const vehiculosDiv = document.getElementById("vehiculos");
+        vehiculosDiv.innerHTML = `<p>${mensaje}</p>`;
+      }
+
+      // Inicialización: Cargar los vehículos de la página inicial
+      cargarVehiculos(paginaActual);
+    </script>
 
     <script src="" async defer></script>
   </body>
