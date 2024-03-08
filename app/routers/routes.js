@@ -146,6 +146,15 @@ router.get("/api/vehiculos", async (req, res) => {
     res.status(500).send("Ocurrió un error al obtener los vehículos");
   }
 });
+router.get("/api/vehiculos?page=${page}", async (req, res) => {
+  try {
+    const vehiculos = await Vehiculo.findAll();
+    res.json(vehiculos);
+  } catch (error) {
+    console.error("Error al obtener vehículos:", error);
+    res.status(500).send("Ocurrió un error al obtener los vehículos");
+  }
+});
 router.get("/edit/:id", async (req, res) => {
   try {
     const vehiculo = await Vehiculo.findByPk(req.params.id);

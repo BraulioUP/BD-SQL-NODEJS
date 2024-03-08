@@ -207,12 +207,11 @@
     </footer>
     <script></script>
     <script>
-      let lista = [];
       let elementosPorPagina = 6;
       let paginaActual = 1;
 
       function cargarVehiculos(page) {
-        fetch(`http://localhost:3000/api/vehiculos?page=${page}`)
+        fetch(`/api/vehiculos?page=${page}`)
           .then((response) => {
             if (!response.ok) {
               throw new Error("Error al cargar los vehículos");
@@ -221,6 +220,7 @@
           })
           .then((vehiculos) => {
             lista = vehiculos;
+            paginaActual = page; // Actualizar la página actual
             mostrarVehiculos();
             crearBotonesPaginacion();
           })
@@ -374,11 +374,26 @@
         section.appendChild(div3);
         const actualizarBtn = document.createElement("button");
         actualizarBtn.textContent = "Actualizar";
-        actualizarBtn.classList.add("btn", "btn-primary");
+        actualizarBtn.classList.add(
+          "px-4",
+          "py-2",
+          "bg-blue-500",
+          "text-white",
+          "rounded",
+          "mr-4" // Agrega margen a la derecha
+        );
 
         const eliminarBtn = document.createElement("button");
         eliminarBtn.textContent = "Eliminar";
-        eliminarBtn.classList.add("btn", "btn-danger");
+        eliminarBtn.classList.add(
+          "px-4",
+          "py-2",
+          "bg-red-700",
+          "text-white",
+          "rounded",
+          "ml-6",
+          "mr-4"
+        );
 
         div1.appendChild(actualizarBtn);
         div1.appendChild(eliminarBtn);
@@ -405,9 +420,8 @@
               .catch((error) => {
                 mostrarError(error.message);
               });
-            }
           }
-        );
+        });
         return section;
       }
 
@@ -434,7 +448,7 @@
         for (let i = 1; i <= numeroPaginas; i++) {
           let li = document.createElement("li");
           li.innerHTML = `
-            <a href=http://localhost:3000/cars?page${i} class="block size-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900">
+            <a href=/cars?page=${i} class="block size-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900">
               ${i}
             </a>
           `;

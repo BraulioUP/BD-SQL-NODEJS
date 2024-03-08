@@ -113,291 +113,299 @@
     <div class="container mx-auto px-4 py-20">
       <main class="container mx-auto px-4 py-20">
         <div id="vehiculos"></div>
-        <form
-          id="vehiculo-form"
-          class="grid grid-cols-1 md:grid-cols-2 gap-4"
-          enctype="multipart/form-data"
-        >
-          <div>
-            <label for="Modelo" class="block text-sm font-medium text-gray-700"
-              >Modelo</label
-            >
-            <input
-              type="text"
-              id="Modelo"
-              name="Modelo"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            />
-          </div>
+        <div class="max-w-4xl mx-auto mt-10 p-5 shadow-2xl">
+          <h2 class="text-2xl font-semibold mb-5">Registro de Vehículo</h2>
+          <form
+            id="vehiculo-form"
+            class="grid grid-cols-1 md:grid-cols-2 gap-4"
+            enctype="multipart/form-data"
+          >
+            <div>
+              <label
+                for="Modelo"
+                class="block text-sm font-medium text-gray-700"
+                >Modelo</label
+              >
+              <input
+                type="text"
+                id="Modelo"
+                name="Modelo"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              />
+            </div>
 
-          <div>
-            <label for="Ano" class="block text-sm font-medium text-gray-700"
-              >Año</label
-            >
-            <input
-              type="number"
-              id="Ano"
-              name="Ano"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            />
-          </div>
+            <div>
+              <label for="Ano" class="block text-sm font-medium text-gray-700"
+                >Año</label
+              >
+              <input
+                type="number"
+                id="Ano"
+                name="Ano"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              />
+            </div>
 
-          <div>
-            <label for="Tipo" class="block text-sm font-medium text-gray-700"
-              >Tipo</label
-            >
-            <input
-              type="text"
-              id="Tipo"
-              name="Tipo"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            />
-          </div>
+            <div>
+              <label for="Tipo" class="block text-sm font-medium text-gray-700"
+                >Tipo</label
+              >
+              <input
+                type="text"
+                id="Tipo"
+                name="Tipo"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              />
+            </div>
 
-          <div>
-            <label
-              for="Autonomia"
-              class="block text-sm font-medium text-gray-700"
-              >Autonomía (km)</label
-            >
-            <input
-              type="number"
-              id="Autonomia"
-              name="Autonomia"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            />
-          </div>
+            <div>
+              <label
+                for="Autonomia"
+                class="block text-sm font-medium text-gray-700"
+                >Autonomía (km)</label
+              >
+              <input
+                type="number"
+                id="Autonomia"
+                name="Autonomia"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              />
+            </div>
 
-          <div>
-            <label
-              for="TiempoDeCarga"
-              class="block text-sm font-medium text-gray-700"
-              >Tiempo de Carga (horas)</label
-            >
-            <input
-              type="text"
-              id="TiempoDeCarga"
-              name="TiempoDeCarga"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            />
-          </div>
+            <div>
+              <label
+                for="TiempoDeCarga"
+                class="block text-sm font-medium text-gray-700"
+                >Tiempo de Carga (horas)</label
+              >
+              <input
+                type="text"
+                id="TiempoDeCarga"
+                name="TiempoDeCarga"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              />
+            </div>
 
-          <div>
-            <label
-              for="Potencia"
-              class="block text-sm font-medium text-gray-700"
-              >Potencia (kW)</label
-            >
-            <input
-              type="text"
-              id="Potencia"
-              name="Potencia"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            />
-          </div>
+            <div>
+              <label
+                for="Potencia"
+                class="block text-sm font-medium text-gray-700"
+                >Potencia (kW)</label
+              >
+              <input
+                type="text"
+                id="Potencia"
+                name="Potencia"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              />
+            </div>
 
-          <div>
-            <label
-              for="Traccion"
-              class="block text-sm font-medium text-gray-700"
-              >Tracción</label
-            >
-            <input
-              type="text"
-              id="Traccion"
-              name="Traccion"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            />
-          </div>
+            <div>
+              <label
+                for="Traccion"
+                class="block text-sm font-medium text-gray-700"
+                >Tracción</label
+              >
+              <input
+                type="text"
+                id="Traccion"
+                name="Traccion"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              />
+            </div>
 
-          <div>
-            <label
-              for="CapacidadDeBateria"
-              class="block text-sm font-medium text-gray-700"
-              >Capacidad de Batería (kWh)</label
-            >
-            <input
-              type="text"
-              id="CapacidadDeBateria"
-              name="CapacidadDeBateria"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            />
-          </div>
+            <div>
+              <label
+                for="CapacidadDeBateria"
+                class="block text-sm font-medium text-gray-700"
+                >Capacidad de Batería (kWh)</label
+              >
+              <input
+                type="text"
+                id="CapacidadDeBateria"
+                name="CapacidadDeBateria"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              />
+            </div>
 
-          <div>
-            <label
-              for="NumeroDeAsientos"
-              class="block text-sm font-medium text-gray-700"
-              >Número de Asientos</label
-            >
-            <input
-              type="number"
-              id="NumeroDeAsientos"
-              name="NumeroDeAsientos"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            />
-          </div>
+            <div>
+              <label
+                for="NumeroDeAsientos"
+                class="block text-sm font-medium text-gray-700"
+                >Número de Asientos</label
+              >
+              <input
+                type="number"
+                id="NumeroDeAsientos"
+                name="NumeroDeAsientos"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              />
+            </div>
 
-          <div>
-            <label for="Precio" class="block text-sm font-medium text-gray-700"
-              >Precio ($)</label
-            >
-            <input
-              type="text"
-              id="Precio"
-              name="Precio"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            />
-          </div>
+            <div>
+              <label
+                for="Precio"
+                class="block text-sm font-medium text-gray-700"
+                >Precio ($)</label
+              >
+              <input
+                type="text"
+                id="Precio"
+                name="Precio"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              />
+            </div>
 
-          <div>
-            <label
-              for="ColorExterior"
-              class="block text-sm font-medium text-gray-700"
-              >Color Exterior</label
-            >
-            <input
-              type="text"
-              id="ColorExterior"
-              name="ColorExterior"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            />
-          </div>
+            <div>
+              <label
+                for="ColorExterior"
+                class="block text-sm font-medium text-gray-700"
+                >Color Exterior</label
+              >
+              <input
+                type="text"
+                id="ColorExterior"
+                name="ColorExterior"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              />
+            </div>
 
-          <div>
-            <label
-              for="ColorInterior"
-              class="block text-sm font-medium text-gray-700"
-              >Color Interior</label
-            >
-            <input
-              type="text"
-              id="ColorInterior"
-              name="ColorInterior"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            />
-          </div>
+            <div>
+              <label
+                for="ColorInterior"
+                class="block text-sm font-medium text-gray-700"
+                >Color Interior</label
+              >
+              <input
+                type="text"
+                id="ColorInterior"
+                name="ColorInterior"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              />
+            </div>
 
-          <div>
-            <label
-              for="OpcionesDeRuedas"
-              class="block text-sm font-medium text-gray-700"
-              >Opciones de Ruedas</label
-            >
-            <input
-              type="text"
-              id="OpcionesDeRuedas"
-              name="OpcionesDeRuedas"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            />
-          </div>
+            <div>
+              <label
+                for="OpcionesDeRuedas"
+                class="block text-sm font-medium text-gray-700"
+                >Opciones de Ruedas</label
+              >
+              <input
+                type="text"
+                id="OpcionesDeRuedas"
+                name="OpcionesDeRuedas"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              />
+            </div>
 
-          <div class="md:col-span-2">
-            <label
-              for="PaqueteDeAutopiloto"
-              class="block text-sm font-medium text-gray-700"
-              >Paquete de Autopiloto</label
-            >
-            <select
-              id="PaqueteDeAutopiloto"
-              name="PaqueteDeAutopiloto"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            >
-              <option value="1">Sí</option>
-              <option value="0">No</option>
-            </select>
-          </div>
+            <div class="md:col-span-2">
+              <label
+                for="PaqueteDeAutopiloto"
+                class="block text-sm font-medium text-gray-700"
+                >Paquete de Autopiloto</label
+              >
+              <select
+                id="PaqueteDeAutopiloto"
+                name="PaqueteDeAutopiloto"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              >
+                <option value="1">Sí</option>
+                <option value="0">No</option>
+              </select>
+            </div>
 
-          <div class="md:col-span-2">
-            <div class="flex justify-between">
-              <div class="flex items-center">
-                <input
-                  id="TechoSolar"
-                  name="TechoSolar"
-                  type="checkbox"
-                  class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-                />
-                <label for="TechoSolar" class="ml-2 block text-sm text-gray-900"
-                  >Techo Solar</label
-                >
-              </div>
-              <div class="flex items-center">
-                <input
-                  id="ConexionInternet"
-                  name="ConexionInternet"
-                  type="checkbox"
-                  class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-                />
-                <label
-                  for="ConexionInternet"
-                  class="ml-2 block text-sm text-gray-900"
-                  >Conexión Internet</label
-                >
-              </div>
-              <div class="flex items-center">
-                <input
-                  id="SistemaDeSonidoPremium"
-                  name="SistemaDeSonidoPremium"
-                  type="checkbox"
-                  class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-                />
-                <label
-                  for="SistemaDeSonidoPremium"
-                  class="ml-2 block text-sm text-gray-900"
-                  >Sistema de Sonido Premium</label
-                >
+            <div class="md:col-span-2">
+              <div class="flex justify-between">
+                <div class="flex items-center">
+                  <input
+                    id="TechoSolar"
+                    name="TechoSolar"
+                    type="checkbox"
+                    class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                  />
+                  <label
+                    for="TechoSolar"
+                    class="ml-2 block text-sm text-gray-900"
+                    >Techo Solar</label
+                  >
+                </div>
+                <div class="flex items-center">
+                  <input
+                    id="ConexionInternet"
+                    name="ConexionInternet"
+                    type="checkbox"
+                    class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                  />
+                  <label
+                    for="ConexionInternet"
+                    class="ml-2 block text-sm text-gray-900"
+                    >Conexión Internet</label
+                  >
+                </div>
+                <div class="flex items-center">
+                  <input
+                    id="SistemaDeSonidoPremium"
+                    name="SistemaDeSonidoPremium"
+                    type="checkbox"
+                    class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                  />
+                  <label
+                    for="SistemaDeSonidoPremium"
+                    class="ml-2 block text-sm text-gray-900"
+                    >Sistema de Sonido Premium</label
+                  >
+                </div>
               </div>
             </div>
-          </div>
-          <div>
-            <label for="Imagen" class="block text-sm font-medium text-gray-700"
-              >Imagen del Vehículo</label
-            >
-            <input
-              type="file"
-              id="Imagen"
-              name="Imagen"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-sm text-gray-900"
-            />
-          </div>
+            <div>
+              <label
+                for="Imagen"
+                class="block text-sm font-medium text-gray-700"
+                >Imagen del Vehículo</label
+              >
+              <input
+                type="file"
+                id="Imagen"
+                name="Imagen"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-sm text-gray-900"
+              />
+            </div>
 
-          <div class="md:col-span-2">
-            <label
-              for="ModoDeConduccion"
-              class="block text-sm font-medium text-gray-700"
-              >Modo de Conducción</label
-            >
-            <select
-              id="ModoDeConduccion"
-              name="ModoDeConduccion"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            >
-              <option value="Estándar">Estándar</option>
-              <option value="Eco">Eco</option>
-              <option value="Deportivo">Deportivo</option>
-            </select>
-          </div>
-
-          <div class="md:col-span-2">
-            <button
-              value="Enviar"
-              type="submit"
-              class="mt-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Actualizar
-            </button>
-          </div>
-          <div class="md:col-span-2">
-            <button
-              value="Enviar"
-              type="submit"
-              id="delete-button"
-              class="mt-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Eliminar
-            </button>
-          </div>
-        </form>
+            <div class="md:col-span-2">
+              <label
+                for="ModoDeConduccion"
+                class="block text-sm font-medium text-gray-700"
+                >Modo de Conducción</label
+              >
+              <select
+                id="ModoDeConduccion"
+                name="ModoDeConduccion"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              >
+                <option value="Estándar">Estándar</option>
+                <option value="Eco">Eco</option>
+                <option value="Deportivo">Deportivo</option>
+              </select>
+            </div>
+            <div class="md:col-span-2 flex justify-between">
+              <button
+                value="Enviar"
+                type="submit"
+                class="mt-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                Actualizar
+              </button>
+              <button
+                value="Enviar"
+                type="submit"
+                id="delete-button"
+                class="mt-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+              >
+                Eliminar
+              </button>
+            </div>
+          </form>
+        </div>
       </main>
       <div id="paginacion"></div>
     </div>
