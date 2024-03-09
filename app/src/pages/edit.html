@@ -410,6 +410,71 @@
       <div id="paginacion"></div>
     </div>
 
+    <div
+      class="fixed z-10 inset-0 overflow-y-auto"
+      id="modal"
+      style="display: none"
+    >
+      <div
+        class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+      >
+        <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+          <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+        <span
+          class="hidden sm:inline-block sm:align-middle sm:h-screen"
+          aria-hidden="true"
+          >&#8203;</span
+        >
+        <div
+          class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+        >
+          <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <div class="sm:flex sm:items-start">
+              <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                <h3
+                  class="text-lg leading-6 font-medium text-gray-900"
+                  id="modal-title"
+                >
+                  Confirmación
+                </h3>
+                <div class="mt-2">
+                  <p class="text-sm text-gray-500" id="modal-content"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <button
+              type="button"
+              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+              id="confirm-button"
+            >
+              Confirmar
+            </button>
+            <button
+              type="button"
+              class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm"
+              id="cancel-button"
+            >
+              Cancelar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function showModal(action) {
+        // Actualiza el contenido del modal en función de la acción
+        document.getElementById(
+          "modal-content"
+        ).textContent = `¿Estás seguro de que quieres ${action} los datos?`;
+
+        // Muestra el modal
+        document.getElementById("modal").style.display = "block";
+      }
+    </script>
+
     <h1 class="text-4xl font-bold text-center mb-8 text-black"></h1>
 
     <footer class="bg-gray-100">
@@ -547,42 +612,79 @@
         .addEventListener("submit", function (event) {
           event.preventDefault();
 
-          // Obtén los datos del formulario
-          const formData = new FormData(this);
+          showModal("actualizar");
+          document
+            .getElementById("confirm-button")
+            .addEventListener("click", function () {
+              document.getElementById("modal").style.display = "none";
 
-          // Haz una solicitud PUT a la ruta de actualización
-          fetch(`/api/vehiculo/${id}`, {
-            method: "PUT",
-            body: JSON.stringify(Object.fromEntries(formData)),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              // Haz algo con los datos actualizados...
-              window.location.href = "/cars";
-            })
-            .catch((error) => console.error("Error:", error));
+              const formData = new FormData(
+                document.getElementById("vehiculo-form")
+              );
+
+              fetch(`/api/vehiculo/${id}`, {
+                method: "PUT",
+                body: JSON.stringify(Object.fromEntries(formData)),
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              })
+                .then((response) => {
+                  if (!response.ok) {
+                    throw new Error("Error al actualizar el vehículo");
+                  }
+                  return response.json();
+                })
+                .then((data) => {
+                  window.location.href = "/cars";
+                })
+                .catch((error) => {
+                  document.getElementById("modal-title").textContent = "Error";
+                  document.getElementById("modal-content").textContent =
+                    error.message;
+                  document.getElementById("modal").style.display = "block";
+                });
+            });
+
+          document
+            .getElementById("cancel-button")
+            .addEventListener("click", function () {
+              document.getElementById("modal").style.display = "none";
+            });
         });
-
       document
         .getElementById("delete-button")
         .addEventListener("click", function (event) {
           event.preventDefault();
 
-          // Haz una solicitud DELETE a la ruta de eliminación
-          fetch(`/api/vehiculo/${id}`, {
-            method: "DELETE",
-          })
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error("Error al eliminar el vehículo");
-              }
-              // Redirige a la página de lista de vehículos después de la eliminación
-              window.location.href = "/cars";
-            })
-            .catch((error) => console.error("Error:", error));
+          showModal("eliminar");
+          document
+            .getElementById("confirm-button")
+            .addEventListener("click", function () {
+              document.getElementById("modal").style.display = "none";
+
+              fetch(`/api/vehiculo/${id}`, {
+                method: "DELETE",
+              })
+                .then((response) => {
+                  if (!response.ok) {
+                    throw new Error("Error al eliminar el vehículo");
+                  }
+                  window.location.href = "/cars";
+                })
+                .catch((error) => {
+                  document.getElementById("modal-title").textContent = "Error";
+                  document.getElementById("modal-content").textContent =
+                    error.message;
+                  document.getElementById("modal").style.display = "block";
+                });
+            });
+
+          document
+            .getElementById("cancel-button")
+            .addEventListener("click", function () {
+              document.getElementById("modal").style.display = "none";
+            });
         });
     </script>
     <script src="" async defer></script>
