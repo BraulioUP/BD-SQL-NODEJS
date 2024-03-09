@@ -307,9 +307,7 @@ router.post("/carspost", upload.single("Imagen"), async (req, res) => {
 
     // Eliminar el archivo temporal
     fs.unlinkSync(req.file.path);
-
-    // Enviar respuesta con el vehículo creado
-    return res.status(201).json(vehiculo);
+    return res.redirect("/cars");
   } catch (error) {
     console.error("Error al crear Vehiculo:", error.message);
     console.error(error.stack);

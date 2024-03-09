@@ -253,36 +253,38 @@
         section.classList.add(
           "group",
           "flex",
-          "justify-end",
+          "justify-between",
           "items-center",
           "border-b",
           "border-gray-200",
           "py-4"
         );
 
-        // Aquí debes crear la estructura para el elemento del vehículo
-
-        // Crear la estructura del elemento de vehículo
+        // Contenedor de detalles
         const div1 = document.createElement("div");
         div1.classList.add(
-          "flex-grow", // Hace que este div ocupe el espacio restante
+          "flex",
+          "flex-col",
+          "justify-start",
+          "w-2/3",
           "mr-4" // Margen derecho para separación
         );
 
+        // Modelo del vehículo
         const h3 = document.createElement("h3");
         h3.textContent = vehiculo.Modelo;
         h3.classList.add("text-lg", "font-semibold", "text-gray-800");
-        h3.setAttribute("contenteditable", "true"); // Hace que el elemento sea editable
         div1.appendChild(h3);
 
-        const p = document.createElement("p");
-        p.textContent = vehiculo.Tipo;
-        p.classList.add("text-sm", "text-gray-600", "mt-1");
-        p.setAttribute("contenteditable", "true");
-        div1.appendChild(p);
+        // Tipo del vehículo
+        const pTipo = document.createElement("p");
+        pTipo.textContent = vehiculo.Tipo;
+        pTipo.classList.add("text-sm", "text-gray-600", "mt-1");
+        div1.appendChild(pTipo);
 
-        const div2 = document.createElement("div");
-        div2.classList.add("mt-3");
+        // Detalles del vehículo
+        const divDetalles = document.createElement("div");
+        divDetalles.classList.add("mt-3");
 
         const detalles = [
           { nombre: "Año", valor: vehiculo.Ano },
@@ -306,10 +308,7 @@
             nombre: "Paquete de Autopiloto",
             valor: vehiculo.PaqueteDeAutopiloto ? "Sí" : "No",
           },
-          {
-            nombre: "Techo Solar",
-            valor: vehiculo.TechoSolar ? "Sí" : "No",
-          },
+          { nombre: "Techo Solar", valor: vehiculo.TechoSolar ? "Sí" : "No" },
           {
             nombre: "Conexión a Internet",
             valor: vehiculo.ConexionInternet ? "Sí" : "No",
@@ -318,60 +317,22 @@
             nombre: "Sistema de Sonido Premium",
             valor: vehiculo.SistemaDeSonidoPremium ? "Sí" : "No",
           },
-          {
-            nombre: "Modo de Conducción",
-            valor: vehiculo.ModoDeConduccion,
-          },
+          { nombre: "Modo de Conducción", valor: vehiculo.ModoDeConduccion },
         ];
 
         detalles.forEach((detalle) => {
-          const p = document.createElement("p");
-          p.textContent = `${detalle.nombre}: `;
-          p.classList.add("text-sm", "text-gray-600", "mt-1");
-
-          const span = document.createElement("span");
-          span.textContent = detalle.valor;
-          span.setAttribute("contenteditable", "true"); // Hace que el elemento span sea editable
-
-          // Inferir el tipo de datos
-          if (typeof detalle.valor === "number") {
-            if (Number.isInteger(detalle.valor)) {
-              console.log(`${detalle.nombre} podría ser INT`);
-            } else {
-              console.log(`${detalle.nombre} podría ser DECIMAL`);
-            }
-          } else if (typeof detalle.valor === "boolean") {
-            console.log(`${detalle.nombre} podría ser BIT`);
-          } else if (
-            typeof detalle.valor === "string" &&
-            detalle.valor.match(/^[0-9A-Fa-f]+$/)
-          ) {
-            console.log(`${detalle.nombre} podría ser VARBINARY`);
-          }
-
-          p.appendChild(span);
-          div2.appendChild(p);
+          const pDetalle = document.createElement("p");
+          pDetalle.textContent = `${detalle.nombre}: ${detalle.valor}`;
+          pDetalle.classList.add("text-sm", "text-gray-600", "mt-1");
+          divDetalles.appendChild(pDetalle);
         });
-        div1.appendChild(div2);
+
+        div1.appendChild(divDetalles);
         section.appendChild(div1);
 
-        const div3 = document.createElement("div");
-        div3.classList.add(
-          "relative",
-          "h-[350px]",
-          "sm:h-[450px]",
-          "w-[300px]", // Ancho fijo para la imagen
-          "m-5"
-        );
-
-        const div4 = document.createElement("div");
-        div3.classList.add(
-          "relative",
-          "h-[350px]",
-          "sm:h-[450px]",
-          "w-[300px]", // Ancho fijo para la imagen
-          "m-5"
-        );
+        // Imagen del vehículo
+        const divImagen = document.createElement("div");
+        divImagen.classList.add("w-1/3");
 
         const img = document.createElement("img");
 
@@ -411,79 +372,53 @@
           img.src = "/app/src/public/auto.jpg";
         }
 
-        // Agregar atributos y estilos adicionales según sea necesario
-        img.alt = vehiculo.Modelo;
-        img.classList.add(
-          "absolute",
-          "inset-0",
-          "h-full",
-          "w-full",
-          "object-cover",
-          "opacity-100",
-          "group-hover:opacity-0"
-        );
-        div3.appendChild(img);
-        function arrayBufferToBase64(buffer) {
-          let binary = "";
-          let bytes = new Uint8Array(buffer);
-          let len = bytes.byteLength;
-          for (let i = 0; i < len; i++) {
-            binary += String.fromCharCode(bytes[i]);
-          }
-          return window.btoa(binary);
-        }
-        //Botones de Actualizar y Eliminar
-        section.appendChild(div3);
+        // Estilos para la imagen
+        img.classList.add("w-full", "h-auto");
+        divImagen.appendChild(img);
+        section.appendChild(divImagen);
+
+        // Botón de Actualizar
         const actualizarBtn = document.createElement("button");
         actualizarBtn.textContent = "Editar Contenido";
         actualizarBtn.classList.add(
+          "bg-white",
           "text-black",
-          "font-bold",
+          "font-semibold",
           "py-2",
           "px-4",
+          "border",
+          "border-black",
           "rounded",
           "transition",
           "duration-300",
           "ease-in-out",
-          "flex-row",
-          "justify-center",
-          "text-white",
-          "cursor-pointer",
-          "hover:bg-blue-700",
+          "hover:bg-black",
+          "hover:text-white",
           "focus:outline-none",
-          "focus:ring-4",
-          "focus:ring-blue-300",
-          "font-medium",
-          "rounded-lg",
-          "px-5",
-          "py-2.5",
-          "text-center",
-          "inline-flex",
-          "items-center",
+          "focus:ring-2",
+          "focus:ring-black",
+          "focus:ring-opacity-50",
           "mr-2",
-          "mb-2",
-          "hover:shadow-lg",
-          "transition-all",
-          "duration-200",
-          "ease-in-out",
-          "scale-90",
-          "hover:scale-110",
-          "gap-x-2",
-          "opacity-70",
-          "hover:opacity-100",
-          "backdrop-blur-md",
-          "bg-blue-500",
-          "transform",
-          "hover:-translate-y-1"
+          "mb-2"
         );
 
-        div1.appendChild(actualizarBtn);
+        section.appendChild(actualizarBtn);
 
         actualizarBtn.addEventListener("click", function () {
           window.location.href = `/edit/${vehiculo.VehiculoID}`;
         });
 
         return section;
+      }
+
+      function arrayBufferToBase64(buffer) {
+        let binary = "";
+        let bytes = new Uint8Array(buffer);
+        let len = bytes.byteLength;
+        for (let i = 0; i < len; i++) {
+          binary += String.fromCharCode(bytes[i]);
+        }
+        return window.btoa(binary);
       }
 
       function mostrarError(mensaje) {
