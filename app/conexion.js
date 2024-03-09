@@ -61,6 +61,10 @@ app.get("/404", (req, res) => {
 app.get("/edit/:id", (req, res) => {
   res.sendFile(path.join(__dirname, "./src/pages/edit.html"));
 });
+app.get("/login", (req, res) => {
+  res.sendFile(path.join(__dirname, "./src/pages/login.html"));
+});
+
 // Prueba la conexión a la base de datos
 sequelize
   .authenticate()

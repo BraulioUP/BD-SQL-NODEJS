@@ -109,10 +109,14 @@
     </nav>
     <div class="container mx-auto px-4 py-20">
       <main class="container mx-auto px-4 py-20">
-        <div id="vehiculos"></div>
-        <div id="botones"></div>
+        <div class="container mx-auto py-8">
+          <h1 class="text-2xl font-bold text-center mb-8">
+            Listado de Vehículos
+          </h1>
+          <div id="vehiculos" class=""></div>
+          <div id="paginacion" class="flex justify-center mt-8"></div>
+        </div>
       </main>
-      <div id="paginacion"></div>
     </div>
 
     <h1 class="text-4xl font-bold text-center mb-8 text-black"></h1>
@@ -205,6 +209,7 @@
     </footer>
     <script></script>
     <script>
+      let lista = [];
       let elementosPorPagina = 6;
       let paginaActual = 1;
 
@@ -220,7 +225,7 @@
             lista = vehiculos;
             paginaActual = page; // Actualizar la página actual
             mostrarVehiculos();
-            crearBotonesPaginacion();
+            mostrarPaginacion(); // Llamar a la función para mostrar la paginación
           })
           .catch((error) => {
             mostrarError(error.message);
@@ -237,20 +242,25 @@
 
         elementosPagina.forEach((vehiculo) => {
           const vehiculoElemento = crearElementoVehiculo(vehiculo);
-          vehiculosDiv.appendChild(vehiculoElemento);
+          if (vehiculoElemento) {
+            vehiculosDiv.appendChild(vehiculoElemento);
+          }
         });
       }
+
       function crearElementoVehiculo(vehiculo) {
         const section = document.createElement("section");
         section.classList.add(
           "group",
           "flex",
-          "justify-end", // Alineación a la derecha
+          "justify-end",
           "items-center",
           "border-b",
           "border-gray-200",
           "py-4"
         );
+
+        // Aquí debes crear la estructura para el elemento del vehículo
 
         // Crear la estructura del elemento de vehículo
         const div1 = document.createElement("div");
@@ -476,85 +486,39 @@
         return section;
       }
 
-      function crearBotonesPaginacion() {
-        let numeroPaginas = Math.ceil(lista.length / elementosPorPagina);
-
-        const paginacionDiv = document.getElementById("paginacion");
-        paginacionDiv.innerHTML = ""; // Limpiar el contenido anterior
-
-        let ol = document.createElement("ol");
-        ol.className = "flex justify-center gap-1 text-xs font-medium";
-
-        let prevButton = document.createElement("li");
-        prevButton.innerHTML = `
-          <a href="" class="inline-flex size-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900 rtl:rotate-180">
-            <span class="sr-only">Prev Page</span>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-            </svg>
-          </a>
-        `;
-        ol.appendChild(prevButton);
-
-        for (let i = 1; i <= numeroPaginas; i++) {
-          let li = document.createElement("li");
-          li.innerHTML = `
-            <a href=/cars?page=${i} class="block size-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900">
-              ${i}
-            </a>
-          `;
-          li.addEventListener("click", () => {
-            paginaActual = i;
-            mostrarVehiculos();
-            actualizarEstiloBoton(li);
-          });
-          ol.appendChild(li);
-        }
-
-        let nextButton = document.createElement("li");
-        nextButton.innerHTML = `
-          <a href="" class="inline-flex size-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900 rtl:rotate-180">
-            <span class="sr-only">Next Page</span>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-            </svg>
-          </a>
-        `;
-        ol.appendChild(nextButton);
-
-        paginacionDiv.appendChild(ol);
-      }
-
-      function actualizarEstiloBoton(botonSeleccionado) {
-        Array.from(botonSeleccionado.parentElement.children).forEach((li) => {
-          li.firstChild.classList.remove(
-            "border-blue-600",
-            "bg-blue-600",
-            "text-white"
-          );
-          li.firstChild.classList.add(
-            "border-gray-100",
-            "bg-white",
-            "text-gray-900"
-          );
-        });
-        botonSeleccionado.firstChild.classList.remove(
-          "border-gray-100",
-          "bg-white",
-          "text-gray-900"
-        );
-        botonSeleccionado.firstChild.classList.add(
-          "border-blue-600",
-          "bg-blue-600",
-          "text-white"
-        );
-      }
-
       function mostrarError(mensaje) {
         const vehiculosDiv = document.getElementById("vehiculos");
         vehiculosDiv.innerHTML = `<p>${mensaje}</p>`;
       }
+      function mostrarPaginacion() {
+        const paginacionDiv = document.getElementById("paginacion");
+        paginacionDiv.innerHTML = ""; // Limpiar contenido anterior
 
+        const numeroPaginas = Math.ceil(lista.length / elementosPorPagina);
+
+        for (let i = 1; i <= numeroPaginas; i++) {
+          const botonPagina = document.createElement("button");
+          botonPagina.textContent = i;
+
+          // Añadir clases de Tailwind para el diseño
+          botonPagina.className =
+            "mx-1 px-3 py-2 bg-gray-500 text-white rounded-full shadow-md hover:bg-blue-700 transition-colors duration-200 ease-in-out";
+
+          // Marcar la página actual
+          if (i === paginaActual) {
+            botonPagina.classList.add("bg-red-700"); // Cambiar el color de fondo para la página actual
+          }
+
+          // Agregar un listener para cargar la página correspondiente cuando se hace clic en el botón
+          botonPagina.addEventListener("click", () => {
+            cargarVehiculos(i);
+            // Cambiar la URL para reflejar el número de página
+            window.history.pushState({}, "", `?page=${i}`);
+          });
+
+          paginacionDiv.appendChild(botonPagina);
+        }
+      }
       // Inicialización: Cargar los vehículos de la página inicial
       cargarVehiculos(paginaActual);
     </script>
