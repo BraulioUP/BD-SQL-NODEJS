@@ -3,7 +3,6 @@ const sequelize = require("../controllers/database");
 const path = require("path");
 const express = require("express");
 const router = express.Router();
-
 const app = express();
 
 app.use(express.json());
@@ -17,15 +16,14 @@ const Idiomas = require("../models/Idiomas")(sequelize, Sequelize);
 // Establece las asociaciones
 User.associate(sequelize.models);
 Regiones.associate(sequelize.models);
-Idiomas.associate(sequelize.models);
 
-router.get("/api/idiomas", async (req, res) => {
+router.get("/api/regiones", async (req, res) => {
   try {
-    const idiomas = await Idiomas.findAll();
-    res.json(idiomas);
+    const regiones = await Regiones.findAll();
+    res.json(regiones);
   } catch (error) {
-    console.error("Error al obtener idiomas:", error);
-    res.status(500).send("Ocurrió un error al obtener los idiomas");
+    console.error("Error al obtener regiones:", error);
+    res.status(500).send("Ocurrió un error al obtener las regiones");
   }
 });
 

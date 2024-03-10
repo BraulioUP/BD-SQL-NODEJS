@@ -129,6 +129,7 @@
                 type="text"
                 id="Modelo"
                 name="Modelo"
+                placeholder="Ej: Model S"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </div>
@@ -141,6 +142,7 @@
                 type="number"
                 id="Ano"
                 name="Ano"
+                placeholder="Ej: 2024"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </div>
@@ -153,6 +155,7 @@
                 type="text"
                 id="Tipo"
                 name="Tipo"
+                placeholder="Ej: Sedán, SUV, Coupó, etc"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </div>
@@ -167,6 +170,7 @@
                 type="number"
                 id="Autonomia"
                 name="Autonomia"
+                placeholder="Ej: 600 - Kilímetros que puede recorrer con una carga completa - "
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </div>
@@ -181,6 +185,7 @@
                 type="text"
                 id="TiempoDeCarga"
                 name="TiempoDeCarga"
+                placeholder="Ej: 8 - Horas para cargar completamente - "
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </div>
@@ -195,6 +200,7 @@
                 type="text"
                 id="Potencia"
                 name="Potencia"
+                placeholder="Ej: 500 - kW o caballos de fuerza - "
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </div>
@@ -209,6 +215,7 @@
                 type="text"
                 id="Traccion"
                 name="Traccion"
+                placeholder="Ej: Trasera, Delantera, 4x4, etc"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </div>
@@ -223,6 +230,7 @@
                 type="text"
                 id="CapacidadDeBateria"
                 name="CapacidadDeBateria"
+                placeholder="Ej: 100 - kWh - "
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </div>
@@ -237,6 +245,7 @@
                 type="number"
                 id="NumeroDeAsientos"
                 name="NumeroDeAsientos"
+                placeholder="Ej: 5 - Número de asientos disponibles - "
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </div>
@@ -251,6 +260,7 @@
                 type="text"
                 id="Precio"
                 name="Precio"
+                placeholder="Ej: 100000 - Precio en dólares - "
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </div>
@@ -265,6 +275,7 @@
                 type="text"
                 id="ColorExterior"
                 name="ColorExterior"
+                placeholder="Ej: Rojo, Az, Blanco, etc"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </div>
@@ -279,6 +290,7 @@
                 type="text"
                 id="ColorInterior"
                 name="ColorInterior"
+                placeholder="Ej: Rojo, Az, Blanco, etc"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </div>
@@ -293,6 +305,7 @@
                 type="text"
                 id="OpcionesDeRuedas"
                 name="OpcionesDeRuedas"
+                placeholder="Ej: 18 Plata, 19 Deportivas, etc"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </div>
@@ -306,6 +319,7 @@
               <select
                 id="PaqueteDeAutopiloto"
                 name="PaqueteDeAutopiloto"
+                aria-placeholder=""
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               >
                 <option value="1">Sí</option>
@@ -356,18 +370,45 @@
                 </div>
               </div>
             </div>
-            <div>
-              <label
-                for="Imagen"
-                class="block text-sm font-medium text-gray-700"
-                >Imagen del Vehículo</label
-              >
-              <input
-                type="file"
-                id="Imagen"
-                name="Imagen"
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-sm text-gray-900"
-              />
+            <div
+              class="flex flex-col items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8"
+            >
+              <div class="max-w-md w-full space-y-8">
+                <div>
+                  <img
+                    class="mx-auto h-12 w-auto"
+                    src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                    alt="Workflow"
+                  />
+                  <h2
+                    class="mt-6 text-center text-3xl font-extrabold text-gray-900"
+                  >
+                    Sube la imagen de tu vehículo
+                  </h2>
+                </div>
+                <div class="rounded-md shadow-sm -space-y-px">
+                  <div>
+                    <label for="Imagen" class="sr-only"
+                      >Imagen del Vehículo</label
+                    >
+                    <input
+                      id="Imagen"
+                      name="Imagen"
+                      type="file"
+                      class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                      placeholder="Imagen del Vehículo"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <button
+                    type="submit"
+                    class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    Subir
+                  </button>
+                </div>
+              </div>
             </div>
 
             <div class="md:col-span-2">
