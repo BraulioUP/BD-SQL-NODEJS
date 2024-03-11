@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title></title>
+    <title>Merchandising</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="" />
@@ -109,6 +109,184 @@
       </div>
     </nav>
 
+    <div class="container mx-auto px-4 py-20">
+      <main class="container mx-auto px-4 py-20">
+        <div class="flex flex-wrap justify-around">
+          <div id="productos" class=""></div>
+        </div>
+        <div id="paginacion" class="flex justify-center mt-8"></div>
+      </main>
+    </div>
+    <script>
+      let lista = [];
+      let elementosPorPagina = 6;
+      let paginaActual = 1;
+
+      function cargarProductos(page) {
+        fetch(`/api/productos?page=${page}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Error al cargar los productos");
+            }
+            return response.json();
+          })
+          .then((producto) => {
+            lista = producto;
+            paginaActual = page; // Actualizar la página actual
+            mostrarProductos();
+            mostrarPaginacion(); // Llamar a la función para mostrar la paginación
+          })
+          .catch((error) => {
+            mostrarError(error.message);
+          });
+      }
+
+      function mostrarProductos() {
+        const vehiculosDiv = document.getElementById("productos");
+        vehiculosDiv.innerHTML = ""; // Limpiar el contenido anterior
+
+        let inicio = (paginaActual - 1) * elementosPorPagina;
+        let fin = inicio + elementosPorPagina;
+        let elementosPagina = lista.slice(inicio, fin);
+
+        elementosPagina.forEach((producto) => {
+          const vehiculoElemento = crearElementoVehiculo(producto);
+          if (vehiculoElemento) {
+            vehiculosDiv.appendChild(vehiculoElemento);
+          }
+        });
+      }
+
+      function crearElementoVehiculo(producto) {
+        const section = document.createElement("section");
+        section.classList.add(
+          "group",
+          "flex",
+          "justify-between",
+          "items-center",
+          "border-b",
+          "border-gray-200",
+          "py-4"
+        );
+
+        // Contenedor de detalles
+        const div1 = document.createElement("div");
+        div1.classList.add(
+          "flex",
+          "flex-col",
+          "justify-start",
+          "w-2/3",
+          "mr-4" // Margen derecho para separación
+        );
+
+        // Modelo del vehículo
+        const h3 = document.createElement("h3");
+        h3.textContent = producto.NombreProducto;
+        h3.classList.add("text-lg", "font-semibold", "text-gray-800");
+        div1.appendChild(h3);
+
+        // Tipo del vehículo
+        const pTipo = document.createElement("p");
+        pTipo.textContent = producto.Descripcion;
+        pTipo.classList.add("text-sm", "text-gray-600", "mt-1");
+        div1.appendChild(pTipo);
+
+        // Detalles del vehículo
+        const divDetalles = document.createElement("div");
+        divDetalles.classList.add("mt-3");
+
+        const detalles = [
+          { nombre: "Stock", valor: producto.Stock },
+          {
+            nombre: "Precio del producto",
+            valor: `${producto.Precio} $`,
+          },
+          {
+            nombre: "Categoria del producto",
+            valor: `${producto.Categoria} `,
+          },
+        ];
+
+        detalles.forEach((detalle) => {
+          const pDetalle = document.createElement("p");
+          pDetalle.textContent = `${detalle.nombre}: ${detalle.valor}`;
+          pDetalle.classList.add("text-sm", "text-gray-600", "mt-1");
+          divDetalles.appendChild(pDetalle);
+        });
+
+        div1.appendChild(divDetalles);
+        section.appendChild(div1);
+
+        // Botón de Actualizar
+        const actualizarBtn = document.createElement("button");
+        actualizarBtn.textContent = "Editar Contenido";
+        actualizarBtn.classList.add(
+          "bg-white",
+          "text-black",
+          "font-semibold",
+          "py-2",
+          "px-4",
+          "border",
+          "border-black",
+          "rounded",
+          "transition",
+          "duration-300",
+          "ease-in-out",
+          "hover:bg-black",
+          "hover:text-white",
+          "focus:outline-none",
+          "focus:ring-2",
+          "focus:ring-black",
+          "focus:ring-opacity-50",
+          "mr-2",
+          "mb-2"
+        );
+
+        section.appendChild(actualizarBtn);
+
+        actualizarBtn.addEventListener("click", function () {
+          window.location.href = `/editmerchs/${producto.ProductoID}`;
+        });
+
+        return section;
+      }
+
+      function mostrarError(mensaje) {
+        const vehiculosDiv = document.getElementById("productos");
+        vehiculosDiv.innerHTML = `<p>${mensaje}</p>`;
+      }
+      function mostrarPaginacion() {
+        const paginacionDiv = document.getElementById("paginacion");
+        paginacionDiv.innerHTML = ""; // Limpiar contenido anterior
+
+        const numeroPaginas = Math.ceil(lista.length / elementosPorPagina);
+
+        for (let i = 1; i <= numeroPaginas; i++) {
+          const botonPagina = document.createElement("button");
+          botonPagina.textContent = i;
+
+          // Añadir clases de Tailwind para el diseño
+          botonPagina.className =
+            "mx-1 px-3 py-2 bg-gray-500 text-white rounded-full shadow-md hover:bg-blue-700 transition-colors duration-200 ease-in-out";
+
+          // Marcar la página actual
+          if (i === paginaActual) {
+            botonPagina.classList.add("bg-red-700"); // Cambiar el color de fondo para la página actual
+          }
+
+          // Agregar un listener para cargar la página correspondiente cuando se hace clic en el botón
+          botonPagina.addEventListener("click", () => {
+            cargarProductos(i);
+            // Cambiar la URL para reflejar el número de página
+            window.history.pushState({}, "", `?page=${i}`);
+          });
+
+          paginacionDiv.appendChild(botonPagina);
+        }
+      }
+      // Inicialización: Cargar los vehículos de la página inicial
+      cargarProductos(paginaActual);
+    </script>
     <h1 class="text-4xl font-bold text-center mb-8 text-black"></h1>
 
     <footer class="bg-gray-100">

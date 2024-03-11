@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title></title>
+    <title>Add Merchandising</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="" />
@@ -203,6 +203,7 @@
             <div class="col-span-2 flex justify-center">
               <button
                 type="submit"
+                onclick="showModal(event, 'guardar')"
                 class="bg-white text-black font-semibold py-2 px-4 border border-black rounded transition duration-300 ease-in-out hover:bg-black hover:text-white focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 mr-2 mb-2"
               >
                 Agregar Producto
@@ -301,6 +302,89 @@
         </p>
       </div>
     </footer>
+    <div
+      class="fixed z-10 inset-0 overflow-y-auto"
+      id="modal"
+      style="display: none"
+    >
+      <div
+        class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+      >
+        <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+          <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+        <span
+          class="hidden sm:inline-block sm:align-middle sm:h-screen"
+          aria-hidden="true"
+          >&#8203;</span
+        >
+        <div
+          class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+        >
+          <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <div class="sm:flex sm:items-start">
+              <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                <h3
+                  class="text-lg leading-6 font-medium text-gray-900"
+                  id="modal-title"
+                >
+                  Confirmación
+                </h3>
+                <div class="mt-2">
+                  <p class="text-sm text-gray-500" id="modal-content"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <button
+              type="button"
+              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+              id="confirm-button"
+            >
+              Confirmar
+            </button>
+            <button
+              type="button"
+              class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm"
+              id="cancel-button"
+            >
+              Cancelar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      var form; // Variable para guardar el formulario
+
+      function showModal(event, action) {
+        event.preventDefault(); // Prevenir el comportamiento predeterminado del botón de "Guardar"
+        form = event.target.form; // Guardar el formulario
+
+        // Obtén la ventana modal y el contenido de la modal
+        var modal = document.getElementById("modal");
+        var modalContent = document.getElementById("modal-content");
+
+        // Configura el contenido de la modal en función de la acción
+        if (action === "guardar") {
+          modalContent.textContent = "¿Estás seguro de que quieres guardar?";
+        } else {
+          modalContent.textContent = "Acción no reconocida.";
+        }
+
+        // Muestra la ventana modal
+        modal.style.display = "block";
+      }
+
+      // Obtén el botón de confirmación
+      var confirmButton = document.getElementById("confirm-button");
+
+      // Cuando el usuario haga clic en el botón de confirmación, envía el formulario
+      confirmButton.onclick = function () {
+        form.submit();
+      };
+    </script>
     <script src="" async defer></script>
   </body>
 </html>

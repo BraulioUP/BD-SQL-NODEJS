@@ -43,7 +43,8 @@ router.get("/api/vehiculos?page=${page}", async (req, res) => {
     res.status(500).send("Ocurrió un error al obtener los vehículos");
   }
 });
-router.get("/edit/:id", async (req, res) => {
+
+router.get("/editcars/:id", async (req, res) => {
   try {
     const vehiculo = await Vehiculo.findByPk(req.params.id);
     if (!vehiculo) {
@@ -52,7 +53,7 @@ router.get("/edit/:id", async (req, res) => {
     }
     console.log("Vehículo obtenido con éxito");
     // En lugar de renderizar una vista, envía el archivo HTML estático
-    res.sendFile(path.join(__dirname, "../src/pages/edit.html"));
+    res.sendFile(path.join(__dirname, "../src/pages/editcars.html"));
   } catch (error) {
     console.error("Error al obtener vehículo:", error);
     res

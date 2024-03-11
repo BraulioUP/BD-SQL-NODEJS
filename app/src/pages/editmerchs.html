@@ -116,13 +116,12 @@
           class="max-w-4xl mx-auto mt-10 p-8 rounded-lg shadow-xl bg-gray-50"
         >
           <h2 class="text-3xl font-semibold mb-8 text-center">
-            Agregar Productos
+            Editar Productos
           </h2>
           <form
             id="productos-form"
             class="grid grid-cols-1 md:grid-cols-2 gap-6"
-            action="/api/productos"
-            method="POST"
+            enctype="multipart/form-data"
           >
             <div class="flex flex-col">
               <label
@@ -201,12 +200,23 @@
               </select>
             </div>
             <div class="col-span-2 flex justify-center">
-              <button
-                type="submit"
-                class="bg-white text-black font-semibold py-2 px-4 border border-black rounded transition duration-300 ease-in-out hover:bg-black hover:text-white focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 mr-2 mb-2"
-              >
-                Agregar Producto
-              </button>
+              <div class="md:col-span-2 flex justify-between">
+                <button
+                  value="Enviar"
+                  type="submit"
+                  class="bg-white text-black font-semibold py-2 px-4 border border-black rounded transition duration-300 ease-in-out hover:bg-black hover:text-white focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 mr-2 mb-2"
+                >
+                  Actualizar
+                </button>
+                <button
+                  value="Enviar"
+                  type="submit"
+                  id="delete-button"
+                  class="bg-red-700 text-white font-semibold py-2 px-4 border border-red rounded transition duration-300 ease-in-out hover:bg-black hover:text-white focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 mr-2 mb-2"
+                >
+                  Eliminar
+                </button>
+              </div>
             </div>
           </form>
         </div>
@@ -301,6 +311,207 @@
         </p>
       </div>
     </footer>
+    <div
+      class="fixed z-10 inset-0 overflow-y-auto"
+      id="modal"
+      style="display: none"
+    >
+      <div
+        class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+      >
+        <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+          <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+        <span
+          class="hidden sm:inline-block sm:align-middle sm:h-screen"
+          aria-hidden="true"
+          >&#8203;</span
+        >
+        <div
+          class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+        >
+          <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <div class="sm:flex sm:items-start">
+              <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                <h3
+                  class="text-lg leading-6 font-medium text-gray-900"
+                  id="modal-title"
+                >
+                  Confirmación
+                </h3>
+                <div class="mt-2">
+                  <p class="text-sm text-gray-500" id="modal-content"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <button
+              type="button"
+              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+              id="confirm-button"
+            >
+              Confirmar
+            </button>
+            <button
+              type="button"
+              class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm"
+              id="cancel-button"
+            >
+              Cancelar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function showModal(action) {
+        // Actualiza el contenido del modal en función de la acción
+        document.getElementById(
+          "modal-content"
+        ).textContent = `¿Estás seguro de que quieres ${action} los datos?`;
+
+        // Muestra el modal
+        document.getElementById("modal").style.display = "block";
+      }
+    </script>
+
+    <script>
+      // Obtén el ID del vehículo de la URL
+      const id = window.location.pathname.split("/").pop();
+
+      // Haz una solicitud a la ruta del vehículo
+      fetch(`/producto/${id}`)
+        .then((response) => response.json())
+        .then((data) => {
+          document.getElementById("NombreProducto").value =
+            data.producto.NombreProducto;
+          document.getElementById("Descripcion").value =
+            data.producto.Descripcion;
+          document.getElementById("Precio").value = data.producto.Precio;
+          document.getElementById("Stock").value = data.producto.Stock;
+          document.getElementById("Categoria").value = data.producto.Categoria;
+
+          // Haz lo mismo para los otros campos del formulario...
+        })
+        .catch((error) => console.error("Error:", error));
+
+      document
+        .getElementById("productos-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          document;
+          const camposNumericos = [
+            { id: "Precio", valor: document.getElementById("Precio").value },
+            { id: "Stock", valor: document.getElementById("Stock").value },
+          ];
+
+          for (let campo of camposNumericos) {
+            if (isNaN(campo.valor)) {
+              document.getElementById(campo.id).focus();
+
+              return;
+            }
+          }
+
+          const camposDeTexto = [
+            {
+              id: "NombreProducto",
+              valor: document.getElementById("NombreProducto").value,
+            },
+            {
+              id: "Descripcion",
+              valor: document.getElementById("Descripcion").value,
+            },
+            {
+              id: "Categoria",
+              valor: document.getElementById("Categoria").value,
+            },
+          ];
+          for (let campo of camposDeTexto) {
+            if (!isNaN(campo.valor)) {
+              document.getElementById(campo.id).focus();
+
+              return;
+            }
+          }
+
+          showModal("actualizar");
+          document
+            .getElementById("confirm-button")
+            .addEventListener("click", function () {
+              document.getElementById("modal").style.display = "none";
+
+              const formData = new FormData(
+                document.getElementById("productos-form")
+              );
+
+              fetch(`/api/producto/${id}`, {
+                method: "PUT",
+                body: JSON.stringify(Object.fromEntries(formData)),
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              })
+                .then((response) => {
+                  if (!response.ok) {
+                    throw new Error("Error al actualizar el producto");
+                  }
+                  return response.json();
+                })
+                .then((data) => {
+                  window.location.href = "/merchsview";
+                })
+                .catch((error) => {
+                  document.getElementById("modal-title").textContent = "Error";
+                  document.getElementById("modal-content").textContent =
+                    error.message;
+                  document.getElementById("modal").style.display = "block";
+                });
+            });
+
+          document
+            .getElementById("cancel-button")
+            .addEventListener("click", function () {
+              document.getElementById("modal").style.display = "none";
+            });
+        });
+      document
+        .getElementById("delete-button")
+        .addEventListener("click", function (event) {
+          event.preventDefault();
+
+          showModal("eliminar");
+          document
+            .getElementById("confirm-button")
+            .addEventListener("click", function () {
+              document.getElementById("modal").style.display = "none";
+
+              fetch(`/api/producto/${id}`, {
+                method: "DELETE",
+              })
+                .then((response) => {
+                  if (!response.ok) {
+                    throw new Error("Error al eliminar el producto");
+                  }
+                  window.location.href = "/merchsview";
+                })
+                .catch((error) => {
+                  document.getElementById("modal-title").textContent = "Error";
+                  document.getElementById("modal-content").textContent =
+                    error.message;
+                  document.getElementById("modal").style.display = "block";
+                });
+            });
+
+          document
+            .getElementById("cancel-button")
+            .addEventListener("click", function () {
+              document.getElementById("modal").style.display = "none";
+            });
+        });
+    </script>
     <script src="" async defer></script>
   </body>
 </html>
