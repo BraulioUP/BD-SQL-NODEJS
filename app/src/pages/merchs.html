@@ -78,16 +78,16 @@
             </li>
             <li>
               <a
-                href="/carspost"
+                href="/api/productos"
                 class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                >Add
+                >API Producto
               </a>
             </li>
             <li>
               <a
-                href="/edit"
+                href="/merchsview"
                 class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                >Edit</a
+                >Productos</a
               >
             </li>
             <li>
@@ -99,7 +99,7 @@
             </li>
             <li>
               <a
-                href="/api/vehiculos"
+                href="/"
                 class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                 >Others</a
               >
@@ -111,91 +111,101 @@
 
     <div class="container mx-auto px-4 py-20">
       <main class="container mx-auto px-4 py-20">
-        <div id="productos"></div>
-        <div class="max-w-4xl mx-auto mt-10 p-5 shadow-2xl">
-          <h2 class="text-2xl font-semibold mb-5">Agregar Productos</h2>
+        <div id="productos" class="flex justify-center items-center"></div>
+        <div
+          class="max-w-4xl mx-auto mt-10 p-8 rounded-lg shadow-xl bg-gray-50"
+        >
+          <h2 class="text-3xl font-semibold mb-8 text-center">
+            Agregar Productos
+          </h2>
           <form
             id="productos-form"
-            class="grid grid-cols-1 md:grid-cols-2 gap-4"
-            enctype="multipart/form-data"
+            class="grid grid-cols-1 md:grid-cols-2 gap-6"
+            action="/api/productos"
+            method="POST"
           >
-            <div class="mb-4">
+            <div class="flex flex-col">
               <label
-                class="block text-gray-700 text-sm font-bold mb-2"
-                for="nombre"
+                for="NombreProducto"
+                class="text-gray-700 text-sm font-semibold mb-2"
                 >Nombre</label
               >
               <input
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="nombre"
+                id="NombreProducto"
                 type="text"
                 placeholder="Nombre del producto"
-                name="nombre"
+                required
+                name="NombreProducto"
+                class="rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400"
               />
             </div>
-            <div class="mb-4">
+            <div class="flex flex-col">
               <label
-                class="block text-gray-700 text-sm font-bold mb-2"
-                for="precio"
+                for="Precio"
+                class="text-gray-700 text-sm font-semibold mb-2"
                 >Precio</label
               >
               <input
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="precio"
+                id="Precio"
                 type="number"
                 placeholder="Precio del producto"
-                name="precio"
+                name="Precio"
+                required
+                class="rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400"
               />
             </div>
-            <div class="mb-4">
+            <div class="flex flex-col">
               <label
-                class="block text-gray-700 text-sm font-bold mb-2"
-                for="descripcion"
+                for="Stock"
+                class="text-gray-700 text-sm font-semibold mb-2"
+                >Stock</label
+              >
+              <input
+                id="Stock"
+                type="number"
+                placeholder="Stock del producto"
+                name="Stock"
+                required
+                class="rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400"
+              />
+            </div>
+            <div class="col-span-2 flex flex-col">
+              <label
+                for="Descripcion"
+                class="text-gray-700 text-sm font-semibold mb-2"
                 >Descripción</label
               >
               <textarea
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="descripcion"
-                type="text"
+                id="Descripcion"
                 placeholder="Descripción del producto"
-                name="descripcion"
+                name="Descripcion"
+                required
+                class="rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 h-32 resize-none"
               ></textarea>
             </div>
-            <div class="mb-4">
+            <div class="flex flex-col">
               <label
-                class="block text-gray-700 text-sm font-bold mb-2"
-                for="imagen"
-                >Imagen</label
-              >
-              <input
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="imagen"
-                type="file"
-                name="imagen"
-              />
-            </div>
-            <div class="mb-4">
-              <label
-                class="block text-gray-700 text-sm font-bold mb-2"
-                for="categoria"
+                for="Categoria"
+                class="text-gray-700 text-sm font-semibold mb-2"
                 >Categoría</label
               >
               <select
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="categoria"
-                name="categoria"
+                id="Categoria"
+                name="Categoria"
+                required
+                class="rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400"
               >
-                <option value="1">Categoría 1</option>
-                <option value="2">Categoría 2</option>
-                <option value="3">Categoría 3</option>
+                <option value="Ropa">Ropa</option>
+                <option value="Utensillos">Utensillos</option>
+                <option value="Accesorios">Accesorios</option>
               </select>
             </div>
-            <div class="mb-4">
+            <div class="col-span-2 flex justify-center">
               <button
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="submit"
+                class="bg-white text-black font-semibold py-2 px-4 border border-black rounded transition duration-300 ease-in-out hover:bg-black hover:text-white focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 mr-2 mb-2"
               >
-                Agregar
+                Agregar Producto
               </button>
             </div>
           </form>
