@@ -5,9 +5,7 @@ const express = require("express");
 const router = express.Router();
 const app = express();
 
-const sharp = require("sharp");
-const multer = require("multer");
-const fs = require("fs");
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -26,6 +24,12 @@ Idiomas.associate(sequelize.models);
 
 router.get("/api/productos", async (req, res) => {
   try {
+    const { NombreProducto } = req.query;
+    if (NombreProducto) {
+      productos = productos.filter((producto) =>
+        producto.NombreProducto.includes(NombreProducto)
+      );
+    }
     const productos = await Productos.findAll({
       order: [["CreatedAt", "DESC"]],
     });
@@ -40,7 +44,8 @@ router.post("/api/productos", async (req, res) => {
   try {
     const producto = await Productos.create(req.body);
 
-    res.json(producto);
+    
+
     return res.redirect("/merchsview");
   } catch (error) {
     console.error("Error al crear producto:", error);
@@ -50,15 +55,19 @@ router.post("/api/productos", async (req, res) => {
 
 router.get("/api/productos?page=${page}", async (req, res) => {
   try {
-    const productos = await Productos.findAll();
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 6;
+    const offset = (page - 1) * limit;
+
+    const productos = await Productos.findAll({ limit, offset });
+
     res.json(productos);
   } catch (error) {
     console.error("Error al obtener productos:", error);
     res.status(500).send("Ocurrió un error al obtener los productos");
   }
 });
-
-router.get("/edit/:id", async (req, res) => {
+router.get("/editmerchs/:id", async (req, res) => {
   try {
     const producto = await Productos.findByPk(req.params.id);
     if (!producto) {
@@ -67,7 +76,7 @@ router.get("/edit/:id", async (req, res) => {
     }
     console.log("Producto obtenido con éxito");
     // En lugar de renderizar una vista, envía el archivo HTML estático
-    res.sendFile(path.join(__dirname, "../src/pages/edit.html"));
+    res.sendFile(path.join(__dirname, "../src/pages/editmerchs.html"));
   } catch (error) {
     console.error("Error al obtener producto:", error);
     res
@@ -84,7 +93,8 @@ router.get("/producto/:id", async (req, res) => {
       return res.status(404).json({ message: "Producto no encontrado" });
     }
     console.log("Producto obtenido con éxito");
-    res.json(producto);
+
+    res.json({ producto });
   } catch (error) {
     console.error("Error al obtener producto:", error);
     res
