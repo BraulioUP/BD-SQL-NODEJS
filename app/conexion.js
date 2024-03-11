@@ -58,8 +58,8 @@ app.get("/cars", (req, res) => {
 app.get("/404", (req, res) => {
   res.sendFile(path.join(__dirname, "./src/pages/404.html"));
 });
-app.get("/edit/:id", (req, res) => {
-  res.sendFile(path.join(__dirname, "./src/pages/edit.html"));
+app.get("/editcars/:id", (req, res) => {
+  res.sendFile(path.join(__dirname, "./src/pages/editcars.html"));
 });
 app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "./src/pages/login.html"));
