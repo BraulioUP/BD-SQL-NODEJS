@@ -7,7 +7,8 @@ select * from Usuarios;
 select * from Regiones;
 select * from Idiomas;
 select * from Vehiculos;
-go
+select * from Productos;
+go 
 INSERT INTO Regiones (Nombre) VALUES
 ('África'),
 ('Antártida'),
@@ -112,6 +113,8 @@ USE master;
 GO
 EXEC xp_readerrorlog 0, 1;
 GO
+DELETE FROM Productos;
+
 
 INSERT INTO Usuarios (RegionID, IdiomaID, Nombre, Apellido, Correo, ContrasenaHash) VALUES
 (1, 1, 'Juan', 'Perez', 'juan.perez@email.com', 'fadsf'),
@@ -128,7 +131,7 @@ INSERT INTO Usuarios (RegionID, IdiomaID, Nombre, Apellido, Correo, ContrasenaHa
 GO
 
 INSERT INTO Vehiculos (
-    Modelo, Año, Tipo, Autonomia, TiempoDeCarga, Potencia, 
+    Modelo, Ano, Tipo, Autonomia, TiempoDeCarga, Potencia, 
     Traccion, CapacidadDeBateria, NumeroDeAsientos, Precio, 
     ColorExterior, ColorInterior, OpcionesDeRuedas, PaqueteDeAutopiloto, 
     TechoSolar, ConexionInternet, SistemaDeSonidoPremium, ModoDeConduccion
@@ -145,6 +148,26 @@ VALUES
     ('Model X Plaid', 2023, 'SUV', 547, 7.5, 1020, 'Tracción total', 100, 6, 119990.00, 'Azul Medianoche', 'Blanco', '22" Turbine', 1, 1, 1, 1, 'Plaid'),
     ('Cybertruck Dual Motor', 2023, 'Pickup', 610, 8, 690, 'Tracción total', 150, 6, 49990.00, 'Plata', 'Negro', '20" Off-road', 1, 0, 1, 0, 'Estándar');
 
+
+
+INSERT INTO Productos (NombreProducto, Descripcion, Precio, Stock, Categoria)
+VALUES 
+    ('Camiseta con Logo', 'Camiseta de algodón con el logo de la marca estampado', 19.99, 100, 'Ropa'),
+    ('Taza de Cerámica', 'Taza de cerámica con diseño exclusivo', 9.99, 200, 'Utensilios'),
+    ('Gorra Bordada', 'Gorra ajustable con bordado del nombre de la marca', 14.99, 150, 'Accesorios');
+
+INSERT INTO Productos (NombreProducto, Descripcion, Precio, Stock, Categoria)
+VALUES 
+    ('Sudadera con Capucha', 'Sudadera de alta calidad con capucha y bolsillo canguro', 39.99, 80, 'Ropa'),
+    ('Botella de Agua Reutilizable', 'Botella de agua de acero inoxidable con tapa hermética', 12.99, 150, 'Utensilios'),
+    ('Mochila Estampada', 'Mochila resistente con estampado personalizado', 29.99, 100, 'Accesorios'),
+    ('Bufanda de Lana', 'Bufanda suave y abrigada de lana con patrón a cuadros', 17.99, 120, 'Ropa'),
+    ('Llavero de Cuero', 'Llavero de cuero genuino con grabado personalizado', 7.99, 200, 'Accesorios'),
+    ('Calcetines Divertidos', 'Calcetines de algodón con diseños únicos y coloridos', 6.99, 300, 'Ropa'),
+    ('Paraguas Plegable', 'Paraguas resistente y compacto con apertura automática', 19.99, 80, 'Accesorios'),
+    ('Bolígrafo Metálico', 'Bolígrafo de tinta gel con cuerpo metálico y diseño elegante', 8.99, 250, 'Papelería'),
+    ('Parche Bordado', 'Parche bordado con diseño exclusivo para personalizar tu ropa', 3.99, 400, 'Accesorios'),
+    ('Libreta de Notas', 'Libreta de tapa dura con papel de alta calidad y diseño moderno', 14.99, 150, 'Papelería');
 
 DECLARE @Password NVARCHAR(50);
 SET @Password = 'fdaf';
@@ -200,16 +223,54 @@ CREATE TABLE Vehiculos (
     ConexionInternet BIT, -- 0 para No, 1 para Sí, considerando conectividad LTE o 5G
     SistemaDeSonidoPremium BIT, -- 0 para No, 1 para Sí
     ModoDeConduccion VARCHAR(50), -- Por ejemplo, Estándar, Eco, Deportivo, etc.
-	Imagen VARBINARY(MAX)
+	Imagen VARBINARY(MAX),
+	CreatedAt DATETIME NOT NULL DEFAULT GETDATE(),
 );
 
+CREATE TABLE Productos (
+    ProductoID INT PRIMARY KEY IDENTITY,
+    NombreProducto NVARCHAR(100),
+    Descripcion NVARCHAR(255),
+    Precio DECIMAL(10, 2),
+    Stock INT,
+	Categoria NVARCHAR(255),
+	CreatedAt DATETIME NOT NULL DEFAULT GETDATE(),
 
+);
+
+CREATE TABLE Ordenes (
+    OrdenID INT PRIMARY KEY IDENTITY,
+    ClienteID INT,
+    FechaOrden DATETIME,
+    TotalOrden DECIMAL(10, 2),
+    FOREIGN KEY (ClienteID) REFERENCES Clientes(ClienteID)
+);
+
+CREATE TABLE DetallesOrden (
+    DetalleOrdenID INT PRIMARY KEY IDENTITY,
+    OrdenID INT,
+    ProductoID INT,
+    Cantidad INT,
+    PrecioUnitario DECIMAL(10, 2),
+    FOREIGN KEY (OrdenID) REFERENCES Ordenes(OrdenID),
+    FOREIGN KEY (ProductoID) REFERENCES Productos(ProductoID)
+);
+CREATE TABLE Clientes (
+    ClienteID INT PRIMARY KEY IDENTITY,
+    UsuarioID INT,  -- Columna para la relación con Usuarios
+    Nombre NVARCHAR(50),
+    Apellido NVARCHAR(50),
+    CorreoElectronico NVARCHAR(100),
+    Telefono NVARCHAR(15),
+    Direccion NVARCHAR(255),
+    FOREIGN KEY (UsuarioID) REFERENCES Usuarios(UsuarioID)  -- Clave foránea para la relación
+);
 
 /*AÑADIR DATOS EN TABLAS YA CREADAS*/
-ALTER TABLE Usuarios
-ADD Telefono NVARCHAR(50) NULL;
-ALTER TABLE Vehiculos
-ADD Imagen VARBINARY(MAX);
+ALTER TABLE Productos
+ADD Categoria NVARCHAR(255);
+ALTER TABLE Productos
+ADD createdAt DATETIME NOT NULL DEFAULT GETDATE();
 
 /* procedimientos almacenados para registro e inicio de sesión */
 CREATE PROCEDURE RegistrarUsuario
