@@ -68,7 +68,12 @@ app.get("/login", (req, res) => {
 app.get("/merchs", (req, res) => {
   res.sendFile(path.join(__dirname, "./src/pages/merchs.html"));
 });
-
+app.get("/merchsview", (req, res) => {
+  res.sendFile(path.join(__dirname, "./src/pages/merchsview.html"));
+});
+app.get("/editmerchs/:id", (req, res) => {
+  res.sendFile(path.join(__dirname, "./src/pages/editmerchs.html"));
+});
 // Prueba la conexión a la base de datos
 sequelize
   .authenticate()
