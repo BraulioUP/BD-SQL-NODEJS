@@ -36,6 +36,18 @@ router.get("/api/productos", async (req, res) => {
   }
 });
 
+router.post("/api/productos", async (req, res) => {
+  try {
+    const producto = await Productos.create(req.body);
+
+    res.json(producto);
+    return res.redirect("/merchsview");
+  } catch (error) {
+    console.error("Error al crear producto:", error);
+    res.status(500).send("Ocurrió un error al crear el producto");
+  }
+});
+
 router.get("/api/productos?page=${page}", async (req, res) => {
   try {
     const productos = await Productos.findAll();
