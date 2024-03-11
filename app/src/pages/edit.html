@@ -371,42 +371,59 @@
               </div>
             </div>
             <div
-              class="flex flex-col items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8"
+              class="py-12 px-4 sm:px-6 lg:px-1 flex justify-center items-center"
             >
-              <div class="max-w-md w-full space-y-8">
-                <div>
-                  <img
-                    class="mx-auto h-12 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                    alt="Workflow"
-                  />
+              <div class="max-w-full mx-auto">
+                <div class="text-center">
                   <h2
-                    class="mt-6 text-center text-3xl font-extrabold text-gray-900"
+                    id="Imagen-name"
+                    class="text-3xl font-semibold text-gray-900"
                   >
                     Sube la imagen de tu vehículo
                   </h2>
                 </div>
-                <div class="rounded-md shadow-sm -space-y-px">
-                  <div>
-                    <label for="Imagen" class="sr-only"
-                      >Imagen del Vehículo</label
-                    >
-                    <input
-                      id="Imagen"
-                      name="Imagen"
-                      type="file"
-                      class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                      placeholder="Imagen del Vehículo"
-                    />
-                  </div>
-                </div>
                 <div>
-                  <button
-                    type="submit"
-                    class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  <label for="imagen" class="sr-only"
+                    >Imagen del Vehículo</label
                   >
-                    Subir
-                  </button>
+                  <div
+                    class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md"
+                    id="drop-zone"
+                  >
+                    <div class="space-y-1 text-center">
+                      <svg
+                        class="mx-auto h-12 w-12 text-gray-400"
+                        stroke="currentColor"
+                        fill="none"
+                        viewBox="0 0 48 48"
+                        aria-hidden="true"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M8 14v20c0 2.209 1.791 4 4 4h24c2.209 0 4-1.791 4-4V14m-16 6v10m8-10v10m-8-10h16m-4-18v8m-8-8v8m0-8l-4-4m8 0l-4 4"
+                        ></path>
+                      </svg>
+                      <div class="flex text-sm text-gray-600">
+                        <label
+                          for="Imagen"
+                          class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+                        >
+                          <span>Selecciona un archivo</span>
+                          <input
+                            id="Imagen"
+                            name="Imagen"
+                            type="file"
+                            class="sr-only"
+                          />
+                        </label>
+                      </div>
+                      <p class="text-xs text-gray-500">
+                        PNG, JPG, GIF hasta 10MB
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -431,7 +448,7 @@
               <button
                 value="Enviar"
                 type="submit"
-                class="mt-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                class="bg-white text-black font-semibold py-2 px-4 border border-black rounded transition duration-300 ease-in-out hover:bg-black hover:text-white focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 mr-2 mb-2"
               >
                 Actualizar
               </button>
@@ -439,7 +456,7 @@
                 value="Enviar"
                 type="submit"
                 id="delete-button"
-                class="mt-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                class="bg-red-700 text-white font-semibold py-2 px-4 border border-red rounded transition duration-300 ease-in-out hover:bg-black hover:text-white focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 mr-2 mb-2"
               >
                 Eliminar
               </button>
@@ -449,7 +466,39 @@
       </main>
       <div id="paginacion"></div>
     </div>
+    <script>
+      var fileUpload = document.getElementById("Imagen");
+      var fileName = document.getElementById("Imagen-name");
 
+      fileUpload.addEventListener("change", function (event) {
+        var uploadedFile = event.target.files[0];
+        if (uploadedFile) {
+          fileName.textContent = uploadedFile.name;
+        } else {
+          fileName.textContent = "Selecciona un archivo";
+        }
+      });
+      var dropZone = document.getElementById("drop-zone");
+      var fileUpload = document.getElementById("Imagen");
+      var fileName = document.getElementById("Imagen-name");
+
+      dropZone.addEventListener("dragover", function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+        event.dataTransfer.dropEffect = "copy";
+      });
+
+      dropZone.addEventListener("drop", function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+        var files = event.dataTransfer.files; // Los archivos arrastrados y soltados
+
+        if (files.length > 0) {
+          fileUpload.files = files;
+          fileName.textContent = files[0].name;
+        }
+      });
+    </script>
     <div
       class="fixed z-10 inset-0 overflow-y-auto"
       id="modal"
@@ -503,6 +552,7 @@
         </div>
       </div>
     </div>
+
     <script>
       function showModal(action) {
         // Actualiza el contenido del modal en función de la acción
@@ -647,10 +697,78 @@
           // Haz lo mismo para los otros campos del formulario...
         })
         .catch((error) => console.error("Error:", error));
+
       document
         .getElementById("vehiculo-form")
         .addEventListener("submit", function (event) {
           event.preventDefault();
+          document;
+          const camposNumericos = [
+            { id: "Ano", valor: document.getElementById("Ano").value },
+            {
+              id: "Autonomia",
+              valor: document.getElementById("Autonomia").value,
+            },
+            {
+              id: "TiempoDeCarga",
+              valor: document.getElementById("TiempoDeCarga").value,
+            },
+            {
+              id: "Potencia",
+              valor: document.getElementById("Potencia").value,
+            },
+            {
+              id: "CapacidadDeBateria",
+              valor: document.getElementById("CapacidadDeBateria").value,
+            },
+            {
+              id: "NumeroDeAsientos",
+              valor: document.getElementById("NumeroDeAsientos").value,
+            },
+            {
+              id: "Precio",
+              valor: document.getElementById("Precio").value,
+            },
+          ];
+
+          for (let campo of camposNumericos) {
+            if (isNaN(campo.valor)) {
+              document.getElementById(campo.id).focus();
+
+              return;
+            }
+          }
+
+          const camposDeTexto = [
+            {
+              id: "Modelo",
+              valor: document.getElementById("Modelo").value,
+            },
+            { id: "Tipo", valor: document.getElementById("Tipo").value },
+            {
+              id: "Traccion",
+              valor: document.getElementById("Traccion").value,
+            },
+            {
+              id: "ColorExterior",
+              valor: document.getElementById("ColorExterior").value,
+            },
+            {
+              id: "ColorInterior",
+              valor: document.getElementById("ColorInterior").value,
+            },
+            {
+              id: "OpcionesDeRuedas",
+              valor: document.getElementById("OpcionesDeRuedas").value,
+            },
+          ];
+          for (let campo of camposDeTexto) {
+            if (!isNaN(campo.valor)) {
+              document.getElementById(campo.id).focus();
+
+              return;
+            }
+          }
 
           showModal("actualizar");
           document

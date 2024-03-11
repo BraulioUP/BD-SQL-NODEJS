@@ -11,6 +11,8 @@
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="" />
+    <link rel="icon" type="image/svg+xml" href="/app/src/public/e-corp.jpg" />
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
     <link href="/tailwind.config.js" rel="stylesheet" />
@@ -367,42 +369,57 @@
             </div>
           </div>
           <div
-            class="flex flex-col items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8"
+            class="py-12 px-4 sm:px-6 lg:px-1 flex justify-center items-center"
           >
-            <div class="max-w-md w-full space-y-8">
-              <div>
-                <img
-                  class="mx-auto h-12 w-auto"
-                  src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                  alt="Workflow"
-                />
+            <div class="max-w-full mx-auto">
+              <div class="text-center">
                 <h2
-                  class="mt-6 text-center text-3xl font-extrabold text-gray-900"
+                  id="Imagen-name"
+                  class="text-3xl font-semibold text-gray-900"
                 >
                   Sube la imagen de tu vehículo
                 </h2>
               </div>
-              <div class="rounded-md shadow-sm -space-y-px">
-                <div>
-                  <label for="Imagen" class="sr-only"
-                    >Imagen del Vehículo</label
-                  >
-                  <input
-                    id="Imagen"
-                    name="Imagen"
-                    type="file"
-                    class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    placeholder="Imagen del Vehículo"
-                  />
-                </div>
-              </div>
               <div>
-                <button
-                  type="submit"
-                  class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                <label for="imagen" class="sr-only">Imagen del Vehículo</label>
+                <div
+                  class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md"
+                  id="drop-zone"
                 >
-                  Subir
-                </button>
+                  <div class="space-y-1 text-center">
+                    <svg
+                      class="mx-auto h-12 w-12 text-gray-400"
+                      stroke="currentColor"
+                      fill="none"
+                      viewBox="0 0 48 48"
+                      aria-hidden="true"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M8 14v20c0 2.209 1.791 4 4 4h24c2.209 0 4-1.791 4-4V14m-16 6v10m8-10v10m-8-10h16m-4-18v8m-8-8v8m0-8l-4-4m8 0l-4 4"
+                      ></path>
+                    </svg>
+                    <div class="flex text-sm text-gray-600">
+                      <label
+                        for="Imagen"
+                        class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+                      >
+                        <span>Selecciona un archivo</span>
+                        <input
+                          id="Imagen"
+                          name="Imagen"
+                          type="file"
+                          class="sr-only"
+                        />
+                      </label>
+                    </div>
+                    <p class="text-xs text-gray-500">
+                      PNG, JPG, GIF hasta 10MB
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -429,7 +446,7 @@
               value="Enviar"
               type="submit"
               onclick="showModal(event, 'guardar')"
-              class="mt-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              class="bg-white text-black font-semibold py-2 px-4 border border-black rounded transition duration-300 ease-in-out hover:bg-black hover:text-white focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 mr-85 mb-2"
             >
               Guardar
             </button>

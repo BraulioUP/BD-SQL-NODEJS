@@ -1,8 +1,8 @@
 const { Sequelize, Model, DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-  const Productos = sequelize.define(
-    "Productos",
+  class Productos extends Model {}
+  Productos.init(
     {
       ProductoID: {
         type: DataTypes.INTEGER,
@@ -10,26 +10,26 @@ module.exports = (sequelize) => {
         autoIncrement: true,
       },
       NombreProducto: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
+        type: DataTypes.STRING,
       },
       Descripcion: {
-        type: DataTypes.STRING(255),
-        allowNull: true,
+        type: DataTypes.STRING,
       },
       Precio: {
         type: DataTypes.DECIMAL(10, 2),
-        allowNull: false,
       },
       Stock: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+      },
+      Categoria: {
+        type: DataTypes.STRING,
       },
     },
     {
-      tableName: "Productos",
-      timestamps: false,
+      sequelize,
       modelName: "Productos",
+      tableName: "Productos", // Asegúrate de que el tableName esté en plural y en minúsculas si sigue tu convención
+      timestamps: false, // Desactiva la gestión automática de las columnas createdAt y updatedAt
     }
   );
 

@@ -15,6 +15,7 @@ const Regiones = require("../models/Regiones")(sequelize, Sequelize);
 const Idiomas = require("../models/Idiomas")(sequelize, Sequelize);
 const Vehiculo = require("../models/Vehiculo")(sequelize, Sequelize);
 
+
 // Establece las asociaciones
 User.associate(sequelize.models);
 Regiones.associate(sequelize.models);
@@ -31,5 +32,8 @@ router.use(routerregiones);
 
 const routervehiculo = require("./routervehiculo");
 router.use(routervehiculo);
+
+const routerproductos = require("./routerproductos");
+router.use(routerproductos);
 
 module.exports = router;
