@@ -13,7 +13,23 @@
     <link rel="stylesheet" href="" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
-    <link href="/tailwind.config.js" rel="stylesheet" />
+    <link rel="stylesheet" href="../output.css" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              clifford: "#da373d",
+              "custom-blue": "#007bff",
+              "custom-gray": "#f8f9fa",
+            },
+            fontFamily: {
+              sans: ["UI Sans", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
   </head>
   <body>
     <!--[if lt IE 7]>
@@ -178,51 +194,54 @@
       </div>
     </main>
     <script>
-      document
-        .getElementById("submit")
-        .addEventListener("click", function (event) {
-          event.preventDefault();
+      document.addEventListener("DOMContentLoaded", (event) => {
+        // El formulario de inicio de sesión
+        document
+          .getElementById("submit")
+          .addEventListener("click", function (event) {
+            event.preventDefault();
+            var Correo = document.getElementById("Correo").value;
+            var Nombre = document.getElementById("Nombre").value;
+            var contrasenaHash =
+              document.getElementById("ContrasenaHash").value;
 
-          var Correo = document.getElementById("Correo").value;
-          var Nombre = document.getElementById("Nombre").value;
-          var contrasenaHash = document.getElementById("ContrasenaHash").value;
-
-          fetch("/login", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              Correo,
-              Nombre: Nombre,
-              ContrasenaHash: ContrasenaHash,
-            }),
-          })
-            .then((response) => {
-              // Verificar si la respuesta es JSON
-              const contentType = response.headers.get("content-type");
-              if (
-                contentType &&
-                contentType.indexOf("application/json") !== -1
-              ) {
-                return response.json();
-              } else {
-                throw new Error("El servidor no respondió con JSON");
-              }
+            fetch("/login", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                Correo,
+                Nombre: Nombre,
+                ContrasenaHash: ContrasenaHash,
+              }),
             })
-            .then((data) => {
-              if (data.message) {
-                alert(data.message);
-              } else {
-                console.log("Usuario inició sesión:", data);
-                document.getElementById("Nombre").textContent = data.Nombre;
-                document.getElementById("Correo").textContent = data.Correo;
-              }
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-            });
-        });
+              .then((response) => {
+                // Verificar si la respuesta es JSON
+                const contentType = response.headers.get("content-type");
+                if (
+                  contentType &&
+                  contentType.indexOf("application/json") !== -1
+                ) {
+                  return response.json();
+                } else {
+                  throw new Error("El servidor no respondió con JSON");
+                }
+              })
+              .then((data) => {
+                if (data.message) {
+                  alert(data.message);
+                } else {
+                  console.log("Usuario inició sesión:", data);
+                  document.getElementById("Nombre").textContent = data.Nombre;
+                  document.getElementById("Correo").textContent = data.Correo;
+                }
+              })
+              .catch((error) => {
+                console.error("Error:", error);
+              });
+          });
+      });
     </script>
   </body>
 </html>
