@@ -5,6 +5,7 @@ const express = require("express");
 const router = express.Router();
 const app = express();
 const jwt = require("jsonwebtoken");
+const session = require("express-session");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -100,30 +101,30 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ message: "Credenciales incorrectas" });
     }
 
-    const token = jwt.sign({ UsuarioId: user.UsuarioId }, "keyboard cat", {
+    const token = jwt.sign({ UsuarioId: user.UsuarioId }, "Karma is cat", {
       expiresIn: "1h",
     });
     // Guarda el nombre y correo del usuario en la sesión
     req.session.user = {
       Nombre: user.Nombre,
       Correo: user.Correo,
+      ContrasenaHash: user.ContrasenaHash,
     };
     res.redirect("/");
   } catch (error) {
     console.error("Error al iniciar sesión:", error);
-    res.status(500).json({ message: "Ocurrió un error al iniciar sesión" });
+    res.status(401).json({ message: "Ocurrió un error al iniciar sesión" });
   }
 });
 router.post("/logout", (req, res) => {
   req.session.destroy((err) => {
     if (err) {
-      console.error("Error al cerrar sesión:", err);
-      return res
-        .status(500)
-        .json({ message: "Ocurrió un error al cerrar sesión" });
+      console.log(err);
+      return res.status(401).json({ message: "Error al cerrar la sesión" });
     }
 
-    res.json({ message: "Cierre de sesión exitoso" });
+    res.clearCookie("Karma is cat");
+    res.json({ message: "Sesión cerrada correctamente" });
   });
 });
 router.get("/me", (req, res) => {
@@ -133,10 +134,17 @@ router.get("/me", (req, res) => {
 
   res.json(req.session.user);
 });
+
 const verificarToken = require("./middlewares/verificarToken"); // Asegúrate de que la ruta sea correcta
 
 router.get("/ruta_protegida", verificarToken, (req, res) => {
-  // Esta ruta está protegida, solo los usuarios autenticados pueden acceder a ella
-  res.json({ message: "Esta es una ruta protegida" });
+
+  const user = req.user;
+
+  if (!user) {
+    return res.status(401).json({ message: "No estás autenticado" });
+  }
+
+  res.json({ message: "Acceso concedido", user: user });
 });
 module.exports = router;
