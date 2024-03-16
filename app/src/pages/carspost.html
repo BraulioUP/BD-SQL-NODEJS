@@ -455,6 +455,39 @@
         </form>
       </div>
     </main>
+    <script>
+      var fileUpload = document.getElementById("Imagen");
+      var fileName = document.getElementById("Imagen-name");
+
+      fileUpload.addEventListener("change", function (event) {
+        var uploadedFile = event.target.files[0];
+        if (uploadedFile) {
+          fileName.textContent = uploadedFile.name;
+        } else {
+          fileName.textContent = "Selecciona un archivo";
+        }
+      });
+      var dropZone = document.getElementById("drop-zone");
+      var fileUpload = document.getElementById("Imagen");
+      var fileName = document.getElementById("Imagen-name");
+
+      dropZone.addEventListener("dragover", function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+        event.dataTransfer.dropEffect = "copy";
+      });
+
+      dropZone.addEventListener("drop", function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+        var files = event.dataTransfer.files; // Los archivos arrastrados y soltados
+
+        if (files.length > 0) {
+          fileUpload.files = files;
+          fileName.textContent = files[0].name;
+        }
+      });
+    </script>
     <h1 class="text-4xl font-bold text-center mb-8 text-black"></h1>
 
     <footer class="bg-gray-100">

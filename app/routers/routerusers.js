@@ -4,8 +4,7 @@ const path = require("path");
 const express = require("express");
 const router = express.Router();
 const app = express();
-
-
+const jwt = require("jsonwebtoken");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -89,36 +88,55 @@ router.post("/api/users", async (req, res) => {
   res.json({ success: true, message: "Registro completado con éxito." });
 });
 
-router.post("/api/login", async (req, res) => {
+router.post("/login", async (req, res) => {
+  const { Correo, Nombre, ContrasenaHash } = req.body;
+
   try {
-    const { Correo, ContrasenaHash } = req.body;
+    const user = await User.findOne({
+      where: { Correo, Nombre },
+    });
 
-    // Buscar al usuario con el correo proporcionado
-    const usuario = await User.findOne({ where: { Correo } });
-
-    if (!usuario) {
-      return res
-        .status(401)
-        .json({ message: "Correo o contraseña incorrectos" });
+    if (!user || user.ContrasenaHash !== ContrasenaHash) {
+      return res.status(401).json({ message: "Credenciales incorrectas" });
     }
 
-    // Verificar la contraseña
-    // Aquí asumimos que estás almacenando las contraseñas como hashes
-    // y que ContrasenaHash es el hash de la contraseña proporcionada por el usuario
-    if (usuario.ContrasenaHash !== ContrasenaHash) {
-      return res
-        .status(401)
-        .json({ message: "Correo o contraseña incorrectos" });
-    }
-
-    // Si las credenciales son correctas, iniciar la sesión y responder con los datos del usuario
-    // Aquí deberías generar un token de sesión o algo similar
-    res.json(usuario);
+    const token = jwt.sign({ UsuarioId: user.UsuarioId }, "keyboard cat", {
+      expiresIn: "1h",
+    });
+    // Guarda el nombre y correo del usuario en la sesión
+    req.session.user = {
+      Nombre: user.Nombre,
+      Correo: user.Correo,
+    };
+    res.redirect("/");
   } catch (error) {
     console.error("Error al iniciar sesión:", error);
-    res.status(500).send("Ocurrió un error al iniciar sesión");
+    res.status(500).json({ message: "Ocurrió un error al iniciar sesión" });
   }
 });
+router.post("/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Error al cerrar sesión:", err);
+      return res
+        .status(500)
+        .json({ message: "Ocurrió un error al cerrar sesión" });
+    }
 
+    res.json({ message: "Cierre de sesión exitoso" });
+  });
+});
+router.get("/me", (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).json({ message: "No estás autenticado" });
+  }
 
+  res.json(req.session.user);
+});
+const verificarToken = require("./middlewares/verificarToken"); // Asegúrate de que la ruta sea correcta
+
+router.get("/ruta_protegida", verificarToken, (req, res) => {
+  // Esta ruta está protegida, solo los usuarios autenticados pueden acceder a ella
+  res.json({ message: "Esta es una ruta protegida" });
+});
 module.exports = router;

@@ -5,7 +5,6 @@ const express = require("express");
 const router = express.Router();
 const app = express();
 
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -15,11 +14,11 @@ const Regiones = require("../models/Regiones")(sequelize, Sequelize);
 const Idiomas = require("../models/Idiomas")(sequelize, Sequelize);
 const Vehiculo = require("../models/Vehiculo")(sequelize, Sequelize);
 
-
 // Establece las asociaciones
 User.associate(sequelize.models);
 Regiones.associate(sequelize.models);
 Idiomas.associate(sequelize.models);
+
 
 const routerusers = require("./routerusers");
 router.use(routerusers);

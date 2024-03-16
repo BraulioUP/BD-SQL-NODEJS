@@ -1748,8 +1748,33 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
                 </div>
               </div>
               <div class="p-2 md:block text-left">
-                <h2 class="text-sm font-semibold text-gray-800">John Doe</h2>
-                <p class="text-xs text-gray-500">Administrator</p>
+                <h2
+                  id="Nombre"
+                  name="Nombre"
+                  class="text-sm font-semibold text-gray-800"
+                ></h2>
+                <p id="Correo" name="Correo" class="text-xs text-gray-500"></p>
+                <script>
+                  window.onload = function () {
+                    fetch("/me")
+                      .then((response) => response.json())
+                      .then((data) => {
+                        if (data.Nombre && data.Correo) {
+                          document.getElementById(
+                            "Nombre"
+                          ).textContent = `${data.Nombre}`;
+                          document.getElementById(
+                            "Correo"
+                          ).textContent = `${data.Correo}`;
+                        } else {
+                          console.error(
+                            "Error: Nombre o Correo son null o undefined"
+                          );
+                        }
+                      })
+                      .catch((error) => console.error("Error:", error));
+                  };
+                </script>
               </div>
             </button>
             <ul

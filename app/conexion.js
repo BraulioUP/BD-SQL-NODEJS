@@ -3,6 +3,7 @@ const path = require("path");
 
 const { Sequelize } = require("sequelize");
 //const insertUser = require("./migration");
+const session = require("express-session");
 
 // Inicializar la app Express
 const app = express();
@@ -31,11 +32,22 @@ sequelize
     console.error("Error al sincronizar modelos:", err);
   });
 
+app.set("trust proxy", 1); // trust first proxy
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: process.env.NODE_ENV === "production" }, // Usar 'secure: true' solo en producción
+  })
+);
+
 // Inserta datos en la base de datos
 //insertUser();
 
 // Ruta para obtener datos de usuarios en formato JSON
 const routes = require("./routers/routes");
+const router = require("./routers/routeridioma");
 app.use(routes);
 
 // Ruta para servir la página HTML de usuarios
@@ -74,6 +86,10 @@ app.get("/merchsview", (req, res) => {
 app.get("/editmerchs/:id", (req, res) => {
   res.sendFile(path.join(__dirname, "./src/pages/editmerchs.html"));
 });
+app.get("/login", (req, res) => {
+  res.sendFile(path.join(__dirname, "./src/pages/login.html"));
+});
+
 // Prueba la conexión a la base de datos
 sequelize
   .authenticate()
