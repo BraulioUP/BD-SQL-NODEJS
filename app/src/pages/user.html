@@ -188,18 +188,41 @@
                 usuario.ContrasenaHash || "No especificado"
               }`; // Ajusta 'hash' según tu modelo de Usuarios
 
+              // Crear botón de eliminar
+              const eliminarBtn = document.createElement("button");
+              eliminarBtn.textContent = "Eliminar";
+              eliminarBtn.className = "btn btn-danger";
+              eliminarBtn.onclick = function () {
+                eliminarUsuario(usuario.UsuarioId);
+              };
+
               // Añadir todos los elementos al li
               li.appendChild(nombre);
               li.appendChild(correo);
               li.appendChild(region);
               li.appendChild(idioma);
               li.appendChild(contrasenaHash);
+              li.appendChild(eliminarBtn);
 
               // Añadir el li a la lista
               lista.appendChild(li);
             });
           })
           .catch((error) => console.error("Error al cargar usuarios:", error));
+      }
+      // Función para eliminar un usuario
+      function eliminarUsuario(id) {
+        fetch(`/api/users/${id}`, {
+          method: "DELETE",
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Error al eliminar usuario");
+            }
+            // Recargar la lista de usuarios después de eliminar
+            cargarUsuarios();
+          })
+          .catch((error) => console.error("Error al eliminar usuario:", error));
       }
 
       // Llamar a cargarUsuarios al cargar la página

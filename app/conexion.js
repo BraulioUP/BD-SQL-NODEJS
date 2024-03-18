@@ -1,9 +1,12 @@
 const express = require("express");
 const path = require("path");
+const passport = require("passport");
 
 const { Sequelize } = require("sequelize");
 //const insertUser = require("./migration");
 const session = require("express-session");
+
+const cors = require("cors");
 
 // Inicializar la app Express
 const app = express();
@@ -16,6 +19,18 @@ const sequelize = require("./controllers/database");
 
 // Importa el modelos de la base de datos
 //const User = require("./Users")(sequelize, Sequelize);
+// Importa el middleware cors
+
+// Configura las opciones de cors
+const corsOptions = {
+  origin: "http://localhost:4321", // Reemplaza esto con tu dominio
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true, // Permite las cookies de sesión
+  optionsSuccessStatus: 200, // Algunos navegadores antiguos (IE11, varios SmartTVs) se ahogan con 204
+};
+
+// Usa el middleware cors con las opciones configuradas
+app.use(cors(corsOptions));
 
 // Sincronizar los modelos con la base de datos
 sequelize
@@ -44,13 +59,15 @@ app.use(
     },
   })
 );
+// Inicializa Passport y la sesión de Passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Inserta datos en la base de datos
 //insertUser();
 
 // Ruta para obtener datos de usuarios en formato JSON
 const routes = require("./routers/routes");
-const router = require("./routers/routeridioma");
 app.use(routes);
 
 // Ruta para servir la página HTML de usuarios
@@ -91,6 +108,13 @@ app.get("/editmerchs/:id", (req, res) => {
 });
 app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "./src/pages/login.html"));
+});
+
+app.get("/robots.txt", (req, res) => {
+  res.sendFile(path.join(__dirname, "/robots.txt"));
+});
+app.get("/sitemap.xml", (req, res) => {
+  res.sendFile(path.join(__dirname, "/sitemap.xml"));
 });
 
 // Prueba la conexión a la base de datos

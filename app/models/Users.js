@@ -16,7 +16,6 @@ module.exports = (sequelize) => {
       },
       RegionId: {
         type: Sequelize.INTEGER,
-        allowNull: true,
         references: {
           model: "Regiones", // Nombre de la tabla
           key: "RegionId",
@@ -24,7 +23,6 @@ module.exports = (sequelize) => {
       },
       IdiomaId: {
         type: Sequelize.INTEGER,
-        allowNull: true,
         references: {
           model: "Idiomas", // Nombre de la tabla
           key: "IdiomaId",
@@ -52,11 +50,9 @@ module.exports = (sequelize) => {
       },
       Telefono: {
         type: Sequelize.STRING,
-        allowNull: false,
       },
       Direccion: {
         type: Sequelize.STRING,
-        allowNull: false,
       },
     },
     {
