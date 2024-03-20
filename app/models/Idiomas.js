@@ -18,6 +18,10 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      Dial_Code: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     },
     {
       tableName: "Idiomas",

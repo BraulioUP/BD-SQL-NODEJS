@@ -12,6 +12,12 @@ const User = require("../models/Users")(sequelize, Sequelize);
 const Regiones = require("../models/Regiones")(sequelize, Sequelize);
 const Idiomas = require("../models/Idiomas")(sequelize, Sequelize);
 const Vehiculo = require("../models/Vehiculo")(sequelize, Sequelize);
+const Productos = require("../models/Productos")(sequelize, Sequelize);
+const CreditCardInfo = require("../models/CreditCardInfo")(
+  sequelize,
+  Sequelize
+);
+
 const session = require("express-session");
 
 // Establece las asociaciones
@@ -33,5 +39,8 @@ router.use(routervehiculo);
 
 const routerproductos = require("./routerproductos");
 router.use(routerproductos);
+
+const routercreditcard = require("./routerCreditcard");
+router.use(routercreditcard);
 
 module.exports = router;

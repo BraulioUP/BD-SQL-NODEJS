@@ -30,15 +30,12 @@ module.exports = (sequelize) => {
       },
       Nombre: {
         type: Sequelize.STRING,
-        allowNull: false,
       },
       Apellido: {
         type: Sequelize.STRING,
-        allowNull: false,
       },
       Correo: {
         type: Sequelize.STRING,
-        allowNull: false,
         unique: true,
         validate: {
           isEmail: true, // Validación para asegurar que el campo es un correo electrónico
@@ -46,7 +43,6 @@ module.exports = (sequelize) => {
       },
       ContrasenaHash: {
         type: Sequelize.STRING,
-        allowNull: true,
       },
       Telefono: {
         type: Sequelize.STRING,
