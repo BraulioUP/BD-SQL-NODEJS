@@ -132,6 +132,7 @@ USE master;
 GO
 EXEC xp_readerrorlog 0, 1;
 GO
+<<<<<<< HEAD
 DELETE FROM Usuarios;
 
 
@@ -141,6 +142,17 @@ INSERT INTO Usuarios (RegionID, IdiomaID, Nombre, Apellido, Correo, ContrasenaHa
 (2, 80, 'Sofia', 'Lopez', 'sofia.lopez@email.com', 'fadsf'),
 (3, 81, 'Ana', 'Gonzalez', 'ana.gonzalez@email.com', 'hla'),
 (3, 82, 'admin', 'admin', 'admin@gmail.com', 'admin123');
+=======
+DELETE FROM Idiomas;
+
+
+INSERT INTO Usuarios (RegionID, IdiomaID, Nombre, Apellido, Correo, ContrasenaHash) VALUES
+(1, 1, 'Juan', 'Perez', 'juan.perez@email.com', 'fadsf'),
+(2, 1, 'Carlos', 'Martinez', 'carlos.martinez@email.com', 'braul'),
+(2, 3, 'Sofia', 'Lopez', 'sofia.lopez@email.com', 'fadsf'),
+(3, 2, 'Ana', 'Gonzalez', 'ana.gonzalez@email.com', 'hla'),
+(3, 2, 'admin', 'admin', 'admin@gmail.com', 'admin123')
+>>>>>>> cec9080b09d62de22a63cbd53db11f996fa5c112
 
 INSERT INTO Usuarios (RegionID, IdiomaID, Nombre, Apellido, Correo, ContrasenaHash) VALUES
 (1, 100, 'Juan', 'Perez', 'juan.perez@email.com', 'fadsf'),
@@ -207,9 +219,15 @@ GO
 
 CREATE TABLE Idiomas (
     IdiomaID INT PRIMARY KEY IDENTITY,
+<<<<<<< HEAD
     Nombre VARCHAR(255),
     Codigo VARCHAR(10),
 	Dial_Code VARCHAR(10)
+=======
+    Nombre VARCHAR(255) NOT NULL,
+    Codigo VARCHAR(10) NOT NULL,
+	Dial_Code VARCHAR(10) NOT NULL
+>>>>>>> cec9080b09d62de22a63cbd53db11f996fa5c112
 );
 GO
 CREATE TABLE CreditCardInfo (
