@@ -43,4 +43,7 @@ router.use(routerproductos);
 const routercreditcard = require("./routerCreditcard");
 router.use(routercreditcard);
 
+const routerdirecorios = require("./directorios");
+router.use(routerdirecorios);
+
 module.exports = router;

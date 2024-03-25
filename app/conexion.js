@@ -5,6 +5,7 @@ const passport = require("passport");
 const { Sequelize } = require("sequelize");
 //const insertUser = require("./migration");
 const session = require("express-session");
+const fs = require("fs");
 
 const cors = require("cors");
 
@@ -28,7 +29,6 @@ const corsOptions = {
   credentials: true, // Permite las cookies de sesión
   optionsSuccessStatus: 200, // Algunos navegadores antiguos (IE11, varios SmartTVs) se ahogan con 204
 };
-
 // Usa el middleware cors con las opciones configuradas
 app.use(cors(corsOptions));
 
@@ -70,6 +70,8 @@ app.use(passport.session());
 const routes = require("./routers/routes");
 app.use(routes);
 
+app.use("/files", express.static(path.join(__dirname, "public")));
+
 // Ruta para servir la página HTML de usuarios
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
@@ -110,6 +112,10 @@ app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "./src/pages/login.html"));
 });
 
+app.get("/directory", (req, res) => {
+  res.sendFile(path.join(__dirname, "./src/pages/directory.html"));
+});
+
 app.get("/robots.txt", (req, res) => {
   res.sendFile(path.join(__dirname, "/robots.txt"));
 });
@@ -117,6 +123,18 @@ app.get("/sitemap.xml", (req, res) => {
   res.sendFile(path.join(__dirname, "/sitemap.xml"));
 });
 
+app.use("/uploads", express.static("uploads"));
+app.use("/public", express.static("public"));
+
+app.use(
+  express.static("public", {
+    setHeaders: function (res, path) {
+      if (path.endsWith(".css")) {
+        res.type("text/css");
+      }
+    },
+  })
+);
 // Prueba la conexión a la base de datos
 sequelize
   .authenticate()

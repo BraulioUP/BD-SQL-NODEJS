@@ -119,6 +119,19 @@ router.delete("/api/vehiculo/:id", async (req, res) => {
       .json({ message: "Ocurrió un error al eliminar el vehículo" });
   }
 });
+app.get("/uploads/:id", async (req, res) => {
+  const vehiculo = await Vehiculo.findByPk(req.params.id);
+
+  if (vehiculo && vehiculo.Imagen) {
+    // Si el vehículo tiene una imagen, enviarla como respuesta
+    res.contentType("image/png");
+    res.send(vehiculo.Imagen);
+  } else {
+    // Si no hay imagen, puedes enviar una imagen de marcador de posición o un mensaje de error
+    res.status(404).send("No se encontró la imagen");
+  }
+});
+
 // Configuración de Multer para guardar las imágenes en una carpeta local
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -191,8 +204,6 @@ router.post("/carspost", upload.single("Imagen"), async (req, res) => {
       Imagen,
     });
 
-    // Eliminar el archivo temporal
-    fs.unlinkSync(req.file.path);
     return res.redirect("/cars");
   } catch (error) {
     console.error("Error al crear Vehiculo:", error.message);
