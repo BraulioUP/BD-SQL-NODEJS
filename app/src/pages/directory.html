@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Directory</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/output.css" type="text" />
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="browsehappy">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="#">upgrade your browser</a> to improve your experience.
+      </p>
+    <![endif]-->
+    <h1 class="text-3xl font-bold underline">Hello world!</h1>
+    <script>
+    fetch("/files")
+        .then((response) => response.json())
+        .then((directoryStructure) => {
+            const listElement = createDirectoryList(directoryStructure);
+            document.body.appendChild(listElement);
+        });
+
+    function createDirectoryList(directoryStructure) {
+        const listElement = document.createElement("ul");
+        directoryStructure.forEach((item) => {
+            const listItem = document.createElement("li");
+            listItem.textContent = item.name;
+            if (item.isDirectory) {
+                const childList = createDirectoryList(item.children);
+                listItem.appendChild(childList);
+            }
+            listElement.appendChild(listItem);
+        });
+        return listElement;
+    }
+    </script>
+    <script src="" async defer></script>
+  </body>
+</html>

@@ -354,46 +354,18 @@
         const img = document.createElement("img");
 
         // Verificar si el vehículo tiene información de imagen
-        if (vehiculo.Imagen && vehiculo.Imagen.data) {
-          const imagenData = vehiculo.Imagen.data;
-
-          // Convertir los datos de la imagen a una cadena base64
-          const imagenBase64 = arrayBufferToBase64(imagenData);
-
-          // Obtener el tipo MIME de la imagen
-          let mimeTypes = {
-            jpg: "image/jpeg",
-            jpeg: "image/jpeg",
-            png: "image/png",
-            gif: "image/gif",
-            bmp: "image/bmp",
-            webp: "image/webp",
-            // Agrega aquí más tipos de imágenes si es necesario
-          };
-
-          // Luego puedes obtener el tipo MIME de una imagen basándote en su extensión
-          let extension = "jpg"; // Reemplaza esto con la extensión real de tu imagen
-          let mimeType = mimeTypes[extension];
-
-          if (vehiculo.Imagen.type) {
-            mimeType = vehiculo.Imagen.type;
-          }
-
-          // Construir la URL de la imagen
-          const imgSrc = `data:${mimeType};base64,${imagenBase64}`;
-
+        if (vehiculo.Imagen) {
           // Establecer la URL de la imagen como la fuente de la etiqueta <img>
-          img.src = imgSrc;
+          img.src = "/uploads/" + vehiculo.VehiculoID;
         } else {
           // Si no hay información de imagen, establecer una imagen de marcador de posición
-          img.src = "";
+          img.src = "/uploads/image-2.png";
         }
 
         // Estilos para la imagen
         img.classList.add("w-full", "h-auto");
         divImagen.appendChild(img);
         section.appendChild(divImagen);
-
         // Botón de Actualizar
         const actualizarBtn = document.createElement("button");
         actualizarBtn.textContent = "Editar Contenido";

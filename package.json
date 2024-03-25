@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app/conexion.js",
-    "dev": "nodemon app/conexion.js"
+    "dev": "nodemon app/conexion.js",
+    "build": "./tailwindcss -i main.css -o output.css --watch"
   },
   "keywords": [],
   "author": "BraulioUP",
@@ -29,9 +30,9 @@
     "tedious": "^17.0.0"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.18",
+    "autoprefixer": "^10.4.19",
     "nodemon": "^2.0.15",
-    "postcss": "^8.4.35",
+    "postcss": "^8.4.38",
     "tailwindcss": "^3.4.1"
   }
 }

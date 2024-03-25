@@ -51,6 +51,7 @@ router.get("/api/users", async (req, res) => {
     res.status(500).send("Ocurrió un error al obtener los usuarios");
   }
 });
+
 router.post("/api/login", async (req, res) => {
   const { Correo, ContrasenaHash } = req.body;
 
