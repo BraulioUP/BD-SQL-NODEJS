@@ -69,7 +69,7 @@ router.post("/api/login", async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({ message: "Credenciales incorrectas" });
     }
-    const token = jwt.sign({ UsuarioId: user.UsuarioId }, "Karma is cat", {
+    const token = jwt.sign({ UsuarioId: user.UsuarioId }, "Karma is a cat", {
       expiresIn: "1h",
     });
     // Guarda el nombre y correo del usuario en la sesión
@@ -187,7 +187,7 @@ router.post("/login", async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({ message: "Credenciales incorrectas" });
     }
-    const token = jwt.sign({ UsuarioId: user.UsuarioId }, "Karma is cat", {
+    const token = jwt.sign({ UsuarioId: user.UsuarioId }, "Karma is a cat", {
       expiresIn: "1h",
     });
     // Guarda el nombre y correo del usuario en la sesión
@@ -209,7 +209,7 @@ router.post("/logout", (req, res) => {
       return res.status(401).json({ message: "Error al cerrar la sesión" });
     }
 
-    res.clearCookie("Karma is cat");
+    res.clearCookie("Karma is a cat");
     res.json({ message: "Sesión cerrada correctamente" });
   });
 });

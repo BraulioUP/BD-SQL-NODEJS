@@ -10,7 +10,8 @@
     <title>Directory</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="/output.css" type="text" />
+    <link rel="stylesheet" href="/public/styles/output.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
     <!--[if lt IE 7]>
@@ -21,26 +22,32 @@
     <![endif]-->
     <h1 class="text-3xl font-bold underline">Hello world!</h1>
     <script>
-    fetch("/files")
+      fetch("/files")
         .then((response) => response.json())
         .then((directoryStructure) => {
-            const listElement = createDirectoryList(directoryStructure);
-            document.body.appendChild(listElement);
+          const listElement = createDirectoryList(directoryStructure);
+          listElement.classList.add("text-gray-500", "font-bold", "text-lg"); // Agrega clases de Tailwind aquí
+          document.body.appendChild(listElement);
         });
 
-    function createDirectoryList(directoryStructure) {
+      function createDirectoryList(directoryStructure) {
         const listElement = document.createElement("ul");
+        listElement.classList.add("list-disc", "pl-5"); // Agrega clases de Tailwind aquí
         directoryStructure.forEach((item) => {
-            const listItem = document.createElement("li");
-            listItem.textContent = item.name;
-            if (item.isDirectory) {
-                const childList = createDirectoryList(item.children);
-                listItem.appendChild(childList);
-            }
-            listElement.appendChild(listItem);
+          const listItem = document.createElement("li");
+          listItem.textContent = item.name;
+          if (item.isDirectory) {
+            listItem.classList.add("font-bold"); // Agrega clases de Tailwind aquí
+            const childList = createDirectoryList(item.children);
+            childList.classList.add("ml-5"); // Agrega clases de Tailwind aquí
+            listItem.appendChild(childList);
+          } else {
+            listItem.classList.add("font-normal"); // Agrega clases de Tailwind aquí
+          }
+          listElement.appendChild(listItem);
         });
         return listElement;
-    }
+      }
     </script>
     <script src="" async defer></script>
   </body>

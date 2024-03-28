@@ -50,7 +50,7 @@ sequelize
 app.set("trust proxy", 1); // trust first proxy
 app.use(
   session({
-    secret: "Karma is cat",
+    secret: "Karma is a cat",
     resave: false,
     saveUninitialized: true,
     cookie: {

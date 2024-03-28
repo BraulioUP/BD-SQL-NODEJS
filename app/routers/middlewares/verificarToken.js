@@ -17,7 +17,7 @@ function verificarToken(req, res, next) {
 
   jwt.verify(
     token,
-    "Karma is cat",
+    "Karma is a cat",
     { algorithms: ["HS256"] },
     (err, decoded) => {
       if (err) {
