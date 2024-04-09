@@ -11,7 +11,6 @@
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="" />
-    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
     <link rel="stylesheet" href="../output.css" />
     <script>
@@ -79,7 +78,7 @@
             <h1
               class="mt-6 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl"
             >
-              Welcome to Squid 🦑
+              Welcome to E-Corp 🦑
             </h1>
 
             <p class="mt-4 leading-relaxed text-gray-500">
@@ -87,85 +86,175 @@
               nam dolorum aliquam, quibusdam aperiam voluptatum.
             </p>
 
-            <form action="#" class="mt-8 grid grid-cols-6 gap-6">
+            <form
+              action="/registers"
+              method="post"
+              class="mt-8 grid grid-cols-6 gap-6"
+            >
+              <!-- Nombre -->
               <div class="col-span-6 sm:col-span-3">
                 <label
-                  for="FirstName"
+                  for="Nombre"
                   class="block text-sm font-medium text-gray-700"
+                  >First Name</label
                 >
-                  First Name
-                </label>
-
                 <input
                   type="text"
-                  id="FirstName"
-                  name="first_name"
+                  id="Nombre"
+                  name="Nombre"
                   class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                 />
               </div>
 
+              <!-- Apellido -->
               <div class="col-span-6 sm:col-span-3">
                 <label
-                  for="LastName"
+                  for="Apellido"
                   class="block text-sm font-medium text-gray-700"
+                  >Last Name</label
                 >
-                  Last Name
-                </label>
-
                 <input
                   type="text"
-                  id="LastName"
-                  name="last_name"
+                  id="Apellido"
+                  name="Apellido"
                   class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                 />
               </div>
 
+              <!-- Addres -->
               <div class="col-span-6">
                 <label
-                  for="Email"
+                  for="Direccion"
                   class="block text-sm font-medium text-gray-700"
+                  >Addres</label
                 >
-                  Email
-                </label>
-
                 <input
-                  type="email"
-                  id="Email"
-                  name="email"
+                  type="address"
+                  id="Direccion"
+                  name="Direccion"
                   class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                 />
               </div>
-
+              <!-- Email -->
               <div class="col-span-6 sm:col-span-3">
                 <label
-                  for="Password"
+                  for="Correo"
                   class="block text-sm font-medium text-gray-700"
+                  >Email</label
                 >
-                  Password
-                </label>
-
+                <input
+                  type="email"
+                  id="Correo"
+                  name="Correo"
+                  class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                />
+              </div>
+              <!-- Password -->
+              <div class="col-span-6 sm:col-span-3">
+                <label
+                  for="ContrasenaHash"
+                  class="block text-sm font-medium text-gray-700"
+                  >Password</label
+                >
                 <input
                   type="password"
-                  id="Password"
-                  name="password"
+                  id="ContrasenaHash"
+                  name="ContrasenaHash"
                   class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                 />
               </div>
 
+              <!-- Password Confirmation -->
+              <!-- No corresponde a un campo en la API pero es útil para la validación en el cliente -->
               <div class="col-span-6 sm:col-span-3">
                 <label
                   for="PasswordConfirmation"
                   class="block text-sm font-medium text-gray-700"
+                  >Password Confirmation</label
                 >
-                  Password Confirmation
-                </label>
-
                 <input
                   type="password"
                   id="PasswordConfirmation"
                   name="password_confirmation"
                   class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                 />
+              </div>
+              <!-- Telefono -->
+              <div class="col-span-6 sm:col-span-3">
+                <label
+                  for="Telefono"
+                  class="block text-sm font-medium text-gray-700"
+                  >Telefono</label
+                >
+                <input
+                  type="phone"
+                  id="Telefono"
+                  name="Telefono"
+                  placeholder="Telefono"
+                  class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                />
+              </div>
+              <!-- Campos adicionales según tu API -->
+              <script>
+                document.addEventListener("DOMContentLoaded", (event) => {
+                  const selectElementIdioma =
+                    document.getElementById("IdiomaID");
+                  const selectElementRegion =
+                    document.getElementById("RegionID");
+
+                  fetch("/api/idiomas")
+                    .then((response) => response.json())
+                    .then((data) => {
+                      data.forEach((idioma) => {
+                        const option = document.createElement("option");
+                        option.value = idioma.IdiomaId;
+                        option.textContent = `${idioma.Nombre} (${idioma.Codigo}) ${idioma.Dial_Code}`;
+                        selectElementIdioma.appendChild(option);
+                      });
+                    })
+                    .catch((error) =>
+                      console.error("Error al obtener los idiomas:", error)
+                    );
+
+                  fetch("/api/regiones")
+                    .then((response) => response.json())
+                    .then((data) => {
+                      data.forEach((region) => {
+                        const option = document.createElement("option");
+                        option.value = region.RegionId;
+                        option.textContent = region.Nombre;
+                        selectElementRegion.appendChild(option);
+                      });
+                    })
+                    .catch((error) =>
+                      console.error("Error al obtener las regiones:", error)
+                    );
+                });
+              </script>
+              <div class="col-span-6 sm:col-span-3">
+                <label
+                  for="RegionID"
+                  class="block text-sm font-medium text-gray-700"
+                  >Region</label
+                >
+                <select
+                  id="RegionID"
+                  name="RegionID"
+                  class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                ></select>
+              </div>
+
+              <div class="col-span-6 sm:col-span-3">
+                <label
+                  for="IdiomaID"
+                  class="block text-sm font-medium text-gray-700"
+                  >Language</label
+                >
+                <select
+                  id="IdiomaID"
+                  name="IdiomaID"
+                  class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                ></select>
               </div>
 
               <div class="col-span-6">
@@ -198,14 +287,15 @@
 
               <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
                 <button
-                  class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
+                  type="submit"
+                  class="bg-white text-black font-semibold py-2 px-4 border border-black rounded transition duration-300 ease-in-out hover:bg-black hover:text-white focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 mr-85 mb-2 mx-auto block"
                 >
                   Create an account
                 </button>
 
                 <p class="mt-4 text-sm text-gray-500 sm:mt-0">
                   Already have an account?
-                  <a href="#" class="text-gray-700 underline">Log in</a>.
+                  <a href="/login" class="text-gray-700 underline">Log in</a>.
                 </p>
               </div>
             </form>

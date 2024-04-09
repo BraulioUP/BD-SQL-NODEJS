@@ -1565,18 +1565,73 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
             <div
               class="dropdown-menu shadow-md shadow-black/5 z-30 hidden max-w-xs w-full bg-white rounded-md border border-gray-100"
             >
-              <form action="" class="p-4 border-b border-b-gray-100">
-                <div class="relative w-full">
-                  <input
-                    type="text"
-                    class="py-2 pr-4 pl-10 bg-gray-50 w-full outline-none border border-gray-100 rounded-md text-sm focus:border-blue-500"
-                    placeholder="Search..."
-                  />
-                  <i
-                    class="ri-search-line absolute top-1/2 left-4 -translate-y-1/2 text-gray-900"
-                  ></i>
-                </div>
-              </form>
+            <form class="p-4 border-b border-b-gray-100">
+              <div class="relative w-full">
+                <input
+                  type="text"
+                  id="buscador"
+                  class="py-2 pr-4 pl-10 bg-gray-50 w-full outline-none border border-gray-100 rounded-md text-sm focus:border-blue-500"
+                  placeholder="Search..."
+                />
+                <div id="resultados"></div>
+                <i class="ri-search-line absolute top-1/2 left-4 -translate-y-1/2 text-gray-900"></i>
+              </div>
+            </form>
+            <script>
+              document
+                .querySelector("form")
+                .addEventListener("submit", function (e) {
+                  e.preventDefault();
+                });
+              document
+                .getElementById("buscador")
+                .addEventListener("input", function (e) {
+                  e.preventDefault();
+            
+                  var busqueda = e.target.value;
+            
+                  fetch("/buscar?consulta=" + encodeURIComponent(busqueda))
+                    .then(function (response) {
+                      if (!response.ok) {
+                        throw new Error("Error de red");
+                      }
+                      return response.json();
+                    })
+                    .then(function (data) {
+                      // Vacía los resultados anteriores
+                      var resultadosDiv = document.getElementById("resultados");
+                      resultadosDiv.innerHTML = "";
+            
+                      // Itera sobre cada tabla de datos
+                      for (var tabla in data) {
+                        if (
+                          data.hasOwnProperty(tabla) &&
+                          data[tabla].length > 0
+                        ) {
+                          // Crea un encabezado para la tabla
+                          var h2 = document.createElement("h2");
+                          h2.innerHTML = tabla;
+                          h2.className = "text-2xl font-bold mt-4"; // Agrega clases de Tailwind
+                          resultadosDiv.appendChild(h2);
+            
+                          // Itera sobre cada fila de la tabla
+                          data[tabla].forEach(function (fila) {
+                            // Crea un div para la fila
+                            var div = document.createElement("div");
+                            // Inserción vulnerable de contenido
+                            div.innerHTML = JSON.stringify(fila);
+                            div.className = "border p-2 mt-2 rounded"; // Agrega clases de Tailwind
+                            resultadosDiv.appendChild(div);
+                          });
+                        }
+                      }
+                    })
+                    .catch(function (error) {
+                      console.error("Error:", error);
+                    });
+                });
+            </script>
+            
             </div>
           </li>
           <li class="dropdown">

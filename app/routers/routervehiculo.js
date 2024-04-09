@@ -155,54 +155,11 @@ router.post("/carspost", upload.single("Imagen"), async (req, res) => {
       vehiculoData.SistemaDeSonidoPremium === "on";
 
     // Desestructura los datos del vehículo y agrega 'Imagen' desde req.file.filename
-    const {
-      Marca,
-      Modelo,
-      Ano,
-      Tipo,
-      Autonomia,
-      TiempoDeCarga,
-      Potencia,
-      Traccion,
-      CapacidadDeBateria,
-      NumeroDeAsientos,
-      Precio,
-      ColorExterior,
-      ColorInterior,
-      OpcionesDeRuedas,
-      PaqueteDeAutopiloto,
-      TechoSolar,
-      ConexionInternet,
-      SistemaDeSonidoPremium,
-      ModoDeConduccion,
-    } = req.body;
+
 
     // Obteniendo el nombre del archivo de la imagen cargada
     const Imagen = req.file.filename;
 
-    // Crear el vehículo en la base de datos
-    const vehiculo = await Vehiculo.create({
-      Marca,
-      Modelo,
-      Ano,
-      Tipo,
-      Autonomia,
-      TiempoDeCarga,
-      Potencia,
-      Traccion,
-      CapacidadDeBateria,
-      NumeroDeAsientos,
-      Precio,
-      ColorExterior,
-      ColorInterior,
-      OpcionesDeRuedas,
-      PaqueteDeAutopiloto,
-      TechoSolar,
-      ConexionInternet,
-      SistemaDeSonidoPremium,
-      ModoDeConduccion,
-      Imagen,
-    });
 
     return res.redirect("/cars");
   } catch (error) {

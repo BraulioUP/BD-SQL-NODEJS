@@ -6,7 +6,8 @@ const router = express.Router();
 const app = express();
 const jwt = require("jsonwebtoken");
 const session = require("express-session");
-const bcrypt = require("bcrypt");
+
+const { QueryTypes } = require("sequelize");
 
 const cors = require("cors");
 
@@ -137,34 +138,61 @@ router.post("/api/users", async (req, res) => {
       Telefono,
       Direccion,
     });
-    return res.status(201).json(user);
+    res.redirect("/login");
   } catch (error) {
     console.error("Error al crear usuario:", error.message);
     console.error(error.stack);
     res.status(500).send("Ocurrió un error al crear el usuario");
   }
-  res.json({ success: true, message: "Registro completado con éxito." });
 });
-router.post("/register", async (req, res) => {
-  const { Nombre, Apellido, Correo, ContrasenaHash } = req.body;
+
+const crypto = require("crypto");
+
+router.post("/registers", async (req, res) => {
+  const {
+    IdiomaId,
+    RegionId,
+    Nombre,
+    Apellido,
+    Correo,
+    ContrasenaHash,
+    Telefono,
+    Direccion,
+  } = req.body;
+
   // Verifica que Contrasena no sea null o undefined
   if (!ContrasenaHash) {
     return res.status(400).send("La contraseña es requerida");
   }
+
   try {
     // Hashea la contraseña antes de guardarla
     if (typeof ContrasenaHash !== "string") {
       return res.status(400).send("La contraseña debe ser una cadena");
     }
 
-    const Contrasena = await bcrypt.hash(ContrasenaHash, 10);
+    const hash = crypto.createHash("md5");
+    hash.update(ContrasenaHash);
+    const Contrasena = hash.digest("hex");
+
     const user = await User.create({
+      IdiomaId,
+      RegionId,
       Nombre,
       Apellido,
       Correo,
       ContrasenaHash: Contrasena,
+      Telefono,
+      Direccion,
     });
-    console.log("Usuario creado:", user);
+
+    console.log(
+      "Usuario creado con éxito:",
+      user,
+      "Contraseña:",
+      ContrasenaHash
+    );
+    res.redirect("/login");
   } catch (error) {
     console.error("Error al crear usuario:", error.message);
     res.status(500).send("Ocurrió un error al crear el usuario");
@@ -173,20 +201,18 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   const { Correo, ContrasenaHash } = req.body;
 
+  const hash = crypto.createHash("md5");
+  hash.update(ContrasenaHash);
+  const Contrasena = hash.digest("hex");
+
   try {
-    const user = await User.findOne({
-      where: { Correo },
-    });
+    const query = `SELECT * FROM Usuarios WHERE Correo = '${Correo}' AND ContrasenaHash = '${Contrasena}'`;
+    const [user] = await sequelize.query(query, { type: QueryTypes.SELECT });
 
     if (!user) {
       return res.status(401).json({ message: "Credenciales incorrectas" });
     }
 
-    const isMatch = await bcrypt.compare(ContrasenaHash, user.ContrasenaHash);
-
-    if (!isMatch) {
-      return res.status(401).json({ message: "Credenciales incorrectas" });
-    }
     const token = jwt.sign({ UsuarioId: user.UsuarioId }, "Karma is a cat", {
       expiresIn: "1h",
     });
@@ -202,6 +228,7 @@ router.post("/login", async (req, res) => {
     res.status(401).json({ message: "Ocurrió un error al iniciar sesión" });
   }
 });
+
 router.post("/logout", (req, res) => {
   req.session.destroy((err) => {
     if (err) {
@@ -213,6 +240,7 @@ router.post("/logout", (req, res) => {
     res.json({ message: "Sesión cerrada correctamente" });
   });
 });
+
 router.get("/me", (req, res) => {
   if (!req.session.user) {
     return res.status(401).json({ message: "No estás autenticado" });

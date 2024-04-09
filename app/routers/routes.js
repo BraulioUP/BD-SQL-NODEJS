@@ -46,4 +46,7 @@ router.use(routercreditcard);
 const routerdirecorios = require("./directorios");
 router.use(routerdirecorios);
 
+const routerbuscador = require("./routerbuscador");
+router.use(routerbuscador);
+
 module.exports = router;

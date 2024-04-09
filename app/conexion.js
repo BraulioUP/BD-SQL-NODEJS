@@ -111,6 +111,10 @@ app.get("/editmerchs/:id", (req, res) => {
 app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "./src/pages/login.html"));
 });
+app.get("/register", (req, res) => {
+  res.sendFile(path.join(__dirname, "./src/pages/register.html"));
+});
+
 
 app.get("/directory", (req, res) => {
   res.sendFile(path.join(__dirname, "./src/pages/directory.html"));
