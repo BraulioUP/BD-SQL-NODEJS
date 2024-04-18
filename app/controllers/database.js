@@ -1,7 +1,7 @@
 // database.js
 const { Sequelize } = require("sequelize");
 
-const sequelize = new Sequelize("ECOMMERCE", "sa", "braulioYrodrigo", {
+const sequelize = new Sequelize("ECOMMERCE", "sa", "password", {
   host: "BRAULIO\\SQLEXPRESS",
   dialect: "mssql",
   dialectOptions: {
